@@ -1,0 +1,13 @@
+import { HTMLAttributes } from 'react'
+
+interface {{properCase name}}Props extends HTMLAttributes<HTMLElement> {}
+
+const {{properCase name}} = ({ children, className, ...htmlAttributes }: {{properCase name}}Props): JSX.Element | null => {
+	return (
+		<div className={className} {...htmlAttributes}>
+			{children}
+		</div>
+	)
+}
+
+export default {{properCase name}}

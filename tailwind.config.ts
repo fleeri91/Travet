@@ -15,6 +15,18 @@ const config: Config = {
     current: 'currentColor',
     extend: {
       colors: {
+        'theme-50': 'var(--color-primary-50)',
+        'theme-100': 'var(--color-primary-100)',
+        'theme-200': 'var(--color-primary-200)',
+        'theme-300': 'var(--color-primary-300)',
+        'theme-400': 'var(--color-primary-400)',
+        'theme-500': 'var(--color-primary-500)',
+        'theme-600': 'var(--color-primary-600)',
+        'theme-700': 'var(--color-primary-700)',
+        'theme-800': 'var(--color-primary-800)',
+        'theme-900': 'var(--color-primary-900)',
+        'theme-950': 'var(--color-primary-950)',
+
         // light mode
         tremor: {
           brand: {

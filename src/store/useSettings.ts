@@ -2,19 +2,22 @@ import { create } from 'zustand'
 
 import { Colors } from '@/constants/Theme'
 
-import { Settings } from '@/types/Settings'
+type SettingsState = {
+  darkMode: boolean
+  theme?: Colors
+}
 
-type CalendarActions = {
+type SettingsActions = {
   setDarkMode: (mode: boolean) => void
   setTheme: (theme: Colors) => void
 }
 
-const initialState: Settings = {
+const initialState: SettingsState = {
   darkMode: false,
-  theme: 'blue',
+  theme: undefined,
 }
 
-export const useCalendarStore = create<Settings & CalendarActions>((set) => ({
+export const useSettingsStore = create<SettingsState & SettingsActions>((set) => ({
   ...initialState,
   setDarkMode: (mode: boolean) => set((state) => ({ ...state, darkMode: mode })),
   setTheme: (theme: Colors) => set((state) => ({ ...state, theme: theme })),

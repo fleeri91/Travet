@@ -7,6 +7,9 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'Travet',
   description: '',
+  icons: {
+    icon: '/favicons/favicon-32x32.png',
+  },
 }
 const RootLayout = ({
   children,

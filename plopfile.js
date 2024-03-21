@@ -1,7 +1,7 @@
 module.exports = (plop) => {
   /** Constants */
-  const COMPONENT_FOLDER_UI = 'src/app/components/ui'
-  const COMPONENT_FOLDER_FUNCTIONAL = 'src/app/components'
+  const COMPONENT_FOLDER_UI = 'src/components/ui'
+  const COMPONENT_FOLDER_FUNCTIONAL = 'src/components'
 
   /**
    * Component generator

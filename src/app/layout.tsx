@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 
+import { SWRProvider } from '@/providers/SWRProvider'
+
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -19,7 +21,9 @@ const RootLayout = ({
   return (
     <html lang="en" data-theme={undefined}>
       <body className={inter.className}>
-        <main>{children}</main>
+        <main>
+          <SWRProvider>{children}</SWRProvider>
+        </main>
       </body>
     </html>
   )

@@ -10,23 +10,23 @@ export const applyThemePreference = (darkMode: boolean) => {
 
 export const gameTypeColor = (gameType: GameType): Color => {
   switch (gameType) {
-    case 'v75':
+    case 'V75':
       return 'blue'
-    case 'gs75':
+    case 'GS75':
       return 'emerald'
-    case 'v86':
+    case 'V86':
       return 'purple'
-    case 'v64':
+    case 'V64':
       return 'orange'
-    case 'v65':
+    case 'V65':
       return 'red'
     case 'dd':
       return 'sky'
-    case 'v5':
+    case 'V5':
       return 'sky'
-    case 'v4':
+    case 'V4':
       return 'sky'
-    case 'v3':
+    case 'V3':
       return 'sky'
     default:
       return 'neutral'

@@ -1,1 +1,3 @@
-export type GameType = 'v75' | 'gs75' | 'v86' | 'v64' | 'v65' | 'dd' | 'v5' | 'v4' | 'v3'
+export type GameType = 'V75' | 'GS75' | 'V86' | 'V64' | 'V65' | 'dd' | 'V5' | 'V4' | 'V3'
+
+export const ALLOWED_GAME_TYPES = ['V75', 'GS75', 'V86', 'V64', 'V65', 'dd', 'V5', 'V4', 'V3']

@@ -1,6 +1,11 @@
 import { Button, ButtonProps } from '@tremor/react'
 
-const IconButton = ({ children, onClick, className, ...htmlAttributes }: ButtonProps): JSX.Element | null => {
+const IconButton = ({
+  children,
+  onClick,
+  className,
+  ...htmlAttributes
+}: ButtonProps): JSX.Element | null => {
   return (
     <button
       onClick={onClick}

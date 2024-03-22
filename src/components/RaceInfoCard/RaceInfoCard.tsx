@@ -8,11 +8,11 @@ import { _getTrackCondition } from '@/utils/atg'
 import { Race } from '@/types/ATG/Game'
 
 interface RaceInfoCardProps {
-  race: Race
+  race: Race | null
 }
 
 const RaceInfoCard = ({ race }: RaceInfoCardProps) => (
-  <Card className={clsx('bg-theme-600 mb-2 text-white')}>
+  <Card className={clsx('mb-2 bg-theme-600 text-white')}>
     {race && (
       <Flex justifyContent="start" className="space-x-4">
         <Text>{race.track.name}</Text>
@@ -20,7 +20,9 @@ const RaceInfoCard = ({ race }: RaceInfoCardProps) => (
         <Text>{race.startMethod}</Text>
       </Flex>
     )}
-    <Flex>{race && <Text>{`Banförhållande: ${_getTrackCondition(race.track.condition)}`}</Text>}</Flex>
+    <Flex>
+      {race && <Text>{`Banförhållande: ${_getTrackCondition(race.track.condition)}`}</Text>}
+    </Flex>
     <Flex>{race && <Text>{race.name}</Text>}</Flex>
   </Card>
 )

@@ -1,1 +1,1 @@
-export { default } from './RaceFilterTable';
+export { default } from './RaceFilterTable'

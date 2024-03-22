@@ -7,7 +7,11 @@ import { applyThemePreference } from '@/utils/theme'
 
 interface DarkModeToggleProps extends HTMLAttributes<HTMLElement> {}
 
-const DarkModeToggle = ({ children, className, ...htmlAttributes }: DarkModeToggleProps): JSX.Element | null => {
+const DarkModeToggle = ({
+  children,
+  className,
+  ...htmlAttributes
+}: DarkModeToggleProps): JSX.Element | null => {
   const { darkMode, setDarkMode } = useSettingsStore()
 
   useEffect(() => {

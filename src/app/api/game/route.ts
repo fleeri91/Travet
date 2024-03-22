@@ -21,7 +21,9 @@ export async function GET(request: NextRequest) {
       const raceData = await Promise.all(
         gameData.races.map(async (race) => {
           const startRequests = race.starts.map((start) => {
-            return axios.get(`${process.env.NEXT_PUBLIC_API_URL}/races/${race.id}/start/${start.number}`)
+            return axios.get(
+              `${process.env.NEXT_PUBLIC_API_URL}/races/${race.id}/start/${start.number}`
+            )
           })
 
           const startResponses = await Promise.all(startRequests)

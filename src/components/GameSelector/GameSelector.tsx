@@ -1,6 +1,8 @@
-import { Fragment } from 'react'
+import { Fragment, useEffect } from 'react'
+import useSWR from 'swr'
 import dayjs from 'dayjs'
 import sv from 'dayjs/locale/sv'
+
 import { Dialog, Transition } from '@headlessui/react'
 import { Flex, Icon, Subtitle } from '@tremor/react'
 import { RiArrowLeftSLine, RiArrowRightSLine } from '@remixicon/react'
@@ -8,9 +10,10 @@ import { RiArrowLeftSLine, RiArrowRightSLine } from '@remixicon/react'
 import GameCard from '@/components/GameCard'
 import IconButton from '@/components/IconButton'
 
-import { useThemeStore } from '@/store/useTheme'
 import { useCalendarStore } from '@/store/useCalendar'
 import { useGameStore } from '@/store/useGame'
+
+import { CalendarDayRoot } from '@/types/ATG/CalendarDay'
 
 interface GameSelectorProps {
   isOpen: boolean
@@ -18,8 +21,26 @@ interface GameSelectorProps {
 }
 
 const GameSelector = ({ isOpen, onClose }: GameSelectorProps): JSX.Element | null => {
-  const { setPreviousDate, setNextDate, selectedDate, today } = useCalendarStore()
+  const {
+    setCalendarData,
+    setIsLoading,
+    setPreviousDate,
+    setNextDate,
+    selectedDate,
+    today,
+    calendarData,
+  } = useCalendarStore()
   const {} = useGameStore()
+
+  const { data, isLoading } = useSWR<CalendarDayRoot>(`day/${selectedDate}`)
+
+  useEffect(() => {
+    data && setCalendarData(data)
+  }, [data])
+
+  useEffect(() => {
+    isLoading && setIsLoading(isLoading)
+  }, [isLoading])
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -54,7 +75,9 @@ const GameSelector = ({ isOpen, onClose }: GameSelectorProps): JSX.Element | nul
                       <Icon color={'neutral'} icon={RiArrowLeftSLine} />
                     </IconButton>
                     <Subtitle className="min-w-20 text-center capitalize">
-                      {selectedDate == today ? 'Idag' : dayjs(selectedDate).locale(sv).format('DD/MM dd')}
+                      {selectedDate == today
+                        ? 'Idag'
+                        : dayjs(selectedDate).locale(sv).format('DD/MM dd')}
                     </Subtitle>
                     <IconButton onClick={() => setNextDate(selectedDate)}>
                       <Icon color={'neutral'} icon={RiArrowRightSLine} />

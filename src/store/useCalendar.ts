@@ -27,7 +27,10 @@ const initialState: CalendarState = {
 export const useCalendarStore = create<CalendarState & CalendarActions>((set) => ({
   ...initialState,
   setPreviousDate: (date: string) =>
-    set((state) => ({ ...state, selectedDate: dayjs(date).subtract(1, 'day').format('YYYY-MM-DD') })),
+    set((state) => ({
+      ...state,
+      selectedDate: dayjs(date).subtract(1, 'day').format('YYYY-MM-DD'),
+    })),
   setNextDate: (date: string) =>
     set((state) => ({ ...state, selectedDate: dayjs(date).add(1, 'day').format('YYYY-MM-DD') })),
   setCalendarData: (data: CalendarDayRoot) => set((state) => ({ ...state, calendarData: data })),

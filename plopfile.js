@@ -1,6 +1,5 @@
 module.exports = (plop) => {
   /** Constants */
-  const COMPONENT_FOLDER_UI = 'src/components/ui'
   const COMPONENT_FOLDER_FUNCTIONAL = 'src/components'
 
   /**
@@ -10,25 +9,15 @@ module.exports = (plop) => {
     description: 'Create a component',
     prompts: [
       {
-        type: 'list',
-        name: 'type',
-        message: 'Which type of component would you like to create?',
-        choices: ['UI', 'Functional'],
-      },
-      {
         type: 'input',
         name: 'name',
         message: "What's the name of your component?",
       },
     ],
-    actions: (data) => {
+    actions: () => {
       let actions = []
 
-      if (data.type === 'UI') {
-        folder = `${COMPONENT_FOLDER_UI}`
-      } else if (data.type === 'Functional') {
-        folder = `${COMPONENT_FOLDER_FUNCTIONAL}`
-      }
+      folder = `${COMPONENT_FOLDER_FUNCTIONAL}`
 
       actions.push({
         type: 'add',

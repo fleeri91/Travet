@@ -6,7 +6,7 @@ export interface GameRoot {
   type: string
 }
 
-interface Race {
+export interface Race {
   id: string
   name: string
   date: string

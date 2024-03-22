@@ -19,7 +19,7 @@ const RootLayout = ({
   children: React.ReactNode
 }>) => {
   return (
-    <html lang="en" data-theme={undefined}>
+    <html lang="en">
       <body className={inter.className}>
         <main>
           <SWRProvider>{children}</SWRProvider>

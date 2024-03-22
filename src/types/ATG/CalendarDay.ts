@@ -39,7 +39,7 @@ export type GameTypes =
   | 'dd';
 */
 
-interface Game {
+export interface Game {
   id: string
   status: string
   startTime: string

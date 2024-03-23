@@ -26,7 +26,7 @@ export interface Race {
   starts: Start[]
 }
 
-interface Track {
+export interface Track {
   id: number
   name: string
   condition: string

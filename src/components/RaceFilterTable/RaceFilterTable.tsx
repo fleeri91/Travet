@@ -1,10 +1,9 @@
 'use client'
 
-import { Fragment, useState } from 'react'
+import { Fragment } from 'react'
 import clsx from 'clsx'
 import {
   Badge,
-  Card,
   Flex,
   Icon,
   Text,
@@ -17,12 +16,23 @@ import {
 } from '@tremor/react'
 import { RiInformationLine } from '@remixicon/react'
 
-import { Race } from '@/types/ATG/Game'
+import { useFilterStore } from '@/store/useFilter'
+
+import { GameRoot, Race, Start } from '@/types/ATG/Game'
+import { _getHorseSex } from '@/utils/atg'
+import { _getGallopp, _getStartForm, _getStartRecord, _recordFilter } from '@/utils/filter'
 
 interface RaceFilterTableProps {
+  game: GameRoot
   race: Race | null
+  raceIndex: number
 }
-const RaceFilterTable = ({ race }: RaceFilterTableProps): JSX.Element | null => {
+
+const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.Element | null => {
+  const { filter } = useFilterStore()
+
+  const handicaps: number[] = []
+
   return (
     <Table className="w-full select-none">
       <TableHead>
@@ -48,6 +58,106 @@ const RaceFilterTable = ({ race }: RaceFilterTableProps): JSX.Element | null => 
           </TableHeaderCell>
         </TableRow>
       </TableHead>
+      <TableBody>
+        {race?.starts.map((start: Start, startIndex: number) => {
+          if (!game.races[raceIndex] || !game.races[raceIndex].starts[startIndex]) {
+            return
+          }
+
+          const currentRace = game.races[raceIndex]
+          const currentStart = game.races[raceIndex].starts[startIndex]
+          const records = start.records
+          const filteredRecords = _recordFilter(
+            records,
+            game.races[raceIndex].track,
+            currentRace,
+            currentStart,
+            filter
+          )
+
+          let handicap = currentStart.distance - currentRace.distance
+
+          const renderHandicapRow = () => {
+            if (!handicaps.includes(handicap) && handicap !== 0) {
+              handicaps.push(handicap)
+
+              return (
+                <TableRow>
+                  <TableCell className="w-full bg-gray-600 text-white" colSpan={12}>
+                    <Text>{`Tillägg: ${handicap} meter`}</Text>
+                  </TableCell>
+                </TableRow>
+              )
+            }
+            return null
+          }
+          const renderDataRow = () => (
+            <TableRow
+              key={startIndex}
+              className={clsx(
+                currentStart && currentStart.scratched && 'text-gray-300 line-through',
+                '!border-gray-100 even:bg-theme-50'
+              )}
+            >
+              <TableCell className="space-x-2 py-2">
+                <Flex justifyContent="start" className="space-x-2">
+                  {currentStart.number && <Text>{currentStart.number}</Text>}
+                  {currentStart.horse.name && <Text>{currentStart.horse.name}</Text>}
+                  {currentStart && currentStart.horse.nationality && (
+                    <Text>{'(' + currentStart.horse.nationality + ')'}</Text>
+                  )}
+                  {currentStart && currentStart.horse.sex && (
+                    <Text>{`${_getHorseSex(currentStart.horse.sex)}${
+                      currentStart.horse.age
+                    }`}</Text>
+                  )}
+                </Flex>
+              </TableCell>
+              {records && (
+                <TableCell className="py-2">{_getStartRecord(filteredRecords)}</TableCell>
+              )}
+              {records && (
+                <TableCell className="space-x-2 py-2">
+                  {_getStartForm(records).map((record: any, index: number) => (
+                    <Badge
+                      key={index}
+                      color={
+                        record.place === '0' || record.place > '5'
+                          ? 'red'
+                          : record.place >= '4' && record.place <= '6'
+                            ? 'gray'
+                            : 'green'
+                      }
+                    >
+                      {record.place}
+                    </Badge>
+                  ))}
+                </TableCell>
+              )}
+              <TableCell className="space-x-2 py-2">
+                {_getGallopp(records, currentRace.startMethod).map((record: any, index: number) =>
+                  record.start.postPosition === currentStart.postPosition ? (
+                    <Badge key={index} color={'red'}>
+                      !!
+                    </Badge>
+                  ) : (
+                    <Badge key={index} color={'yellow'}>
+                      !
+                    </Badge>
+                  )
+                )}
+              </TableCell>
+            </TableRow>
+          )
+
+          return (
+            <Fragment key={startIndex}>
+              {currentStart && currentRace.startMethod === 'volte' && renderHandicapRow()}
+              {renderDataRow()}
+            </Fragment>
+          )
+        })}
+      </TableBody>
     </Table>
   )
 }

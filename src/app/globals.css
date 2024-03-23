@@ -12,7 +12,7 @@
   }
 
   /** Theme */
-  html[data-theme='blue'] {
+  html[data-theme='V75'] {
     --color-primary-50: #eff6ff;
     --color-primary-100: #dbeafe;
     --color-primary-200: #bfdbfe;
@@ -25,7 +25,7 @@
     --color-primary-900: #1e3a8a;
     --color-primary-950: #172554;
   }
-  html[data-theme='purple'] {
+  html[data-theme='V86'] {
     --color-primary-50: #f5f3ff;
     --color-primary-100: #ede9fe;
     --color-primary-200: #ddd6fe;
@@ -38,7 +38,7 @@
     --color-primary-900: #4c1d95;
     --color-primary-950: #2e1065;
   }
-  html[data-theme='orange'] {
+  html[data-theme='V64'] {
     --color-primary-50: #fffbeb;
     --color-primary-100: #fef3c7;
     --color-primary-200: #fde68a;
@@ -51,7 +51,7 @@
     --color-primary-900: #78350f;
     --color-primary-950: #451a03;
   }
-  html[data-theme='red'] {
+  html[data-theme='V65'] {
     --color-primary-50: #fef2f2;
     --color-primary-100: #fee2e2;
     --color-primary-200: #fecaca;
@@ -64,7 +64,7 @@
     --color-primary-900: #7f1d1d;
     --color-primary-950: #450a0a;
   }
-  html[data-theme='emerald'] {
+  html[data-theme='GS75'] {
     --color-primary-50: #ecfdf5;
     --color-primary-100: #d1fae5;
     --color-primary-200: #a7f3d0;
@@ -77,7 +77,10 @@
     --color-primary-900: #064e3b;
     --color-primary-950: #022c22;
   }
-  html[data-theme='sky'] {
+  html[data-theme='DD'],
+  html[data-theme='V5'],
+  html[data-theme='V4'],
+  html[data-theme='V3'] {
     --color-primary-50: #f0f9ff;
     --color-primary-100: #e0f2fe;
     --color-primary-200: #bae6fd;

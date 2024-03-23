@@ -2,7 +2,7 @@ import { HTMLAttributes, useEffect } from 'react'
 
 import { Switch } from '@headlessui/react'
 
-import { useSettingsStore } from '@/store/useSettings'
+import { useThemeStore } from '@/store/useTheme'
 import { applyThemePreference } from '@/utils/theme'
 
 interface DarkModeToggleProps extends HTMLAttributes<HTMLElement> {}
@@ -12,7 +12,7 @@ const DarkModeToggle = ({
   className,
   ...htmlAttributes
 }: DarkModeToggleProps): JSX.Element | null => {
-  const { darkMode, setDarkMode } = useSettingsStore()
+  const { darkMode, setDarkMode } = useThemeStore()
 
   useEffect(() => {
     applyThemePreference(darkMode)

@@ -1,32 +1,56 @@
 'use client'
 
-import { useEffect } from 'react'
-
-import { useCalendarStore } from '@/store/useCalendar'
-
+import { useEffect, useState } from 'react'
+import { Flex, Icon } from '@tremor/react'
 import useSWR from 'swr'
-import RaceFilterTable from '@/components/RaceFilterTable'
-import { Flex } from '@tremor/react'
+
+import { RiFilter3Line, RiCalendarLine } from '@remixicon/react'
+
 import GameSelector from '@/components/GameSelector'
-import RaceInfoCard from '@/components/RaceInfoCard'
+import RaceTab from '@/components/RaceTab'
+import SpeedDial from '@/components/SpeedDial'
+
+import { useGameStore } from '@/store/useGame'
+import { GameRoot } from '@/types/ATG/Game'
+import IconButton from '@/components/IconButton'
+import Filter from '@/components/Filter'
 
 const Home = () => {
-  const { selectedDate, calendarData } = useCalendarStore()
+  const { gameId } = useGameStore()
+
+  const [gameSelectorOpen, setGameSelectorOpen] = useState<boolean>(true)
+  const [filterOpen, setfilterOpen] = useState<boolean>(true)
+
+  const { data, isLoading } = useSWR<GameRoot>(gameId ? `game/?id=${gameId}` : null)
 
   useEffect(() => {
-    calendarData && console.log(calendarData)
-  }, [calendarData])
+    gameId && console.log(gameId)
+  }, [gameId])
 
   return (
     <Flex
       flexDirection="col"
-      className="mx-auto mt-24 max-w-screen-md"
+      className="mx-auto mt-16 max-w-screen-md"
       alignItems="center"
       justifyContent="center"
     >
-      <RaceInfoCard race={null} />
-      <RaceFilterTable race={null} />
-      <GameSelector isOpen={false} onClose={() => null} />
+      {data && <RaceTab gameData={data} />}
+      <GameSelector isOpen={gameSelectorOpen} onClose={() => setGameSelectorOpen(false)} />
+      <Filter isOpen={filterOpen} onClose={() => setfilterOpen(false)} />
+      <SpeedDial>
+        <Icon
+          variant="shadow"
+          icon={RiCalendarLine}
+          className="cursor-pointer"
+          onClick={() => setGameSelectorOpen(true)}
+        />
+        <Icon
+          variant="shadow"
+          icon={RiFilter3Line}
+          className="cursor-pointer"
+          onClick={() => setfilterOpen(true)}
+        />
+      </SpeedDial>
     </Flex>
   )
 }

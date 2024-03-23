@@ -29,7 +29,7 @@ const RaceTab = ({ gameData }: RaceTabProps) => {
                 key={index}
                 onClick={() => setRaceIndex(index)}
                 className={clsx(
-                  'w-full select-none justify-center rounded-lg border-none py-2.5 text-sm font-medium uppercase leading-5 focus:outline-none'
+                  'w-full max-w-[initial] select-none justify-center rounded-lg border-none py-2.5 text-sm font-medium uppercase leading-5 focus:outline-none'
                 )}
               >
                 <Text className="text-theme-600">{gameData.type + ':' + (index + 1)}</Text>

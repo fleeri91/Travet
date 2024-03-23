@@ -25,7 +25,7 @@ const Home = () => {
   const { data, isLoading } = useSWR<GameRoot>(gameId ? `game/?id=${gameId}` : null)
 
   return (
-    <Flex flexDirection="row" className="mx-auto mt-16 max-w-screen-md gap-2">
+    <Flex flexDirection="row" className="mx-auto my-16 max-w-screen-md gap-2">
       {data && <RaceTab gameData={data} />}
       <GameSelector isOpen={gameSelectorOpen} onClose={() => setGameSelectorOpen(false)} />
       <Filter isOpen={filterOpen} onClose={() => setFilterOpen(false)} />

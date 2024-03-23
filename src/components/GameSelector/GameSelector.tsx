@@ -15,9 +15,11 @@ import { useGameStore } from '@/store/useGame'
 
 import { CalendarDayRoot } from '@/types/ATG/CalendarDay'
 
+import { ALLOWED_GAME_TYPES, GameType } from '@/constants/GameType'
+
 interface GameSelectorProps {
   isOpen: boolean
-  onClose: (value: boolean) => void
+  onClose: () => void
 }
 
 const GameSelector = ({ isOpen, onClose }: GameSelectorProps): JSX.Element | null => {
@@ -27,16 +29,33 @@ const GameSelector = ({ isOpen, onClose }: GameSelectorProps): JSX.Element | nul
     setPreviousDate,
     setNextDate,
     selectedDate,
+    biggestGame,
+    setBiggestGame,
     today,
     calendarData,
   } = useCalendarStore()
-  const {} = useGameStore()
+  const { setGameId } = useGameStore()
 
-  const { data, isLoading } = useSWR<CalendarDayRoot>(`day/${selectedDate}`)
+  const { data, isLoading } = useSWR<CalendarDayRoot>(selectedDate ? `day/${selectedDate}` : null)
+
+  const handleClose = () => {
+    onClose()
+  }
 
   useEffect(() => {
-    data && setCalendarData(data)
+    if (data) {
+      setCalendarData(data)
+      setBiggestGame(data.tracks[0].biggestGameType)
+    }
   }, [data])
+
+  useEffect(() => {
+    if (biggestGame && calendarData) {
+      Object.entries(calendarData.games)
+        .filter(([gameType, gamesArray]) => gamesArray.length > 0 && gameType.includes(biggestGame))
+        .map(([_gameType, gamesArray], _index) => setGameId(gamesArray[0].id))
+    }
+  }, [biggestGame])
 
   useEffect(() => {
     isLoading && setIsLoading(isLoading)
@@ -84,7 +103,25 @@ const GameSelector = ({ isOpen, onClose }: GameSelectorProps): JSX.Element | nul
                     </IconButton>
                   </Flex>
                   <Flex flexDirection="col" className="gap-2">
-                    <GameCard gameType="v75" track="Solvalla" time="20:30" />
+                    {calendarData &&
+                      calendarData.games &&
+                      Object.entries(calendarData.games)
+                        .filter(
+                          ([gameType, gamesArray]) =>
+                            gamesArray.length > 0 && ALLOWED_GAME_TYPES.includes(gameType)
+                        )
+                        .map(([gameType, gamesArray], index) => (
+                          <GameCard
+                            key={index}
+                            gameType={gameType as GameType}
+                            tracks={gamesArray[0].tracks}
+                            time={gamesArray[0].scheduledStartTime}
+                            onClick={() => {
+                              setGameId(gamesArray[0].id)
+                              handleClose()
+                            }}
+                          />
+                        ))}
                   </Flex>
                 </Flex>
               </Dialog.Panel>

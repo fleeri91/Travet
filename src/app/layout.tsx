@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 
 import { SWRProvider } from '@/providers/SWRProvider'
+import { ThemeProvider } from '@/context/themeContext'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,7 +23,9 @@ const RootLayout = ({
     <html lang="en">
       <body className={inter.className}>
         <main>
-          <SWRProvider>{children}</SWRProvider>
+          <ThemeProvider>
+            <SWRProvider>{children}</SWRProvider>
+          </ThemeProvider>
         </main>
       </body>
     </html>

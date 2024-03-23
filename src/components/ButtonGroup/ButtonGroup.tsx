@@ -7,7 +7,7 @@ const ButtonGroup = ({
   className,
   ...htmlAttributes
 }: ButtonGroupProps): JSX.Element | null => (
-  <div className="group fixed bottom-6 end-6 flex flex-col gap-2" {...htmlAttributes}>
+  <div className="group flex flex-col gap-2" {...htmlAttributes}>
     {children}
   </div>
 )

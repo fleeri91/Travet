@@ -28,29 +28,26 @@ const Home = () => {
   }, [gameId])
 
   return (
-    <Flex
-      flexDirection="col"
-      className="mx-auto mt-16 max-w-screen-md"
-      alignItems="center"
-      justifyContent="center"
-    >
+    <Flex flexDirection="row" className="mx-auto mt-16 max-w-screen-md gap-2">
       {data && <RaceTab gameData={data} />}
+      <Flex className="mt-auto h-full flex-1" justifyContent="center" alignItems="end">
+        <ButtonGroup>
+          <Icon
+            variant="shadow"
+            icon={RiCalendarLine}
+            className="cursor-pointer"
+            onClick={() => setGameSelectorOpen(true)}
+          />
+          <Icon
+            variant="shadow"
+            icon={RiFilter3Line}
+            className="cursor-pointer"
+            onClick={() => setfilterOpen(true)}
+          />
+        </ButtonGroup>
+      </Flex>
       <GameSelector isOpen={gameSelectorOpen} onClose={() => setGameSelectorOpen(false)} />
       <Filter isOpen={filterOpen} onClose={() => setfilterOpen(false)} />
-      <ButtonGroup>
-        <Icon
-          variant="shadow"
-          icon={RiCalendarLine}
-          className="cursor-pointer"
-          onClick={() => setGameSelectorOpen(true)}
-        />
-        <Icon
-          variant="shadow"
-          icon={RiFilter3Line}
-          className="cursor-pointer"
-          onClick={() => setfilterOpen(true)}
-        />
-      </ButtonGroup>
     </Flex>
   )
 }

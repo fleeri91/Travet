@@ -18,8 +18,8 @@ import Filter from '@/components/Filter'
 const Home = () => {
   const { gameId } = useGameStore()
 
-  const [gameSelectorOpen, setGameSelectorOpen] = useState<boolean>(true)
-  const [filterOpen, setfilterOpen] = useState<boolean>(true)
+  const [gameSelectorOpen, setGameSelectorOpen] = useState<boolean>(false)
+  const [filterOpen, setfilterOpen] = useState<boolean>(false)
 
   const { data, isLoading } = useSWR<GameRoot>(gameId ? `game/?id=${gameId}` : null)
 

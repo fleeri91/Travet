@@ -8,7 +8,7 @@ import { RiFilter3Line, RiCalendarLine } from '@remixicon/react'
 
 import GameSelector from '@/components/GameSelector'
 import RaceTab from '@/components/RaceTab'
-import SpeedDial from '@/components/SpeedDial'
+import ButtonGroup from '@/components/ButtonGroup'
 
 import { useGameStore } from '@/store/useGame'
 import { GameRoot } from '@/types/ATG/Game'
@@ -37,7 +37,7 @@ const Home = () => {
       {data && <RaceTab gameData={data} />}
       <GameSelector isOpen={gameSelectorOpen} onClose={() => setGameSelectorOpen(false)} />
       <Filter isOpen={filterOpen} onClose={() => setfilterOpen(false)} />
-      <SpeedDial>
+      <ButtonGroup>
         <Icon
           variant="shadow"
           icon={RiCalendarLine}
@@ -50,7 +50,7 @@ const Home = () => {
           className="cursor-pointer"
           onClick={() => setfilterOpen(true)}
         />
-      </SpeedDial>
+      </ButtonGroup>
     </Flex>
   )
 }

@@ -31,11 +31,11 @@ interface HomeTrack {
 }
 
 interface Results {
-  records: Record[]
+  records: RecordResult[]
   hasMoreRecords: boolean
 }
 
-interface Record {
+export interface RecordResult {
   date: string
   link: boolean
   kmTime: KmTime

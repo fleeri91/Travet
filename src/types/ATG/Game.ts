@@ -1,3 +1,5 @@
+import { RecordResult } from './Record'
+
 export interface GameRoot {
   id: string
   status: string
@@ -35,7 +37,7 @@ interface Value {
   amount: number
 }
 
-interface Start {
+export interface Start {
   number: number
   postPosition: number
   distance: number
@@ -44,6 +46,7 @@ interface Start {
   scratched?: boolean
   out?: boolean
   pools: Pools
+  records: RecordResult[]
 }
 
 interface Horse {

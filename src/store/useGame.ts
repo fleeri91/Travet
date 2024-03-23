@@ -1,17 +1,18 @@
 import { create } from 'zustand'
 
-import { GameType } from '@/constants/GameType'
-
 type GameState = {
-  gameType?: GameType
+  gameId: string
 }
 
-type GameActions = {}
+type GameActions = {
+  setGameId: (id: string) => void
+}
 
 const initialState: GameState = {
-  gameType: undefined,
+  gameId: '',
 }
 
 export const useGameStore = create<GameState & GameActions>((set) => ({
   ...initialState,
+  setGameId: (value: string) => set((state) => ({ ...state, gameId: value })),
 }))

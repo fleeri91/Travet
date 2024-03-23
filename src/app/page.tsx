@@ -23,10 +23,6 @@ const Home = () => {
 
   const { data, isLoading } = useSWR<GameRoot>(gameId ? `game/?id=${gameId}` : null)
 
-  useEffect(() => {
-    gameId && console.log(gameId)
-  }, [gameId])
-
   return (
     <Flex flexDirection="row" className="mx-auto mt-16 max-w-screen-md gap-2">
       {data && <RaceTab gameData={data} />}

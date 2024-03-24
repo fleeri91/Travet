@@ -10,6 +10,7 @@ import RaceInfoCard from '@/components/RaceInfoCard'
 import { GameRoot } from '@/types/ATG/Game'
 import ButtonGroup from '../ButtonGroup'
 import { useModalsStore } from '@/store/useModals'
+import { useThemeStore } from '@/store/useTheme'
 
 interface RaceTabProps {
   gameData: GameRoot
@@ -19,6 +20,7 @@ const RaceTab = ({ gameData }: RaceTabProps) => {
   const [raceIndex, setRaceIndex] = useState<number>(0)
 
   const { setFilterOpen, setGameSelectorOpen } = useModalsStore()
+  const { theme } = useThemeStore()
 
   return (
     <Flex className="gap-2">
@@ -63,12 +65,14 @@ const RaceTab = ({ gameData }: RaceTabProps) => {
       <Flex className="mt-auto h-full flex-1" justifyContent="center" alignItems="end">
         <ButtonGroup>
           <Icon
+            color={theme}
             variant="shadow"
             icon={RiCalendarLine}
             className="cursor-pointer"
             onClick={() => setGameSelectorOpen(true)}
           />
           <Icon
+            color={theme}
             variant="shadow"
             icon={RiFilter3Line}
             className="cursor-pointer"

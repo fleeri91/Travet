@@ -7,7 +7,10 @@ const ButtonGroup = ({
   className,
   ...htmlAttributes
 }: ButtonGroupProps): JSX.Element | null => (
-  <div className="group flex flex-col gap-2" {...htmlAttributes}>
+  <div
+    className="group fixed bottom-0 right-0 flex flex-col gap-2 p-4 xl:relative"
+    {...htmlAttributes}
+  >
     {children}
   </div>
 )

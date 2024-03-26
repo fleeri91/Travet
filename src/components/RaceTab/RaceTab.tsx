@@ -23,7 +23,7 @@ const RaceTab = ({ gameData }: RaceTabProps) => {
   const { theme } = useThemeStore()
 
   return (
-    <Flex className="gap-2">
+    <Flex className="lg:gap-2">
       <TabGroup>
         <TabList
           defaultValue="1"
@@ -38,10 +38,12 @@ const RaceTab = ({ gameData }: RaceTabProps) => {
                   key={index}
                   onClick={() => setRaceIndex(index)}
                   className={clsx(
-                    'w-full max-w-[initial] select-none justify-center rounded-lg border-none py-2.5 text-sm font-medium uppercase leading-5 focus:outline-none'
+                    'w-full max-w-[initial] select-none justify-center rounded-lg border-none py-1.5 text-sm font-medium uppercase leading-5 focus:outline-none md:py-2.5'
                   )}
                 >
-                  <Text className="text-theme-600">{gameData.type + ':' + (index + 1)}</Text>
+                  <Text className="text-xs text-theme-600 md:text-sm">
+                    {gameData.type + ':' + (index + 1)}
+                  </Text>
                 </Tab>
               )
             })}
@@ -51,7 +53,7 @@ const RaceTab = ({ gameData }: RaceTabProps) => {
             gameData.races.map((race, index) => (
               <TabPanel key={index}>
                 <RaceInfoCard race={gameData.races[raceIndex]} />
-                <Card>
+                <Card className="px-4 py-2 md:p-4">
                   <RaceFilterTable
                     game={gameData}
                     race={gameData.races[raceIndex]}

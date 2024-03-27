@@ -22,7 +22,7 @@ const RootLayout = ({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <main>
+        <main className="flex justify-center">
           <ThemeProvider>
             <SWRProvider>{children}</SWRProvider>
           </ThemeProvider>

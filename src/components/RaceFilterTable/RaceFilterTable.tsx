@@ -77,7 +77,6 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
           )
 
           let handicap = currentStart.distance - currentRace.distance
-          console.log(handicap)
 
           const renderDataRow = () => (
             <TableRow

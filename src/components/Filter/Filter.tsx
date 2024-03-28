@@ -70,6 +70,7 @@ const Filter = ({ isOpen, onClose }: FilterProps): JSX.Element => {
             placeholder="Specifik distans"
             value={filterState.specificDistance != null ? filterState.specificDistance : ''}
             onChange={handleSpecificDistanceChange}
+            min={0}
           />
         )}
         <Switch

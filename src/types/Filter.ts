@@ -2,6 +2,7 @@ export type FilterType = {
   shoes: boolean
   sulky: boolean
   distance: boolean
+  specificDistance?: string
   money: boolean
   top: boolean
   track: boolean

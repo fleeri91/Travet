@@ -112,8 +112,13 @@ export const _recordFilter = (
         filterConditions && record.start.horse.sulky?.type?.text === start.horse?.sulky?.type?.text
     }
     if (distance) {
-      filterConditions =
-        filterConditions && (record.start.distance ?? 0) >= (race.distance ?? 0) - 200
+      if (filter.specificDistance && filter.specificDistance !== '') {
+        filterConditions =
+          filterConditions && (record.start.distance ?? 0) >= parseInt(filter.specificDistance)
+      } else {
+        filterConditions =
+          filterConditions && (record.start.distance ?? 0) >= (race.distance ?? 0) - 200
+      }
     }
     if (money) {
       if (race.prize !== null) {

@@ -1,8 +1,6 @@
-import { useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 
-import { Button, Flex, Icon } from '@tremor/react'
-
-import { RiFilter3Line } from '@remixicon/react'
+import { Button, Flex, Icon, NumberInput } from '@tremor/react'
 
 import Modal from '@/components/Modal'
 import Switch from '@/components/Switch'
@@ -18,7 +16,6 @@ interface FilterProps {
 
 const Filter = ({ isOpen, onClose }: FilterProps): JSX.Element => {
   const { filter, setFilter } = useFilterStore()
-
   const [filterState, setFilterState] = useState<FilterType>(filter)
 
   const toggleFilter = (key: keyof FilterType) => {
@@ -28,12 +25,21 @@ const Filter = ({ isOpen, onClose }: FilterProps): JSX.Element => {
     }))
   }
 
+  const handleSpecificDistanceChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value
+    setFilterState((prevFilterState: FilterType) => ({
+      ...prevFilterState,
+      specificDistance: value,
+    }))
+  }
+
   const discardFilter = () => {
     setFilter(filter)
     onClose()
   }
 
   const applyFilter = () => {
+    console.log(filterState)
     setFilter(filterState)
     onClose()
   }
@@ -59,6 +65,13 @@ const Filter = ({ isOpen, onClose }: FilterProps): JSX.Element => {
           label="Distans"
           tooltip="Filtrera hästens resultat på loppets aktuella distans"
         />
+        {filterState.distance && (
+          <NumberInput
+            placeholder="Specifik distans"
+            value={filterState.specificDistance != null ? filterState.specificDistance : ''}
+            onChange={handleSpecificDistanceChange}
+          />
+        )}
         <Switch
           onChange={() => toggleFilter('money')}
           value={filter.money}

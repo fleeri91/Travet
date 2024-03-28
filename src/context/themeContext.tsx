@@ -9,8 +9,6 @@ import { gameTypeColor } from '@/utils/theme'
 
 import { GameType } from '@/constants/GameType'
 
-const DEFAULT_THEME = 'default'
-
 interface ThemeContextProps {}
 
 const ThemeContext = createContext<ThemeContextProps>({})

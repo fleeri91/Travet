@@ -16,6 +16,8 @@ import {
 } from '@tremor/react'
 import { RiInformationLine } from '@remixicon/react'
 
+import HandicapRow from './HandicapRow'
+
 import { useFilterStore } from '@/store/useFilter'
 
 import { GameRoot, Race, Start } from '@/types/ATG/Game'
@@ -30,8 +32,7 @@ interface RaceFilterTableProps {
 
 const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.Element | null => {
   const { filter } = useFilterStore()
-
-  const handicaps: number[] = []
+  const renderedHandicaps: { [key: number]: boolean } = {}
 
   return (
     <Table className="w-full select-none">
@@ -76,21 +77,8 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
           )
 
           let handicap = currentStart.distance - currentRace.distance
+          console.log(handicap)
 
-          const renderHandicapRow = () => {
-            if (!handicaps.includes(handicap) && handicap !== 0) {
-              handicaps.push(handicap)
-
-              return (
-                <TableRow>
-                  <TableCell className="w-full bg-gray-600 text-white" colSpan={12}>
-                    <Text>{`Tillägg: ${handicap} meter`}</Text>
-                  </TableCell>
-                </TableRow>
-              )
-            }
-            return null
-          }
           const renderDataRow = () => (
             <TableRow
               key={startIndex}
@@ -150,9 +138,17 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
             </TableRow>
           )
 
+          const renderHandicapRow = () => {
+            if (handicap > 0 && !renderedHandicaps[handicap]) {
+              renderedHandicaps[handicap] = true
+              return <HandicapRow handicap={handicap} />
+            }
+            return null
+          }
+
           return (
             <Fragment key={startIndex}>
-              {currentStart && currentRace.startMethod === 'volte' && renderHandicapRow()}
+              {renderHandicapRow()}
               {renderDataRow()}
             </Fragment>
           )

@@ -88,15 +88,25 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
             >
               <TableCell className="space-x-2 py-2">
                 <Flex justifyContent="start" className="space-x-2">
-                  {currentStart.number && <Text>{currentStart.number}</Text>}
-                  {currentStart.horse.name && <Text>{currentStart.horse.name}</Text>}
+                  {currentStart.number && (
+                    <Text className={clsx(start.scratched && 'text-gray-300')}>
+                      {currentStart.number}
+                    </Text>
+                  )}
+                  {currentStart.horse.name && (
+                    <Text className={clsx(start.scratched && 'text-gray-300')}>
+                      {currentStart.horse.name}
+                    </Text>
+                  )}
                   {currentStart && currentStart.horse.nationality && (
-                    <Text>{'(' + currentStart.horse.nationality + ')'}</Text>
+                    <Text className={clsx(start.scratched && 'text-gray-300')}>
+                      {'(' + currentStart.horse.nationality + ')'}
+                    </Text>
                   )}
                   {currentStart && currentStart.horse.sex && (
-                    <Text>{`${_getHorseSex(currentStart.horse.sex)}${
-                      currentStart.horse.age
-                    }`}</Text>
+                    <Text
+                      className={clsx(start.scratched && 'text-gray-300')}
+                    >{`${_getHorseSex(currentStart.horse.sex)}${currentStart.horse.age}`}</Text>
                   )}
                 </Flex>
               </TableCell>

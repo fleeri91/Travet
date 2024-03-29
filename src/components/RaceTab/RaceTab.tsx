@@ -64,7 +64,11 @@ const RaceTab = ({ gameData }: RaceTabProps) => {
             ))}
         </TabPanels>
       </TabGroup>
-      <Flex className="mt-auto h-full flex-1" justifyContent="center" alignItems="end">
+      <Flex
+        className="right-0 mt-auto h-full px-2 md:sticky md:bottom-2 md:px-0"
+        justifyContent="center"
+        alignItems="end"
+      >
         <ButtonGroup>
           <Icon
             color={theme}

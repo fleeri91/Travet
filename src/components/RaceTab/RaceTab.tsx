@@ -65,7 +65,7 @@ const RaceTab = ({ gameData }: RaceTabProps) => {
         </TabPanels>
       </TabGroup>
       <Flex
-        className="right-0 mt-auto h-full px-2 md:sticky md:bottom-2 md:px-0"
+        className="right-0 mt-auto h-full w-auto px-2 md:sticky md:bottom-2 md:px-0"
         justifyContent="center"
         alignItems="end"
       >

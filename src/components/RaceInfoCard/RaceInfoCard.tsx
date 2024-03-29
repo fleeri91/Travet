@@ -3,7 +3,7 @@
 import clsx from 'clsx'
 import { Card, Flex, Text } from '@tremor/react'
 
-import { _getTrackCondition } from '@/utils/atg'
+import { _getRaceStartMethod, _getTrackCondition } from '@/utils/atg'
 
 import { Race } from '@/types/ATG/Game'
 
@@ -18,7 +18,7 @@ const RaceInfoCard = ({ race }: RaceInfoCardProps) => {
         <Flex justifyContent="start" className="space-x-2 ">
           <Text className="text-white">{race.track.name}</Text>
           <Text className="text-white">{race.distance + 'm'}</Text>
-          <Text className="text-white">{race.startMethod}</Text>
+          <Text className="text-white">{_getRaceStartMethod(race.startMethod)}</Text>
         </Flex>
       )}
       <Flex>

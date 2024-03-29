@@ -34,3 +34,14 @@ export const _getTrackCondition = (condition: string) => {
       return ''
   }
 }
+
+export const _getRaceStartMethod = (method: string) => {
+  switch (method) {
+    case 'auto':
+      return 'Auto'
+    case 'volte':
+      return 'Volt'
+    default:
+      break
+  }
+}

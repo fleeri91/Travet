@@ -13,12 +13,14 @@ import {
   TableHead,
   TableHeaderCell,
   TableRow,
+  Subtitle,
 } from '@tremor/react'
 import { RiInformationLine } from '@remixicon/react'
 
 import HandicapRow from './HandicapRow'
 
 import { useFilterStore } from '@/store/useFilter'
+import { useThemeStore } from '@/store/useTheme'
 
 import { GameRoot, Race, Start } from '@/types/ATG/Game'
 import { _getHorseSex } from '@/utils/atg'
@@ -32,28 +34,31 @@ interface RaceFilterTableProps {
 
 const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.Element | null => {
   const { filter } = useFilterStore()
+  const { theme } = useThemeStore()
   const renderedHandicaps: { [key: number]: boolean } = {}
 
   return (
     <Table className="w-full select-none">
       <TableHead>
         <TableRow>
-          <TableHeaderCell className="w-6/12">Namn</TableHeaderCell>
-          <TableHeaderCell className="w-2/12 ">
+          <TableHeaderCell className="w-6/12">
+            <Subtitle>Namn</Subtitle>
+          </TableHeaderCell>
+          <TableHeaderCell className="w-1/12 ">
             <Flex justifyContent="start">
-              <Text>Tid</Text>
+              <Subtitle>Tid</Subtitle>
               <Icon tooltip={'Filtrerat resultat'} icon={RiInformationLine} />
             </Flex>
           </TableHeaderCell>
-          <TableHeaderCell className="w-2/12 ">
+          <TableHeaderCell className="w-[210px]">
             <Flex justifyContent="start">
-              <Text>Form</Text>
+              <Subtitle>Form</Subtitle>
               <Icon tooltip={'Hästens form senaste 3 månaderna'} icon={RiInformationLine} />
             </Flex>
           </TableHeaderCell>
-          <TableHeaderCell className="w-2/12 ">
+          <TableHeaderCell className="w-[210px]">
             <Flex justifyContent="start">
-              <Text>Gallopp</Text>
+              <Subtitle>Gallopp</Subtitle>
               <Icon tooltip={'Gallopp senaste 5 starter'} icon={RiInformationLine} />
             </Flex>
           </TableHeaderCell>
@@ -83,38 +88,36 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
               key={startIndex}
               className={clsx(
                 currentStart && currentStart.scratched && 'text-gray-300 line-through',
-                '!border-gray-100 even:bg-theme-50'
+                'table-fixed !border-gray-100 even:bg-theme-50	'
               )}
             >
               <TableCell className="space-x-2 py-2">
-                <Flex justifyContent="start" className="space-x-2">
-                  {currentStart.number && (
-                    <Text className={clsx(start.scratched && 'text-gray-300')}>
-                      {currentStart.number}
-                    </Text>
-                  )}
-                  {currentStart.horse.name && (
-                    <Text className={clsx(start.scratched && 'text-gray-300')}>
-                      {currentStart.horse.name}
-                    </Text>
-                  )}
-                  {currentStart && currentStart.horse.nationality && (
-                    <Text className={clsx(start.scratched && 'text-gray-300')}>
-                      {'(' + currentStart.horse.nationality + ')'}
-                    </Text>
-                  )}
-                  {currentStart && currentStart.horse.sex && (
-                    <Text
-                      className={clsx(start.scratched && 'text-gray-300')}
-                    >{`${_getHorseSex(currentStart.horse.sex)}${currentStart.horse.age}`}</Text>
-                  )}
+                <Flex justifyContent="start">
+                  <Text className={clsx(start.scratched && 'text-gray-300', 'space-x-2')}>
+                    <Badge color={theme} className="w-[25px]">
+                      {currentStart.number && currentStart.number}
+                    </Badge>
+                    <span>{currentStart.horse.name && currentStart.horse.name}</span>
+                    <span>
+                      {currentStart &&
+                        currentStart.horse.nationality &&
+                        '(' + currentStart.horse.nationality + ')'}
+                    </span>
+                    <span>
+                      {currentStart &&
+                        currentStart.horse.sex &&
+                        `${_getHorseSex(currentStart.horse.sex)}${currentStart.horse.age}`}
+                    </span>
+                  </Text>
                 </Flex>
               </TableCell>
               {records && (
-                <TableCell className="py-2">{_getStartRecord(filteredRecords)}</TableCell>
+                <TableCell className="max-w-[50px] py-2">
+                  <Text>{_getStartRecord(filteredRecords)}</Text>
+                </TableCell>
               )}
               {records && (
-                <TableCell className="space-x-2 py-2">
+                <TableCell className="min-w-[210px] space-x-2 py-2">
                   {_getStartForm(records).map((record: any, index: number) => (
                     <Badge
                       key={index}
@@ -131,18 +134,17 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
                   ))}
                 </TableCell>
               )}
-              <TableCell className="space-x-2 py-2">
-                {_getGallopp(records, currentRace.startMethod).map((record: any, index: number) =>
-                  record.start.postPosition === currentStart.postPosition ? (
-                    <Badge key={index} color={'red'}>
-                      !!
-                    </Badge>
-                  ) : (
-                    <Badge key={index} color={'yellow'}>
-                      !
-                    </Badge>
-                  )
-                )}
+              <TableCell className="min-w-[210px] space-x-2 py-2">
+                {_getGallopp(records, currentRace.startMethod).map((record: any, index: number) => (
+                  <Badge
+                    key={index}
+                    color={
+                      record.start.postPosition === currentStart.postPosition ? 'red' : 'yellow'
+                    }
+                  >
+                    {record.disqualified ? `D` : record.galloped ? `G` : ``}
+                  </Badge>
+                ))}
               </TableCell>
             </TableRow>
           )

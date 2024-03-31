@@ -15,18 +15,20 @@ const RaceInfoCard = ({ race }: RaceInfoCardProps) => {
   return (
     <Card className={clsx('mb-2 select-none bg-theme-600 text-white')}>
       {race && (
-        <Flex justifyContent="start" className="space-x-2 ">
-          <Text className="text-white">{race.track.name}</Text>
-          <Text className="text-white">{race.distance + 'm'}</Text>
-          <Text className="text-white">{_getRaceStartMethod(race.startMethod)}</Text>
+        <Flex justifyContent="start">
+          <Text className="space-x-2 text-sm text-white md:text-base">
+            <span>{race.track.name}</span>
+            <span>{race.distance + 'm'}</span>
+            <span>{_getRaceStartMethod(race.startMethod)}</span>
+          </Text>
         </Flex>
       )}
       <Flex>
         {race && race.track.condition && (
-          <Text className="text-white">{`Banförhållande: ${_getTrackCondition(race.track.condition)}`}</Text>
+          <Text className="text-xs  text-white md:text-sm">{`Banförhållande: ${_getTrackCondition(race.track.condition)}`}</Text>
         )}
       </Flex>
-      <Flex>{race && <Text className="text-white">{race.name}</Text>}</Flex>
+      <Flex>{race && <Text className="text-xs  text-white md:text-sm">{race.name}</Text>}</Flex>
     </Card>
   )
 }

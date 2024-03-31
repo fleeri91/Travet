@@ -41,7 +41,7 @@ const RaceTab = ({ gameData }: RaceTabProps) => {
                     'w-full max-w-[initial] select-none justify-center rounded-lg border-none py-1.5 text-sm font-medium uppercase leading-5 focus:outline-none md:py-2.5'
                   )}
                 >
-                  <Text className="text-xs text-theme-600 md:text-sm">
+                  <Text className="text-xs font-bold text-theme-600 md:text-sm">
                     {gameData.type + ':' + (index + 1)}
                   </Text>
                 </Tab>

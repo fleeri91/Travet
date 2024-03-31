@@ -23,6 +23,8 @@ import { useFilterStore } from '@/store/useFilter'
 import { useThemeStore } from '@/store/useTheme'
 
 import { GameRoot, Race, Start } from '@/types/ATG/Game'
+import { FormType } from '@/types/Filter'
+
 import { _getHorseSex } from '@/utils/atg'
 import { _getGallopp, _getStartForm, _getStartRecord, _recordFilter } from '@/utils/filter'
 
@@ -35,6 +37,7 @@ interface RaceFilterTableProps {
 const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.Element | null => {
   const { filter } = useFilterStore()
   const { theme } = useThemeStore()
+
   const renderedHandicaps: { [key: number]: boolean } = {}
 
   return (
@@ -118,18 +121,18 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
               )}
               {records && (
                 <TableCell className="min-w-[210px] space-x-2 py-2">
-                  {_getStartForm(records).map((record: any, index: number) => (
+                  {_getStartForm(records).map((record: FormType, index: number) => (
                     <Badge
                       key={index}
                       color={
-                        record.place === '0' || record.place > '5'
+                        record.disqualified || record.place === '0' || record.place > '5'
                           ? 'red'
                           : record.place >= '4' && record.place <= '6'
                             ? 'gray'
                             : 'green'
                       }
                     >
-                      {record.place}
+                      {record.disqualified ? 'D' : record.place}
                     </Badge>
                   ))}
                 </TableCell>

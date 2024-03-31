@@ -15,4 +15,5 @@ export type FilterType = {
 export interface FormType {
   place: string | number
   galloped: boolean
+  disqualified: boolean
 }

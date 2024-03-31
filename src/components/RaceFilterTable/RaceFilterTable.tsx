@@ -90,7 +90,7 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
           const renderDataRow = () => (
             <TableRow
               key={startIndex}
-              className={clsx('table-fixed !border-gray-100 even:bg-theme-50')}
+              className={clsx('table-fixed !border-none even:bg-theme-50 dark:even:bg-slate-800')}
             >
               <TableCell className="space-x-2 py-2">
                 <Flex justifyContent="start">

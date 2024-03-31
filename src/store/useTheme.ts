@@ -13,7 +13,7 @@ type ThemeActions = {
 }
 
 const initialState: ThemeState = {
-  darkMode: false,
+  darkMode: true,
   theme: 'neutral',
 }
 

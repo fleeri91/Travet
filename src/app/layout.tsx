@@ -26,7 +26,7 @@ const RootLayout = ({
   return (
     <html lang="en">
       <body className={`${TitilliumWeb.className}`}>
-        <main className="flex justify-center">
+        <main className="flex justify-center ">
           <ThemeProvider>
             <SWRProvider>{children}</SWRProvider>
           </ThemeProvider>

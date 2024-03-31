@@ -10,7 +10,7 @@ const config: Config = {
     // Path to Tremor module
     './node_modules/@tremor/**/*.{js,ts,jsx,tsx}',
   ],
-  darkMode: 'class',
+  darkMode: 'selector',
   theme: {
     transparent: 'transparent',
     current: 'currentColor',

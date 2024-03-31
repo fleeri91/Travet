@@ -20,8 +20,12 @@ export const _getStartForm = (records: RecordResult[]): FormType[] => {
   )
 
   for (let i = 0; i < filteredRecords.length; i++) {
-    if (records[i].place !== undefined) {
-      lastFive.push({ place: records[i].place, galloped: records[i].galloped })
+    if (records[i].place || records[i].galloped || records[i].disqualified) {
+      lastFive.push({
+        place: records[i].place,
+        galloped: records[i].galloped,
+        disqualified: records[i].disqualified,
+      })
     }
   }
 

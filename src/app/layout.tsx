@@ -1,11 +1,15 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Titillium_Web } from 'next/font/google'
 import './globals.css'
 
 import { SWRProvider } from '@/providers/SWRProvider'
 import { ThemeProvider } from '@/context/themeContext'
 
-const inter = Inter({ subsets: ['latin'] })
+const TitilliumWeb = Titillium_Web({
+  subsets: ['latin'],
+  weight: ['200', '300', '400', '600', '700', '900'],
+  variable: '--font-source-code-pro',
+})
 
 export const metadata: Metadata = {
   title: 'Travet',
@@ -21,7 +25,7 @@ const RootLayout = ({
 }>) => {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${TitilliumWeb.className}`}>
         <main className="flex justify-center">
           <ThemeProvider>
             <SWRProvider>{children}</SWRProvider>

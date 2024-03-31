@@ -44,10 +44,11 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
     <Table className="w-full select-none">
       <TableHead>
         <TableRow>
-          <TableHeaderCell className="w-6/12">
+          <TableHeaderCell className="w-3/12">
             <Subtitle>Namn</Subtitle>
           </TableHeaderCell>
-          <TableHeaderCell className="w-1/12 ">
+          <TableHeaderCell className="w-2/12" />
+          <TableHeaderCell className="w-1/12">
             <Flex justifyContent="start">
               <Subtitle>Tid</Subtitle>
               <Icon tooltip={'Filtrerat resultat'} icon={RiInformationLine} />
@@ -89,14 +90,13 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
           const renderDataRow = () => (
             <TableRow
               key={startIndex}
-              className={clsx(
-                currentStart && currentStart.scratched && 'text-gray-300 line-through',
-                'table-fixed !border-gray-100 even:bg-theme-50	'
-              )}
+              className={clsx('table-fixed !border-gray-100 even:bg-theme-50')}
             >
               <TableCell className="space-x-2 py-2">
                 <Flex justifyContent="start">
-                  <Text className={clsx(start.scratched && 'text-gray-300', 'space-x-2')}>
+                  <Text
+                    className={clsx(start.scratched && 'text-gray-300 line-through', 'space-x-2')}
+                  >
                     <Badge color={theme} className="w-[25px]">
                       {currentStart.number && currentStart.number}
                     </Badge>
@@ -113,6 +113,9 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
                     </span>
                   </Text>
                 </Flex>
+              </TableCell>
+              <TableCell className="py-2">
+                {start.scratched && <Badge color={'neutral'}>STRUKEN</Badge>}
               </TableCell>
               {records && (
                 <TableCell className="max-w-[50px] py-2">

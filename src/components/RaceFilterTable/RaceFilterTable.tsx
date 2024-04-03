@@ -115,7 +115,11 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
                 </Flex>
               </TableCell>
               <TableCell className="py-2">
-                {start.scratched && <Badge color={'neutral'}>STRUKEN</Badge>}
+                {start.scratched && (
+                  <Badge color={'neutral'} className="font-semibold uppercase">
+                    Struken
+                  </Badge>
+                )}
               </TableCell>
               {records && (
                 <TableCell className="max-w-[50px] py-2">

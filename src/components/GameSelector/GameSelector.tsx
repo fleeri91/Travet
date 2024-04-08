@@ -88,7 +88,12 @@ const GameSelector = ({}): JSX.Element | null => {
             <Icon color={'neutral'} icon={RiArrowRightSLine} />
           </IconButton>
         </Flex>
-        <Flex flexDirection="row" justifyContent="start" alignItems="center">
+        <Flex
+          flexDirection="row"
+          justifyContent="start"
+          alignItems="center"
+          className="scroll-x-fade relative"
+        >
           <GameTypeSelect games={games} />
         </Flex>
         <Flex flexDirection="col" className="gap-2">

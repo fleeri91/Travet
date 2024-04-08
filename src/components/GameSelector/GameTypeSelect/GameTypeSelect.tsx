@@ -11,7 +11,7 @@ const GameTypeSelect = ({ games }: { games: [string, Game[]][] }): JSX.Element |
     <RadioGroup
       value={selected}
       onChange={setSelected}
-      className="inline-flex w-full gap-2"
+      className="no-scrollbar relative inline-flex w-full gap-2 overflow-x-scroll py-2 "
       id="game-type-selector"
     >
       <RadioGroup.Label className="sr-only">Speltyp</RadioGroup.Label>

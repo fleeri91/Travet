@@ -7,19 +7,16 @@ import { GameType } from '@/constants/GameType'
 
 interface GameTypeSelectProps {
   games: [string, Game[]][]
-  setSelectedGameType: (value: string) => void
+  onSelectedGameType: (value: string) => void
 }
 
-const GameTypeSelect = ({
-  games,
-  setSelectedGameType,
-}: GameTypeSelectProps): JSX.Element | null => {
+const GameTypeSelect = ({ games, onSelectedGameType }: GameTypeSelectProps): JSX.Element | null => {
   const [selected, setSelected] = useState(games[0][0])
 
   useEffect(() => {
     if (games) {
       setSelected(games[0][0])
-      setSelectedGameType(games[0][0])
+      onSelectedGameType(games[0][0])
     }
   }, [games])
 
@@ -35,7 +32,7 @@ const GameTypeSelect = ({
         <RadioGroup.Option
           key={gameType}
           value={gameType}
-          onClick={() => setSelectedGameType(gameType as GameType)}
+          onClick={() => onSelectedGameType(gameType)}
           className={({ active, checked }) =>
             `${active ? 'ring-2 ring-white/60 ring-offset-2 ring-offset-sky-300' : ''}
                   ${checked ? 'text-white' : 'bg-slate-300'}

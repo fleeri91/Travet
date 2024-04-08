@@ -96,7 +96,7 @@ const GameSelector = ({}): JSX.Element | null => {
           alignItems="center"
           className="scroll-x-fade relative"
         >
-          <GameTypeSelect games={games} setSelectedGameType={setSelectedGameType} />
+          <GameTypeSelect games={games} onSelectedGameType={setSelectedGameType} />
         </Flex>
         <Flex flexDirection="col" className="gap-2">
           {games &&

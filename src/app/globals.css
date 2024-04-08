@@ -96,6 +96,68 @@
   }
 }
 
+@layer components {
+  #game-type-selector div[data-theme='V75'][data-headlessui-state='checked'],
+  #game-type-selector div[data-theme='V75'][data-headlessui-state='checked active'] {
+    @apply !bg-blue-500;
+  }
+  #game-type-selector div[data-theme='V75'] {
+    @apply hover:!bg-blue-500;
+  }
+
+  #game-type-selector div[data-theme='GS75'][data-headlessui-state='checked'],
+  #game-type-selector div[data-theme='GS75'][data-headlessui-state='checked active'] {
+    @apply !bg-emerald-500;
+  }
+  #game-type-selector div[data-theme='GS75'] {
+    @apply hover:!bg-emerald-500;
+  }
+
+  #game-type-selector div[data-theme='V86'][data-headlessui-state='checked'],
+  #game-type-selector div[data-theme='V86'][data-headlessui-state='checked active'] {
+    @apply !bg-purple-500;
+  }
+  #game-type-selector div[data-theme='V86'] {
+    @apply hover:!bg-purple-500;
+  }
+
+  #game-type-selector div[data-theme='V64'][data-headlessui-state='checked'],
+  #game-type-selector div[data-theme='V64'][data-headlessui-state='checked active'] {
+    @apply !bg-orange-500;
+  }
+  #game-type-selector div[data-theme='V64'] {
+    @apply hover:!bg-orange-500;
+  }
+
+  #game-type-selector div[data-theme='V65'][data-headlessui-state='checked'],
+  #game-type-selector div[data-theme='V65'][data-headlessui-state='checked active'] {
+    @apply !bg-red-500;
+  }
+  #game-type-selector div[data-theme='V65'] {
+    @apply hover:!bg-red-500;
+  }
+
+  #game-type-selector div[data-theme='dd'][data-headlessui-state='checked'],
+  #game-type-selector div[data-theme='dd'][data-headlessui-state='checked active'],
+  #game-type-selector div[data-theme='ld'][data-headlessui-state='checked'],
+  #game-type-selector div[data-theme='ld'][data-headlessui-state='checked active'],
+  #game-type-selector div[data-theme='V5'][data-headlessui-state='checked'],
+  #game-type-selector div[data-theme='V5'][data-headlessui-state='checked active'],
+  #game-type-selector div[data-theme='V4'][data-headlessui-state='checked'],
+  #game-type-selector div[data-theme='V4'][data-headlessui-state='checked active'],
+  #game-type-selector div[data-theme='V3'][data-headlessui-state='checked'],
+  #game-type-selector div[data-theme='V3'][data-headlessui-state='checked active'] {
+    @apply !bg-sky-400;
+  }
+  #game-type-selector div[data-theme='dd'],
+  #game-type-selector div[data-theme='ld'],
+  #game-type-selector div[data-theme='V5'],
+  #game-type-selector div[data-theme='V4'],
+  #game-type-selector div[data-theme='V3'] {
+    @apply hover:!bg-sky-400;
+  }
+}
+
 @layer utilites {
   .no-scrollbar::-webkit-scrollbar {
     display: none;

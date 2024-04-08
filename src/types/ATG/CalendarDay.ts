@@ -26,19 +26,6 @@ interface Games {
   [key: string]: Game[]
 }
 
-/*
-export type GameTypes =
-  | 'V75'
-  | 'GS75'
-  | 'V86'
-  | 'V64'
-  | 'V65'
-  | 'V5'
-  | 'V4'
-  | 'V3'
-  | 'dd';
-*/
-
 export interface Game {
   id: string
   status: string

@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 import dayjs from 'dayjs'
 import sv from 'dayjs/locale/sv'
@@ -35,6 +35,8 @@ const GameSelector = ({}): JSX.Element | null => {
   } = useCalendarStore()
   const { setGameId } = useGameStore()
   const { gameSelectorOpen, setGameSelectorOpen } = useModalsStore()
+
+  const [selectedGameType, setSelectedGameType] = useState<string | null>(null)
 
   const { data, isLoading } = useSWR<CalendarDayRoot>(selectedDate ? `day/${selectedDate}` : null)
 
@@ -94,23 +96,25 @@ const GameSelector = ({}): JSX.Element | null => {
           alignItems="center"
           className="scroll-x-fade relative"
         >
-          <GameTypeSelect games={games} />
+          <GameTypeSelect games={games} setSelectedGameType={setSelectedGameType} />
         </Flex>
         <Flex flexDirection="col" className="gap-2">
           {games &&
-            games.map(([gameType, gamesArray], index) => (
-              <GameCard
-                key={index}
-                gameType={gameType as GameType}
-                tracks={gamesArray[0].tracks}
-                time={gamesArray[0].scheduledStartTime}
-                status={gamesArray[0].status}
-                onClick={() => {
-                  setGameId(gamesArray[0].id)
-                  setGameSelectorOpen(false)
-                }}
-              />
-            ))}
+            games
+              .filter(([gameType]) => gameType == selectedGameType)
+              .map(([gameType, gamesArray], index) => (
+                <GameCard
+                  key={index}
+                  gameType={gameType as GameType}
+                  tracks={gamesArray[0].tracks}
+                  time={gamesArray[0].scheduledStartTime}
+                  status={gamesArray[0].status}
+                  onClick={() => {
+                    setGameId(gamesArray[0].id)
+                    setGameSelectorOpen(false)
+                  }}
+                />
+              ))}
         </Flex>
       </Flex>
     </Modal>

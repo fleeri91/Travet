@@ -1,17 +1,33 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { RadioGroup } from '@headlessui/react'
 import { Flex } from '@tremor/react'
 import { Game } from '@/types/ATG/CalendarDay'
+import { GameType } from '@/constants/GameType'
 
-const GameTypeSelect = ({ games }: { games: [string, Game[]][] }): JSX.Element | null => {
+interface GameTypeSelectProps {
+  games: [string, Game[]][]
+  setSelectedGameType: (value: string) => void
+}
+
+const GameTypeSelect = ({
+  games,
+  setSelectedGameType,
+}: GameTypeSelectProps): JSX.Element | null => {
   const [selected, setSelected] = useState(games[0][0])
+
+  useEffect(() => {
+    if (games) {
+      setSelected(games[0][0])
+      setSelectedGameType(games[0][0])
+    }
+  }, [games])
 
   return (
     <RadioGroup
       value={selected}
       onChange={setSelected}
-      className="no-scrollbar relative inline-flex w-full gap-2 overflow-x-scroll py-2 "
+      className="no-scrollbar relative inline-flex w-full gap-2 overflow-x-scroll p-2 "
       id="game-type-selector"
     >
       <RadioGroup.Label className="sr-only">Speltyp</RadioGroup.Label>
@@ -19,6 +35,7 @@ const GameTypeSelect = ({ games }: { games: [string, Game[]][] }): JSX.Element |
         <RadioGroup.Option
           key={gameType}
           value={gameType}
+          onClick={() => setSelectedGameType(gameType as GameType)}
           className={({ active, checked }) =>
             `${active ? 'ring-2 ring-white/60 ring-offset-2 ring-offset-sky-300' : ''}
                   ${checked ? 'text-white' : 'bg-slate-300'}
@@ -26,15 +43,13 @@ const GameTypeSelect = ({ games }: { games: [string, Game[]][] }): JSX.Element |
           }
           data-theme={gameType}
         >
-          {({ active, checked }) => (
+          <Flex>
             <Flex>
-              <Flex>
-                <RadioGroup.Label as="p" className={`font-medium text-white transition-all`}>
-                  {gameType}
-                </RadioGroup.Label>
-              </Flex>
+              <RadioGroup.Label as="p" className={`font-medium text-white transition-all`}>
+                {gameType}
+              </RadioGroup.Label>
             </Flex>
-          )}
+          </Flex>
         </RadioGroup.Option>
       ))}
     </RadioGroup>

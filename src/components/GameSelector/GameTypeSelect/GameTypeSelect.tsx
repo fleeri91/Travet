@@ -23,23 +23,29 @@ const GameTypeSelect = ({ games, onSelectedGameType }: GameTypeSelectProps): JSX
     <RadioGroup
       value={selected}
       onChange={setSelected}
-      className="no-scrollbar relative inline-flex w-full gap-2 overflow-x-scroll p-2 "
+      className="no-scrollbar relative inline-flex w-full gap-2 overflow-x-scroll py-2"
       id="game-type-selector"
     >
       <RadioGroup.Label className="sr-only">Speltyp</RadioGroup.Label>
-      {games.map(([gameType, _]) => (
+      {games.map(([gameType, gamesArray]) => (
         <RadioGroup.Option
           key={gameType}
           value={gameType}
           onClick={() => onSelectedGameType(gameType)}
           className={({ active, checked }) =>
-            `${active ? 'ring-2 ring-white/60 ring-offset-2 ring-offset-sky-300' : ''}
-                  ${checked ? 'text-white' : 'bg-slate-300'}
-                    group relative flex cursor-pointer rounded-lg px-3 py-2 uppercase shadow-md transition-all focus:outline-none sm:hover:scale-105`
+            `${checked ? 'text-white' : 'bg-slate-300'}
+              group relative flex cursor-pointer select-none rounded-lg border-none px-3 py-2 uppercase shadow-md transition-all focus:outline-none`
           }
           data-theme={gameType}
         >
           <Flex>
+            {gamesArray.length > 1 && (
+              <span className="absolute -right-2 -top-2 rounded-full bg-slate-600">
+                <span className="flex h-4 w-4 items-center justify-center text-xs text-white">
+                  {gamesArray.length}
+                </span>
+              </span>
+            )}
             <RadioGroup.Label as="p" className={`font-medium text-white transition-all`}>
               {gameType}
             </RadioGroup.Label>

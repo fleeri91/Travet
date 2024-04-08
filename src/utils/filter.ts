@@ -15,16 +15,21 @@ export const _getStartForm = (records: RecordResult[]): FormType[] => {
   const currentDate = dayjs()
   const currentDateThreeMonthsAgo = currentDate.subtract(3, 'months')
 
-  const filteredRecords = records.filter((record) =>
-    dayjs(record.date).isAfter(currentDateThreeMonthsAgo)
+  const filteredRecords = records.filter(
+    (record) =>
+      dayjs(record.date).isAfter(currentDateThreeMonthsAgo) && !(record.oddsCode === 'ejg')
   )
 
   for (let i = 0; i < filteredRecords.length; i++) {
-    if (records[i].place || records[i].galloped || records[i].disqualified) {
+    if (
+      filteredRecords[i].place ||
+      filteredRecords[i].galloped ||
+      filteredRecords[i].disqualified
+    ) {
       lastFive.push({
-        place: records[i].place,
-        galloped: records[i].galloped,
-        disqualified: records[i].disqualified,
+        place: filteredRecords[i].place,
+        galloped: filteredRecords[i].galloped,
+        disqualified: filteredRecords[i].disqualified,
       })
     }
   }

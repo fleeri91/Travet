@@ -22,6 +22,8 @@ export const gameTypeColor = (gameType: GameType): Color => {
       return 'red'
     case 'dd':
       return 'sky'
+    case 'ld':
+      return 'sky'
     case 'V5':
       return 'sky'
     case 'V4':

@@ -78,6 +78,7 @@
     --color-primary-950: #022c22;
   }
   html[data-theme='dd'],
+  html[data-theme='ld'],
   html[data-theme='V5'],
   html[data-theme='V4'],
   html[data-theme='V3'] {

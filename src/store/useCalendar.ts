@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import dayjs from 'dayjs'
 
-import { CalendarDayRoot } from '@/types/ATG/CalendarDay'
+import { CalendarDayRoot, Game } from '@/types/ATG/CalendarDay'
 
 type CalendarState = {
   today: string
@@ -9,6 +9,7 @@ type CalendarState = {
   calendarData: CalendarDayRoot
   biggestGame: string
   isLoading: boolean
+  games: [string, Game[]][]
 }
 
 type CalendarActions = {
@@ -17,6 +18,7 @@ type CalendarActions = {
   setCalendarData: (data: CalendarDayRoot) => void
   setBiggestGame: (value: string) => void
   setIsLoading: (value: boolean) => void
+  setGames: (value: [string, Game[]][]) => void
 }
 
 const initialState: CalendarState = {
@@ -25,6 +27,7 @@ const initialState: CalendarState = {
   calendarData: {} as CalendarDayRoot,
   biggestGame: '',
   isLoading: false,
+  games: [],
 }
 
 export const useCalendarStore = create<CalendarState & CalendarActions>((set) => ({
@@ -39,4 +42,5 @@ export const useCalendarStore = create<CalendarState & CalendarActions>((set) =>
   setCalendarData: (data: CalendarDayRoot) => set((state) => ({ ...state, calendarData: data })),
   setBiggestGame: (value: string) => set((state) => ({ ...state, biggestGame: value })),
   setIsLoading: (value: boolean) => set((state) => ({ ...state, isLoading: value })),
+  setGames: (value: [string, Game[]][]) => set((state) => ({ ...state, games: value })),
 }))

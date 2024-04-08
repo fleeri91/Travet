@@ -1,9 +1,8 @@
-import { Fragment, useEffect } from 'react'
+import { useEffect } from 'react'
 import useSWR from 'swr'
 import dayjs from 'dayjs'
 import sv from 'dayjs/locale/sv'
 
-import { Dialog, Transition } from '@headlessui/react'
 import { Flex, Icon, Subtitle } from '@tremor/react'
 import { RiArrowLeftSLine, RiArrowRightSLine } from '@remixicon/react'
 
@@ -17,7 +16,8 @@ import { useModalsStore } from '@/store/useModals'
 
 import { CalendarDayRoot } from '@/types/ATG/CalendarDay'
 
-import { ALLOWED_GAME_TYPES, GameType } from '@/constants/GameType'
+import { GameType } from '@/constants/GameType'
+import GameTypeSelect from './GameTypeSelect'
 
 const GameSelector = ({}): JSX.Element | null => {
   const {
@@ -30,6 +30,8 @@ const GameSelector = ({}): JSX.Element | null => {
     setBiggestGame,
     today,
     calendarData,
+    setGames,
+    games,
   } = useCalendarStore()
   const { setGameId } = useGameStore()
   const { gameSelectorOpen, setGameSelectorOpen } = useModalsStore()
@@ -57,6 +59,15 @@ const GameSelector = ({}): JSX.Element | null => {
     isLoading && setIsLoading(isLoading)
   }, [isLoading])
 
+  useEffect(() => {
+    if (calendarData.games) {
+      const filteredGames = Object.entries(calendarData.games).filter(([gameType]) =>
+        Object.values(GameType).includes(gameType as GameType)
+      )
+      setGames(filteredGames)
+    }
+  }, [calendarData.games])
+
   return (
     <Modal isOpen={gameSelectorOpen} onClose={() => setGameSelectorOpen(false)}>
       <Flex flexDirection="col" className="gap-4">
@@ -77,26 +88,23 @@ const GameSelector = ({}): JSX.Element | null => {
             <Icon color={'neutral'} icon={RiArrowRightSLine} />
           </IconButton>
         </Flex>
+        <Flex flexDirection="row" justifyContent="start" alignItems="center">
+          <GameTypeSelect games={games} />
+        </Flex>
         <Flex flexDirection="col" className="gap-2">
-          {calendarData &&
-            calendarData.games &&
-            Object.entries(calendarData.games)
-              .filter(
-                ([gameType, gamesArray]) =>
-                  gamesArray.length > 0 && ALLOWED_GAME_TYPES.includes(gameType)
-              )
-              .map(([gameType, gamesArray], index) => (
-                <GameCard
-                  key={index}
-                  gameType={gameType as GameType}
-                  tracks={gamesArray[0].tracks}
-                  time={gamesArray[0].scheduledStartTime}
-                  onClick={() => {
-                    setGameId(gamesArray[0].id)
-                    setGameSelectorOpen(false)
-                  }}
-                />
-              ))}
+          {games &&
+            games.map(([gameType, gamesArray], index) => (
+              <GameCard
+                key={index}
+                gameType={gameType as GameType}
+                tracks={gamesArray[0].tracks}
+                time={gamesArray[0].scheduledStartTime}
+                onClick={() => {
+                  setGameId(gamesArray[0].id)
+                  setGameSelectorOpen(false)
+                }}
+              />
+            ))}
         </Flex>
       </Flex>
     </Modal>

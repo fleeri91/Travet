@@ -5,34 +5,45 @@ import { gameTypeColor } from '@/utils/theme'
 import { GameType } from '@/constants/GameType'
 
 import { useCalendarStore } from '@/store/useCalendar'
+import { _getGameStatus } from '@/utils/atg'
+import { GameStatus } from '@/constants/GameStatus'
 
 interface GameCardProps {
   gameType: GameType
   tracks?: number[]
   time?: string
+  status?: string
   onClick?: () => void
 }
 
-const GameCard = ({ gameType, tracks, time, onClick }: GameCardProps): JSX.Element | null => {
+const GameCard = ({
+  gameType,
+  tracks,
+  time,
+  status,
+  onClick,
+}: GameCardProps): JSX.Element | null => {
   const { calendarData } = useCalendarStore()
 
   if (!calendarData) return null
 
   return (
     <Card
-      className={`bg-${gameTypeColor(gameType)}-500 cursor-pointer transition-opacity hover:opacity-80`}
+      className={`bg-${gameTypeColor(gameType)}-500 cursor-pointer transition-all hover:scale-[1.025] hover:opacity-80`}
       onClick={onClick}
     >
       <Flex>
-        <Title className="uppercase text-white">{gameType}</Title>
-        <Flex flexDirection="col">
-          <Subtitle className="text-white">
-            {calendarData.tracks
-              .filter((track) => tracks?.includes(track.id))
-              .map((track) => `${track.name} `)}
-          </Subtitle>
-          <Subtitle className="text-white">{dayjs(time).format('HH:mm')}</Subtitle>
-        </Flex>
+        <Subtitle className="uppercase text-white">{gameType}</Subtitle>
+        <Subtitle className="absolute left-1/2 -translate-x-1/2 capitalize text-white">
+          {calendarData.tracks
+            .filter((track) => tracks?.includes(track.id))
+            .map((track) => `${track.name} `)}
+        </Subtitle>
+        <Subtitle className="text-white">
+          {status && (status == GameStatus.ongoing || status == GameStatus.results)
+            ? _getGameStatus(status)
+            : dayjs(time).format('HH:mm')}
+        </Subtitle>
       </Flex>
     </Card>
   )

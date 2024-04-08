@@ -1,3 +1,5 @@
+import { GameStatus } from '@/constants/GameStatus'
+
 export const _getHorseSex = (sex: string): string => {
   switch (sex) {
     case 'mare':
@@ -11,11 +13,13 @@ export const _getHorseSex = (sex: string): string => {
   }
 }
 
-export const _getGameStatus = (status: string): string => {
+export const _getGameStatus = (status: GameStatus): string => {
   switch (status) {
-    case 'bettable':
+    case GameStatus.bettable:
       return 'Spelbar'
-    case 'results':
+    case GameStatus.ongoing:
+      return 'Pågående'
+    case GameStatus.results:
       return 'Avslutad'
     default:
       return ''

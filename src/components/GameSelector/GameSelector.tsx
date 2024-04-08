@@ -99,6 +99,7 @@ const GameSelector = ({}): JSX.Element | null => {
                 gameType={gameType as GameType}
                 tracks={gamesArray[0].tracks}
                 time={gamesArray[0].scheduledStartTime}
+                status={gamesArray[0].status}
                 onClick={() => {
                   setGameId(gamesArray[0].id)
                   setGameSelectorOpen(false)

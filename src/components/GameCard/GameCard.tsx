@@ -32,27 +32,25 @@ const GameCard = ({
       className={`bg-${gameTypeColor(gameType)}-500 cursor-pointer select-none transition-all sm:hover:scale-[1.025] sm:hover:opacity-80`}
       onClick={onClick}
     >
-      <Flex>
-        <Grid numItems={3} className="w-full">
-          <Grid>
-            <Subtitle className="uppercase text-white">{gameType}</Subtitle>
-          </Grid>
-          <Grid>
-            <Subtitle className="text-center capitalize text-white">
-              {calendarData.tracks
-                .filter((track) => tracks?.includes(track.id))
-                .map((track) => `${track.name} `)}
-            </Subtitle>
-          </Grid>
-          <Grid>
-            <Subtitle className="text-right text-white">
-              {status && (status == GameStatus.ongoing || status == GameStatus.results)
-                ? _getGameStatus(status)
-                : dayjs(time).format('HH:mm')}
-            </Subtitle>
-          </Grid>
+      <Grid numItems={3} className="w-full items-center">
+        <Grid>
+          <Subtitle className="uppercase text-white">{gameType}</Subtitle>
         </Grid>
-      </Flex>
+        <Grid>
+          <Subtitle className="text-center capitalize text-white">
+            {calendarData.tracks
+              .filter((track) => tracks?.includes(track.id))
+              .map((track) => `${track.name} `)}
+          </Subtitle>
+        </Grid>
+        <Grid>
+          <Subtitle className="text-right text-white">
+            {status && (status == GameStatus.ongoing || status == GameStatus.results)
+              ? _getGameStatus(status)
+              : dayjs(time).format('HH:mm')}
+          </Subtitle>
+        </Grid>
+      </Grid>
     </Card>
   )
 }

@@ -36,7 +36,7 @@ const GameTypeSelect = ({ games, onSelectedGameType }: GameTypeSelectProps): JSX
           className={({ active, checked }) =>
             `${active ? 'ring-2 ring-white/60 ring-offset-2 ring-offset-sky-300' : ''}
                   ${checked ? 'text-white' : 'bg-slate-300'}
-                    group relative flex cursor-pointer rounded-lg px-3 py-2 uppercase shadow-md transition-all hover:scale-105 focus:outline-none`
+                    group relative flex cursor-pointer rounded-lg px-3 py-2 uppercase shadow-md transition-all focus:outline-none sm:hover:scale-105`
           }
           data-theme={gameType}
         >

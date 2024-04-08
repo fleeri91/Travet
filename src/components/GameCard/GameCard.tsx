@@ -29,7 +29,7 @@ const GameCard = ({
 
   return (
     <Card
-      className={`bg-${gameTypeColor(gameType)}-500 cursor-pointer transition-all hover:scale-[1.025] hover:opacity-80`}
+      className={`bg-${gameTypeColor(gameType)}-500 cursor-pointer transition-all sm:hover:scale-[1.025] sm:hover:opacity-80`}
       onClick={onClick}
     >
       <Flex>

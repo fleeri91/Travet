@@ -4,7 +4,7 @@ export interface CalendarDayRoot {
   games: Games
 }
 
-interface Track {
+export interface Track {
   id: number
   name: string
   startTime: string

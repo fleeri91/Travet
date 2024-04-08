@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 import { RadioGroup } from '@headlessui/react'
 import { Flex } from '@tremor/react'
 import { Game } from '@/types/ATG/CalendarDay'
-import { GameType } from '@/constants/GameType'
 
 interface GameTypeSelectProps {
   games: [string, Game[]][]
@@ -41,11 +40,9 @@ const GameTypeSelect = ({ games, onSelectedGameType }: GameTypeSelectProps): JSX
           data-theme={gameType}
         >
           <Flex>
-            <Flex>
-              <RadioGroup.Label as="p" className={`font-medium text-white transition-all`}>
-                {gameType}
-              </RadioGroup.Label>
-            </Flex>
+            <RadioGroup.Label as="p" className={`font-medium text-white transition-all`}>
+              {gameType}
+            </RadioGroup.Label>
           </Flex>
         </RadioGroup.Option>
       ))}

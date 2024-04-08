@@ -9,6 +9,7 @@ import { RiArrowLeftSLine, RiArrowRightSLine } from '@remixicon/react'
 import Modal from '@/components/Modal'
 import GameCard from '@/components/GameCard'
 import IconButton from '@/components/IconButton'
+import GameTypeSelect from './GameTypeSelect'
 
 import { useCalendarStore } from '@/store/useCalendar'
 import { useGameStore } from '@/store/useGame'
@@ -17,7 +18,7 @@ import { useModalsStore } from '@/store/useModals'
 import { CalendarDayRoot } from '@/types/ATG/CalendarDay'
 
 import { GameType } from '@/constants/GameType'
-import GameTypeSelect from './GameTypeSelect'
+import { filterGamesByTrack } from '@/utils/track'
 
 const GameSelector = ({}): JSX.Element | null => {
   const {
@@ -51,6 +52,7 @@ const GameSelector = ({}): JSX.Element | null => {
       const firstGameId = games[0]?.[1]?.[0]?.id
       setGameId(firstGameId)
     }
+    console.log(games)
   }, [games])
 
   useEffect(() => {
@@ -58,13 +60,10 @@ const GameSelector = ({}): JSX.Element | null => {
   }, [isLoading])
 
   useEffect(() => {
-    if (calendarData.games) {
-      const filteredGames = Object.entries(calendarData.games).filter(([gameType]) =>
-        Object.values(GameType).includes(gameType as GameType)
-      )
-      setGames(filteredGames)
+    if (calendarData.games && calendarData.tracks) {
+      setGames(filterGamesByTrack(calendarData.games, calendarData.tracks))
     }
-  }, [calendarData.games])
+  }, [calendarData.games, calendarData.tracks])
 
   return (
     <Modal isOpen={gameSelectorOpen} onClose={() => setGameSelectorOpen(false)}>

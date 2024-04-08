@@ -26,8 +26,6 @@ const GameSelector = ({}): JSX.Element | null => {
     setPreviousDate,
     setNextDate,
     selectedDate,
-    biggestGame,
-    setBiggestGame,
     today,
     calendarData,
     setGames,
@@ -45,17 +43,15 @@ const GameSelector = ({}): JSX.Element | null => {
   useEffect(() => {
     if (data) {
       setCalendarData(data)
-      setBiggestGame(data.tracks[0].biggestGameType)
     }
   }, [data])
 
   useEffect(() => {
-    if (biggestGame && calendarData) {
-      Object.entries(calendarData.games)
-        .filter(([gameType, gamesArray]) => gamesArray.length > 0 && gameType.includes(biggestGame))
-        .map(([_gameType, gamesArray], _index) => setGameId(gamesArray[0].id))
+    if (games.length) {
+      const firstGameId = games[0]?.[1]?.[0]?.id
+      setGameId(firstGameId)
     }
-  }, [biggestGame])
+  }, [games])
 
   useEffect(() => {
     isLoading && setIsLoading(isLoading)
@@ -102,19 +98,21 @@ const GameSelector = ({}): JSX.Element | null => {
           {games &&
             games
               .filter(([gameType]) => gameType == selectedGameType)
-              .map(([gameType, gamesArray], index) => (
-                <GameCard
-                  key={index}
-                  gameType={gameType as GameType}
-                  tracks={gamesArray[0].tracks}
-                  time={gamesArray[0].scheduledStartTime}
-                  status={gamesArray[0].status}
-                  onClick={() => {
-                    setGameId(gamesArray[0].id)
-                    setGameSelectorOpen(false)
-                  }}
-                />
-              ))}
+              .map(([gameType, gamesArray], index) =>
+                gamesArray.map((game, gameIndex) => (
+                  <GameCard
+                    key={`${index}-${gameIndex}`} // Ensure each key is unique
+                    gameType={gameType as GameType}
+                    tracks={game.tracks}
+                    time={game.scheduledStartTime}
+                    status={game.status}
+                    onClick={() => {
+                      setGameId(game.id)
+                      setGameSelectorOpen(false)
+                    }}
+                  />
+                ))
+              )}
         </Flex>
       </Flex>
     </Modal>

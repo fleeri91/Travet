@@ -8,7 +8,12 @@ const GameTypeSelect = ({ games }: { games: [string, Game[]][] }): JSX.Element |
   const [selected, setSelected] = useState(games[0][0])
 
   return (
-    <RadioGroup value={selected} onChange={setSelected} className="inline-flex gap-2">
+    <RadioGroup
+      value={selected}
+      onChange={setSelected}
+      className="inline-flex w-full gap-2"
+      id="game-type-selector"
+    >
       <RadioGroup.Label className="sr-only">Speltyp</RadioGroup.Label>
       {games.map(([gameType, _]) => (
         <RadioGroup.Option
@@ -16,17 +21,15 @@ const GameTypeSelect = ({ games }: { games: [string, Game[]][] }): JSX.Element |
           value={gameType}
           className={({ active, checked }) =>
             `${active ? 'ring-2 ring-white/60 ring-offset-2 ring-offset-sky-300' : ''}
-                  ${checked ? 'bg-sky-900/75 text-white' : 'bg-white'}
-                    relative flex cursor-pointer rounded-lg px-3 py-2 uppercase shadow-md focus:outline-none`
+                  ${checked ? 'text-white' : 'bg-slate-300'}
+                    group relative flex cursor-pointer rounded-lg px-3 py-2 uppercase shadow-md transition-all hover:scale-105 focus:outline-none`
           }
+          data-theme={gameType}
         >
           {({ active, checked }) => (
             <Flex>
               <Flex>
-                <RadioGroup.Label
-                  as="p"
-                  className={`font-medium  ${checked ? 'text-white' : 'text-gray-900'}`}
-                >
+                <RadioGroup.Label as="p" className={`font-medium text-white transition-all`}>
                   {gameType}
                 </RadioGroup.Label>
               </Flex>

@@ -1,7 +1,8 @@
-import { GameRoot, Start } from '@/types/ATG/Game' // Import Start interface
-import { RecordRoot } from '@/types/ATG/Record' // Import RecordRoot interface
-import axios from 'axios'
 import { NextResponse, NextRequest } from 'next/server'
+import axios from 'axios'
+
+import { GameRoot, Start } from '@/types/ATG/Game'
+import { RecordRoot } from '@/types/ATG/Record'
 
 export async function GET(request: NextRequest) {
   const params = request.nextUrl.searchParams
@@ -45,4 +46,3 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(error)
   }
 }
-export const revalidate = 0

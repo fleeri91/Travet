@@ -41,9 +41,19 @@ export async function GET(request: NextRequest) {
       data = { ...gameData, races: raceData }
     }
 
-    return NextResponse.json(data)
-  } catch (error) {
-    return NextResponse.json(error)
+    const jsonResponse = NextResponse.json(data)
+    // Set caching headers to prevent revalidation
+    jsonResponse.headers.set('Cache-Control', 'public, max-age=31536000, immutable')
+
+    return jsonResponse
+  } catch (error: unknown) {
+    let errorMessage = 'An unexpected error occurred'
+    if (error instanceof Error) {
+      errorMessage = error.message
+    }
+
+    const errorResponse = NextResponse.json({ error: errorMessage })
+    errorResponse.headers.set('Cache-Control', 'no-store')
+    return errorResponse
   }
 }
-export const revalidate = 0

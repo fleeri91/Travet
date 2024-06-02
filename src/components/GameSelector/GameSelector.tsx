@@ -37,7 +37,11 @@ const GameSelector = ({}): JSX.Element | null => {
 
   const [selectedGameType, setSelectedGameType] = useState<string | null>(null)
 
-  const { data, isLoading } = useSWR<CalendarDayRoot>(selectedDate ? `day/${selectedDate}` : null)
+  const { data, isLoading } = useSWR<CalendarDayRoot>(selectedDate ? `day/${selectedDate}` : null, {
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+    refreshInterval: 0,
+  })
 
   const FIVE_DAYS = dayjs(today).add(5, 'day')
 

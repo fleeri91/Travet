@@ -54,7 +54,7 @@ const TravsportStatisticsTable = ({
   chartType = 1,
 }: TravsportStatisticsTableProps) => {
   const [year, setYear] = useState<number>(2023)
-  const [isSTL, setIsSTL] = useState<boolean>(true)
+  const [isSTL, setIsSTL] = useState<boolean>(false)
   const [isYouth, setIsYouth] = useState<boolean>(false)
 
   const { data } = useSWR<TravsportStats[]>(

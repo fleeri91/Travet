@@ -72,7 +72,7 @@ const RaceTab = ({ gameData }: RaceTabProps) => {
                       <TravsportStatisticsTable amount={50} />
                     </TabPanel>
                     <TabPanel>
-                      <TravsportStatisticsTable chartType={2} />
+                      <TravsportStatisticsTable amount={50} chartType={2} />
                     </TabPanel>
                   </TabPanels>
                 </TabGroup>

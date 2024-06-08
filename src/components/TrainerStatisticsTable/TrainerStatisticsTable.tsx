@@ -55,10 +55,6 @@ const TrainerStatisticsTable = ({
     `travsport/?licenseType=${licenseType}&gender=${gender}&homeTrack=${homeTrack}&raceOnTrack=${currentTrack}&typeOfRace=${raceType}&sulkyOrMonte=${sulkyOrMonte}&breed=${breed}&returnNumberOfEntries=${amount}&onlyYouth=false&list=S&year=${year}&chartTypeSearchParam=2&category=1`
   )
 
-  useEffect(() => {
-    data && console.log(data)
-  }, [data])
-
   return (
     <Table>
       <TableHead>

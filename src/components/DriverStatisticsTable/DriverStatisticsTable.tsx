@@ -40,7 +40,7 @@ interface DriverStatisticsTableProps {
 
 const DriverStatisticsTable = ({
   year = 2023,
-  licenseType = 'A',
+  licenseType = 'S',
   gender = 'B',
   homeTrack = 'A',
   currentTrack = 'A',

@@ -26,6 +26,8 @@ import {
   TravsportSulkyOrMonte,
 } from '@/types/Travsport/Travsport'
 
+import { formatPrizeMoney } from '@/utils/format'
+
 interface DriverStatisticsTableProps {
   year?: number
   licenseType?: TravsportLicenseType
@@ -118,7 +120,9 @@ const DriverStatisticsTable = ({
                 {item.numberOfThirdPlaces}
               </TableCell>
               <TableCell className="space-x-2 py-2 text-right">{`${item.winningPercent} %`}</TableCell>
-              <TableCell className="space-x-2 py-2 text-right">{item.prizeMoney}</TableCell>
+              <TableCell className="space-x-2 py-2 text-right">
+                {formatPrizeMoney(item.prizeMoney)}
+              </TableCell>
             </TableRow>
           ))}
       </TableBody>

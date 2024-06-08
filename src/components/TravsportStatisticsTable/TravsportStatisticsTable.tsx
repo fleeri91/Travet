@@ -55,18 +55,21 @@ const TravsportStatisticsTable = ({
 }: TravsportStatisticsTableProps) => {
   const [year, setYear] = useState<number>(2023)
   const [isSTL, setIsSTL] = useState<boolean>(false)
+  const [isColdBlood, setIsColdBlood] = useState<boolean>(false)
   const [isYouth, setIsYouth] = useState<boolean>(false)
 
   const { data } = useSWR<TravsportStats[]>(
-    `travsport/?licenseType=${licenseType}&gender=${gender}&homeTrack=${homeTrack}&raceOnTrack=${currentTrack}&typeOfRace=${isSTL ? (raceType = 'R') : (raceType = 'B')}&sulkyOrMonte=${sulkyOrMonte}&breed=${breed}&returnNumberOfEntries=${amount}&onlyYouth=${isYouth}&list=S&year=${year}&chartTypeSearchParam=${chartType}&category=1`
+    `travsport/?licenseType=${licenseType}&gender=${gender}&homeTrack=${homeTrack}&raceOnTrack=${currentTrack}&typeOfRace=${isSTL ? (raceType = 'R') : (raceType = 'B')}&sulkyOrMonte=${sulkyOrMonte}&breed=${isColdBlood ? (breed = 'K') : (breed = 'V')}&returnNumberOfEntries=${amount}&onlyYouth=${isYouth}&list=S&year=${year}&chartTypeSearchParam=${chartType}&category=1`
   )
 
   return (
     <>
       <TravsportStatisticsFilter
         isSTL={isSTL}
+        isColdBlood={isColdBlood}
         isYouth={isYouth}
         setIsSTL={setIsSTL}
+        setIsColdBlood={setIsColdBlood}
         setIsYouth={setIsYouth}
       />
       <Table>

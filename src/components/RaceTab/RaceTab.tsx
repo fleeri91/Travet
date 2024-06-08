@@ -9,8 +9,7 @@ import { GameRoot } from '@/types/ATG/Game'
 import ButtonGroup from '../ButtonGroup'
 import { useModalsStore } from '@/store/useModals'
 import { useThemeStore } from '@/store/useTheme'
-import DriverStatisticsTable from '../DriverStatisticsTable'
-import TrainerStatisticsTable from '../TrainerStatisticsTable'
+import TravsportStatisticsTable from '../TravsportStatisticsTable'
 
 interface RaceTabProps {
   gameData: GameRoot
@@ -70,10 +69,10 @@ const RaceTab = ({ gameData }: RaceTabProps) => {
                       <RaceFilterTable game={gameData} race={race} raceIndex={index} />
                     </TabPanel>
                     <TabPanel>
-                      <DriverStatisticsTable amount={50} />
+                      <TravsportStatisticsTable amount={50} />
                     </TabPanel>
                     <TabPanel>
-                      <TrainerStatisticsTable />
+                      <TravsportStatisticsTable chartType={2} />
                     </TabPanel>
                   </TabPanels>
                 </TabGroup>

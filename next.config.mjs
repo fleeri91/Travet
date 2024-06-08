@@ -18,6 +18,10 @@ const nextConfig = {
         source: '/api/race/:path*/start/:path*',
         destination: 'https://www.atg.se/services/racinginfo/v1/api/races/:path*/start/:path*',
       },
+      {
+        source: '/api/travsport',
+        destination: 'https://api.travsport.se/webapi/charts/listpersonchart/organisation/TROT',
+      },
     ]
   },
 }

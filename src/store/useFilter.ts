@@ -16,7 +16,10 @@ const initialState: FilterState = {
     shoes: false,
     sulky: false,
     distance: false,
-    specificDistance: undefined,
+    specificDistance: {
+      from: '',
+      to: '',
+    },
     money: false,
     top: false,
     track: false,

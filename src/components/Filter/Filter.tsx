@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 
 import { Button, Flex, Icon, NumberInput } from '@tremor/react'
 
@@ -25,27 +25,49 @@ const Filter = ({ isOpen, onClose }: FilterProps): JSX.Element => {
     }))
   }
 
-  const handleSpecificDistanceChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleSpecificDistanceFromChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value
     setFilterState((prevFilterState: FilterType) => ({
       ...prevFilterState,
-      specificDistance: value,
+      specificDistance: {
+        ...prevFilterState.specificDistance,
+        from: value,
+      },
+    }))
+  }
+
+  const handleSpecificDistanceToChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value
+    setFilterState((prevFilterState: FilterType) => ({
+      ...prevFilterState,
+      specificDistance: {
+        ...prevFilterState.specificDistance,
+        to: value,
+      },
     }))
   }
 
   const discardFilter = () => {
-    setFilter(filter)
+    setFilterState(filter)
     onClose()
   }
 
   const applyFilter = () => {
-    console.log(filterState)
     setFilter(filterState)
     onClose()
   }
 
+  useEffect(() => {
+    filter && console.log(filter)
+    setFilterState(filter)
+  }, [filter])
+
+  useEffect(() => {
+    filterState && console.log(filterState)
+  }, [filterState])
+
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Filter">
+    <Modal isOpen={isOpen} onClose={discardFilter} title="Filter">
       <Flex className="space-y-4 py-4" flexDirection="col">
         <Switch
           onChange={() => toggleFilter('shoes')}
@@ -66,12 +88,24 @@ const Filter = ({ isOpen, onClose }: FilterProps): JSX.Element => {
           tooltip="Filtrera hästens resultat på loppets aktuella distans"
         />
         {filterState.distance && (
-          <NumberInput
-            placeholder="Specifik distans"
-            value={filterState.specificDistance != null ? filterState.specificDistance : ''}
-            onChange={handleSpecificDistanceChange}
-            min={0}
-          />
+          <Flex className="space-x-2">
+            <NumberInput
+              placeholder="Från"
+              value={
+                filterState.specificDistance?.from != null ? filterState.specificDistance.from : ''
+              }
+              onChange={handleSpecificDistanceFromChange}
+              min={0}
+            />
+            <NumberInput
+              placeholder="Till"
+              value={
+                filterState.specificDistance?.to != null ? filterState.specificDistance.to : ''
+              }
+              onChange={handleSpecificDistanceToChange}
+              min={0}
+            />
+          </Flex>
         )}
         <Switch
           onChange={() => toggleFilter('money')}

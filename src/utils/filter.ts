@@ -116,40 +116,56 @@ export const _recordFilter = (
         record.start.horse.shoes?.back === start.horse?.shoes.back?.hasShoe &&
         record.start.horse.shoes?.front === start.horse?.shoes.front?.hasShoe
     }
+
     if (sulky) {
       filterConditions =
         filterConditions && record.start.horse.sulky?.type?.text === start.horse?.sulky?.type?.text
     }
+
     if (distance) {
-      if (filter.specificDistance && filter.specificDistance !== '') {
+      if (filter.specificDistance?.from && filter.specificDistance?.from !== '') {
         filterConditions =
-          filterConditions && (record.start.distance ?? 0) >= parseInt(filter.specificDistance)
-      } else {
+          filterConditions && (record.start.distance ?? 0) >= parseInt(filter.specificDistance.from)
+      }
+
+      if (filter.specificDistance?.to && filter.specificDistance?.to !== '') {
+        filterConditions =
+          filterConditions && (record.start.distance ?? 0) <= parseInt(filter.specificDistance.to)
+      }
+
+      if (filter.specificDistance?.from === '' && filter.specificDistance?.to === '') {
         filterConditions =
           filterConditions && (record.start.distance ?? 0) >= (race.distance ?? 0) - 200
       }
     }
+
     if (money) {
       if (race.prize !== null) {
         filterConditions =
           filterConditions && record.race.firstPrize / 100000 >= getRacePrize(race.prize)
       }
     }
+
     if (top) {
       filterConditions = filterConditions && record.place <= '3'
     }
+
     if (win) {
       filterConditions = filterConditions && record.place == '1'
     }
+
     if (track) {
       filterConditions = filterConditions && record.track.id === race.track.id
     }
+
     if (driver) {
       filterConditions = filterConditions && record.start.driver.id === start.driver.id
     }
+
     if (condition) {
       filterConditions = filterConditions && record.track.condition === currentTrack.condition
     }
+
     if (stl) {
       if (race.prize !== null) {
         filterConditions = filterConditions && record.race.firstPrize >= 10000000

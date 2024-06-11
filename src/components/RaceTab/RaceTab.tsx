@@ -69,10 +69,10 @@ const RaceTab = ({ gameData }: RaceTabProps) => {
                       <RaceFilterTable game={gameData} race={race} raceIndex={index} />
                     </TabPanel>
                     <TabPanel>
-                      <TravsportStatisticsTable amount={50} />
+                      <TravsportStatisticsTable amount={50} currentTrack={1480} />
                     </TabPanel>
                     <TabPanel>
-                      <TravsportStatisticsTable amount={50} chartType={2} />
+                      <TravsportStatisticsTable amount={50} chartType={2} currentTrack={1480} />
                     </TabPanel>
                   </TabPanels>
                 </TabGroup>

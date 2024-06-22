@@ -78,6 +78,56 @@ export const _getStartRecord = (
     : lowestKmTime?.seconds + '.' + lowestKmTime?.tenths
 }
 
+export const _getPotentialRecords = (
+  records: RecordResult[],
+  race: Race,
+  length: number = records.length
+): string => {
+  const raceDistance = race.distance
+  const thresholdDistance = 200
+
+  let lowestKmTime = null
+  let recordDistance = null
+
+  for (let i = 0; i < length; i++) {
+    if (records[i] === undefined || records[i].kmTime === undefined) {
+      return ''
+    }
+
+    const kmTime = records[i].kmTime
+
+    if (
+      kmTime &&
+      (!lowestKmTime ||
+        kmTime.minutes < lowestKmTime.minutes ||
+        (kmTime.minutes === lowestKmTime.minutes && kmTime.seconds < lowestKmTime.seconds) ||
+        (kmTime.minutes === lowestKmTime.minutes &&
+          kmTime.seconds === lowestKmTime.seconds &&
+          kmTime.tenths < lowestKmTime.tenths))
+    ) {
+      lowestKmTime = kmTime
+      recordDistance = records[i].start.distance
+    }
+  }
+
+  if (
+    lowestKmTime !== null &&
+    recordDistance !== null &&
+    recordDistance > raceDistance + thresholdDistance
+  ) {
+    const adjustedSeconds = lowestKmTime.seconds - 1
+    lowestKmTime = {
+      minutes: lowestKmTime.minutes,
+      seconds: adjustedSeconds,
+      tenths: lowestKmTime.tenths,
+    }
+  }
+
+  return lowestKmTime?.minutes === undefined
+    ? ''
+    : lowestKmTime?.seconds + '.' + lowestKmTime?.tenths
+}
+
 /**
  *
  * @param records

@@ -12,6 +12,7 @@ import { useGameStore } from '@/store/useGame'
 import { useModalsStore } from '@/store/useModals'
 
 import { GameRoot } from '@/types/ATG/Game'
+import { Suspense } from 'react'
 
 const Home = () => {
   const { gameId } = useGameStore()
@@ -25,7 +26,9 @@ const Home = () => {
       {data && <RaceTab gameData={data} />}
       <GameSelector />
       <Filter isOpen={filterOpen} onClose={() => setFilterOpen(false)} />
-      <Dashboard />
+      <Suspense>
+        <Dashboard />
+      </Suspense>
     </Flex>
   )
 }

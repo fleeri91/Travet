@@ -58,13 +58,8 @@ const Filter = ({ isOpen, onClose }: FilterProps): JSX.Element => {
   }
 
   useEffect(() => {
-    filter && console.log(filter)
     setFilterState(filter)
   }, [filter])
-
-  useEffect(() => {
-    filterState && console.log(filterState)
-  }, [filterState])
 
   return (
     <Modal isOpen={isOpen} onClose={discardFilter} title="Filter">

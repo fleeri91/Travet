@@ -56,7 +56,6 @@ const GameSelector = ({}): JSX.Element | null => {
       const firstGameId = games[0]?.[1]?.[0]?.id
       setGameId(firstGameId)
     }
-    console.log(games)
   }, [games])
 
   useEffect(() => {

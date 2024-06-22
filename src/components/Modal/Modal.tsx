@@ -2,11 +2,14 @@ import { Fragment } from 'react'
 import clsx from 'clsx'
 
 import { Dialog, Transition } from '@headlessui/react'
-import { Size } from '@tremor/react'
+import { Flex, Size } from '@tremor/react'
 
 interface ModalProps {
   /** Content rendered as children */
   children?: React.ReactNode
+
+  /** Title of the modal */
+  title?: string
 
   /** Size of the modal */
   size?: Size
@@ -21,7 +24,14 @@ interface ModalProps {
   onClose: (value: boolean) => void
 }
 
-const Modal = ({ children, size = 'md', fullWidth, isOpen, onClose }: ModalProps): JSX.Element => {
+const Modal = ({
+  children,
+  title,
+  size = 'md',
+  fullWidth,
+  isOpen,
+  onClose,
+}: ModalProps): JSX.Element => {
   const SizeClasses = {
     xs: 'max-w-xs',
     sm: 'max-w-sm',
@@ -63,6 +73,13 @@ const Modal = ({ children, size = 'md', fullWidth, isOpen, onClose }: ModalProps
                   size && fullWidth ? '' : SizeClasses[size]
                 )}
               >
+                <Flex className="mb-4">
+                  {title && (
+                    <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
+                      {title}
+                    </Dialog.Title>
+                  )}
+                </Flex>
                 {children}
               </Dialog.Panel>
             </Transition.Child>

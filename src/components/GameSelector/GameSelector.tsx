@@ -53,8 +53,16 @@ const GameSelector = ({}): JSX.Element | null => {
 
   useEffect(() => {
     if (games.length) {
-      const firstGameId = games[0]?.[1]?.[0]?.id
-      setGameId(firstGameId)
+      let gameId = ''
+      for (let i = 0; i < games.length; i++) {
+        const potentialId = games[i]?.[1]?.[0]?.id
+        if (potentialId) {
+          gameId = potentialId
+          break
+        }
+      }
+
+      setGameId(gameId)
     }
   }, [games])
 

@@ -53,7 +53,7 @@ const TravsportStatisticsTable = ({
   amount = 10,
   chartType = 1,
 }: TravsportStatisticsTableProps) => {
-  const [year, setYear] = useState<number>(2023)
+  const [year, setYear] = useState<string>('2023')
   const [isSTL, setIsSTL] = useState<boolean>(false)
   const [isColdBlood, setIsColdBlood] = useState<boolean>(false)
   const [isYouth, setIsYouth] = useState<boolean>(false)
@@ -68,9 +68,11 @@ const TravsportStatisticsTable = ({
         isSTL={isSTL}
         isColdBlood={isColdBlood}
         isYouth={isYouth}
+        year={year}
         setIsSTL={setIsSTL}
         setIsColdBlood={setIsColdBlood}
         setIsYouth={setIsYouth}
+        setYear={setYear}
       />
       <Table>
         <TableHead>

@@ -11,7 +11,7 @@
     "new": "plop"
   },
   "dependencies": {
-    "@headlessui/react": "^1.7.18",
+    "@headlessui/react": "^2.1.5",
     "@headlessui/tailwindcss": "^0.2.0",
     "@remixicon/react": "^4.2.0",
     "@tremor/react": "^3.14.1",

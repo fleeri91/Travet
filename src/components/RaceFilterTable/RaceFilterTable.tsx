@@ -27,13 +27,7 @@ import { GameRoot, Race, Start } from '@/types/ATG/Game'
 import { FormType } from '@/types/Filter'
 
 import { _getHorseSex } from '@/utils/atg'
-import {
-  _getGallopp,
-  _getPotentialRecords,
-  _getStartForm,
-  _getStartRecord,
-  _recordFilter,
-} from '@/utils/filter'
+import { _getGallopp, _getStartForm, _getStartRecord, _recordFilter } from '@/utils/filter'
 
 interface RaceFilterTableProps {
   game: GameRoot
@@ -66,12 +60,6 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
           <TableHeaderCell className="w-1/12">
             <Flex justifyContent="start">
               <Subtitle>Tid</Subtitle>
-              <Icon tooltip={'Filtrerat resultat'} icon={RiInformationLine} />
-            </Flex>
-          </TableHeaderCell>
-          <TableHeaderCell className="w-1/12">
-            <Flex justifyContent="start">
-              <Subtitle>Potentiell Tid</Subtitle>
               <Icon tooltip={'Filtrerat resultat'} icon={RiInformationLine} />
             </Flex>
           </TableHeaderCell>
@@ -151,11 +139,6 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
               {records && filteredRecords && (
                 <TableCell className="max-w-[50px] py-2 text-right">
                   <Text>{_getStartRecord(filteredRecords)}</Text>
-                </TableCell>
-              )}
-              {records && filteredRecords && (
-                <TableCell className="max-w-[50px] py-2 text-right">
-                  <Text>{_getPotentialRecords(filteredRecords, race)}</Text>
                 </TableCell>
               )}
               {records && (

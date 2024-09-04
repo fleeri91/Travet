@@ -39,15 +39,7 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
   const { filter } = useFilterStore()
   const { theme } = useThemeStore()
 
-  const router = useRouter()
-
   const renderedHandicaps: { [key: number]: boolean } = {}
-
-  const handleOnRowClick = (index: number, pos: number) => {
-    if (race) {
-      router.push(`?id=${race.id}&start=${index + 1}&pos=${pos}&method=${race.startMethod}`)
-    }
-  }
 
   return (
     <Table className="w-full select-none">
@@ -100,19 +92,15 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
             <TableRow
               key={startIndex}
               className={clsx(
-                'group table-fixed cursor-pointer !border-none odd:bg-white even:bg-theme-50 dark:even:bg-slate-800'
+                'group table-fixed !border-none odd:bg-white even:bg-theme-50 dark:even:bg-slate-800'
               )}
-              onClick={() => handleOnRowClick(startIndex, currentStart.postPosition)}
             >
               <TableCell className="space-x-2 py-2">
                 <Flex justifyContent="start">
                   <Text
                     className={clsx(start.scratched && 'text-gray-300 line-through', 'space-x-2')}
                   >
-                    <Badge
-                      color={theme}
-                      className="w-[25px] cursor-pointer transition-transform group-hover:scale-[1.2]"
-                    >
+                    <Badge color={theme} className="w-[25px]">
                       {currentStart.number && currentStart.number}
                     </Badge>
                     <span>{currentStart.horse.name && currentStart.horse.name}</span>
@@ -131,14 +119,15 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
               </TableCell>
               <TableCell className="py-2">
                 {start.scratched && (
-                  <Badge color={'neutral'} className="cursor-pointer font-semibold uppercase">
+                  <Badge color={'neutral'} className=" font-semibold uppercase">
                     Struken
                   </Badge>
                 )}
               </TableCell>
               {records && filteredRecords && (
-                <TableCell className="max-w-[50px] py-2 text-right">
-                  <Text>{_getStartRecord(filteredRecords)}</Text>
+                <TableCell className="flex justify-end space-x-2 py-2">
+                  <Text className="text-right">{_getStartRecord(filteredRecords)}</Text>
+                  {/*<Badge>S</Badge>*/}
                 </TableCell>
               )}
               {records && (
@@ -146,7 +135,7 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
                   {_getStartForm(records).map((record: FormType, index: number) => (
                     <Badge
                       key={index}
-                      className="cursor-pointer"
+                      className=""
                       color={
                         record.disqualified || record.place === '0' || record.place > '5'
                           ? 'red'
@@ -164,7 +153,7 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
                 {_getGallopp(records, currentRace.startMethod).map((record: any, index: number) => (
                   <Badge
                     key={index}
-                    className="cursor-pointer"
+                    className=""
                     color={
                       record.start.postPosition === currentStart.postPosition ? 'red' : 'yellow'
                     }

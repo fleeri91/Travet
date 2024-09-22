@@ -125,8 +125,28 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
               </TableCell>
               {records && filteredRecords && (
                 <TableCell className="flex justify-end space-x-2 py-2">
-                  <Text className="text-right">{_getStartRecord(filteredRecords)}</Text>
-                  {/*<Badge>S</Badge>*/}
+                  {(() => {
+                    const startRecord = _getStartRecord(filteredRecords)
+
+                    if (!startRecord.time && !startRecord.distance?.type) {
+                      return null
+                    }
+
+                    return (
+                      <>
+                        {startRecord.time && <Text className="text-right">{startRecord.time}</Text>}
+                        {startRecord.distance?.type && (
+                          <Badge
+                            color={'neutral'}
+                            className="min-w-12"
+                            tooltip={startRecord.distance.number?.toString()}
+                          >
+                            {startRecord.distance.type}
+                          </Badge>
+                        )}
+                      </>
+                    )
+                  })()}
                 </TableCell>
               )}
               {records && (

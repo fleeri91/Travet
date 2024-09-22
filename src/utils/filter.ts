@@ -53,11 +53,13 @@ export const _getGallopp = (records: RecordResult[], method: string): RecordResu
 export const _getStartRecord = (
   records: RecordResult[],
   length: number = records.length
-): string => {
+): { time: string; distance: { number: number | null; type: string } } => {
   let lowestKmTime = null
+  let recordDistance = null // Variable to track the distance
+
   for (let i = 0; i < length; i++) {
     if (records[i] === undefined || records[i].kmTime === undefined) {
-      return ''
+      return { time: '', distance: { number: null, type: '' } }
     }
 
     const kmTime = records[i].kmTime
@@ -71,11 +73,29 @@ export const _getStartRecord = (
           kmTime.tenths < lowestKmTime.tenths))
     ) {
       lowestKmTime = kmTime
+      recordDistance = records[i].start.distance // Store the distance
     }
   }
-  return lowestKmTime?.minutes === undefined
-    ? ''
-    : lowestKmTime?.seconds + '.' + lowestKmTime?.tenths
+
+  const distanceType =
+    recordDistance === null
+      ? ''
+      : recordDistance <= 1800
+        ? 'S'
+        : recordDistance <= 2400
+          ? 'M'
+          : recordDistance <= 2900
+            ? 'L'
+            : 'L+'
+
+  return {
+    time:
+      lowestKmTime?.minutes === undefined ? '' : `${lowestKmTime.seconds}.${lowestKmTime.tenths}`,
+    distance: {
+      number: recordDistance,
+      type: distanceType,
+    },
+  }
 }
 
 /**

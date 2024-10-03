@@ -1,4 +1,5 @@
 import { Button, ButtonProps } from '@tremor/react'
+import clsx from 'clsx'
 
 const IconButton = ({
   children,
@@ -7,15 +8,17 @@ const IconButton = ({
   ...htmlAttributes
 }: ButtonProps): JSX.Element | null => {
   return (
-    <button
-      onClick={onClick}
-      className={
-        'cursor-pointer rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-slate-300/50 disabled:cursor-not-allowed disabled:opacity-25 sm:hover:bg-slate-400/10'
-      }
+    <Button
+      className={clsx(
+        'inline-flex items-center border-none bg-transparent p-2 text-blue-500 shadow-inner shadow-white/10 transition-colors',
+        'hover:bg-blue-200',
+        className
+      )}
       {...htmlAttributes}
+      onClick={onClick}
     >
       {children}
-    </button>
+    </Button>
   )
 }
 

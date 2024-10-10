@@ -16,8 +16,7 @@ export const _getStartForm = (records: RecordResult[]): FormType[] => {
   const currentDateThreeMonthsAgo = currentDate.subtract(3, 'months')
 
   const filteredRecords = records.filter(
-    (record) =>
-      dayjs(record.date).isAfter(currentDateThreeMonthsAgo) && !(record.oddsCode === 'ejg')
+    (record) => dayjs(record.date).isAfter(currentDateThreeMonthsAgo) && !record.oddsCode
   )
 
   for (let i = 0; i < filteredRecords.length; i++) {

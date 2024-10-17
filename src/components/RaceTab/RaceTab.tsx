@@ -20,24 +20,24 @@ const RaceTab = ({ gameData }: RaceTabProps) => {
 
   return (
     <TabGroup>
-      <Card className="flex rounded-xl px-4 py-2 shadow-md ring-0">
+      <Card className="flex p-0 shadow-md ring-0 sm:px-4 sm:py-2">
         <Flex>
-          <TabList color={theme} variant="solid" className="bg-theme-50">
+          <TabList color={theme} variant="solid" className="w-full sm:w-auto">
             {gameData?.races?.map((race, index) => (
               <Tab
                 key={index}
                 onClick={() => setRaceIndex(index)}
                 className={clsx(
-                  'w-full max-w-[initial] select-none justify-center rounded-lg border-none px-4 py-2 text-sm font-medium uppercase drop-shadow-sm hover:bg-black/5 hover:drop-shadow-sm focus:outline-none'
+                  'w-full max-w-[initial] select-none justify-center border-none px-4 py-2 text-sm font-medium uppercase drop-shadow-sm hover:bg-black/5 hover:drop-shadow-sm focus:outline-none'
                 )}
               >
-                <Text className="text-xs font-black text-theme-600 md:text-base">
+                <Text className="text-sm font-black text-theme-600 sm:text-base">
                   {`${index + 1}`}
                 </Text>
               </Tab>
             ))}
           </TabList>
-          <Flex className="space-x-2" justifyContent="end" alignItems="end">
+          <Flex className="hidden space-x-2 sm:flex" justifyContent="end" alignItems="end">
             <Icon
               color={theme}
               variant="shadow"

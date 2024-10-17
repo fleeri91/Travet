@@ -38,7 +38,7 @@ const RaceTab = ({ gameData }: RaceTabProps) => {
             ))}
           </TabList>
           <Flex
-            className="fixed bottom-0 right-0 z-50 flex flex-col space-y-2 p-2 sm:relative sm:flex-row sm:space-x-2 sm:space-y-0 sm:p-0"
+            className="fixed bottom-0 right-0 z-10 flex flex-col space-y-2 p-2 sm:relative sm:flex-row sm:space-x-2 sm:space-y-0 sm:p-0"
             justifyContent="end"
             alignItems="end"
           >

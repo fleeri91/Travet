@@ -109,19 +109,24 @@ const GameSelector = ({}): JSX.Element | null => {
             games
               .filter(([gameType]) => gameType == selectedGameType)
               .map(([gameType, gamesArray], index) =>
-                gamesArray.map((game, gameIndex) => (
-                  <GameCard
-                    key={`${index}-${gameIndex}`} // Ensure each key is unique
-                    gameType={gameType as GameType}
-                    tracks={game.tracks}
-                    time={game.scheduledStartTime}
-                    status={game.status}
-                    onClick={() => {
-                      setGameId(game.id)
-                      setGameSelectorOpen(false)
-                    }}
-                  />
-                ))
+                gamesArray
+                  .sort(
+                    (a, b) =>
+                      dayjs(a.scheduledStartTime).unix() - dayjs(b.scheduledStartTime).unix()
+                  )
+                  .map((game, gameIndex) => (
+                    <GameCard
+                      key={`${index}-${gameIndex}`}
+                      gameType={gameType as GameType}
+                      tracks={game.tracks}
+                      time={game.scheduledStartTime}
+                      status={game.status}
+                      onClick={() => {
+                        setGameId(game.id)
+                        setGameSelectorOpen(false)
+                      }}
+                    />
+                  ))
               )}
         </Flex>
       </Flex>

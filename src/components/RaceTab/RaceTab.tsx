@@ -4,9 +4,9 @@ import { Card, Flex, Icon, Tab, TabGroup, TabList, TabPanel, TabPanels, Text } f
 import { RiFilter3Line, RiCalendarLine } from '@remixicon/react'
 
 import RaceFilterTable from '@/components/RaceFilterTable'
-import RaceInfoCard from '@/components/RaceInfoCard'
+import RaceInfoCard from '@/components/ui/RaceInfoCard'
 import { GameRoot } from '@/types/ATG/Game'
-import ButtonGroup from '../ButtonGroup'
+import ButtonGroup from '../ui/ButtonGroup'
 import { useModalsStore } from '@/store/useModals'
 import { useThemeStore } from '@/store/useTheme'
 import TravsportStatisticsTable from '../TravsportStatisticsTable'

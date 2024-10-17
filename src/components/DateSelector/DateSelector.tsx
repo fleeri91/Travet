@@ -4,7 +4,7 @@ import sv from 'dayjs/locale/sv'
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react'
 import { RiArrowLeftSLine, RiArrowRightSLine } from '@remixicon/react'
 
-import IconButton from '@/components/IconButton'
+import IconButton from '@/components/ui/IconButton'
 
 import { useCalendarStore } from '@/store/useCalendar'
 

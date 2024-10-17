@@ -2,8 +2,8 @@ import { ChangeEvent, useEffect, useState } from 'react'
 
 import { Button, Flex, Icon, NumberInput } from '@tremor/react'
 
-import Modal from '@/components/Modal'
-import Switch from '@/components/Switch'
+import Modal from '@/components/ui/Modal'
+import Switch from '@/components/ui/Switch'
 
 import { useFilterStore } from '@/store/useFilter'
 

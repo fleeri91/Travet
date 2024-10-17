@@ -8,7 +8,7 @@ import { useCalendarStore } from '@/store/useCalendar'
 import { _getGameStatus } from '@/utils/atg'
 import { GameStatus } from '@/constants/GameStatus'
 
-interface GameCardProps {
+interface GameSelectorCardProps {
   gameType: GameType
   tracks?: number[]
   time?: string
@@ -16,13 +16,13 @@ interface GameCardProps {
   onClick?: () => void
 }
 
-const GameCard = ({
+const GameSelectorCard = ({
   gameType,
   tracks,
   time,
   status,
   onClick,
-}: GameCardProps): JSX.Element | null => {
+}: GameSelectorCardProps): JSX.Element | null => {
   const { calendarData } = useCalendarStore()
 
   if (!calendarData) return null
@@ -55,4 +55,4 @@ const GameCard = ({
   )
 }
 
-export default GameCard
+export default GameSelectorCard

@@ -6,9 +6,9 @@ import sv from 'dayjs/locale/sv'
 import { Flex, Icon, Subtitle } from '@tremor/react'
 import { RiArrowLeftSLine, RiArrowRightSLine } from '@remixicon/react'
 
-import Modal from '@/components/Modal'
-import GameCard from '@/components/GameCard'
-import IconButton from '@/components/IconButton'
+import Modal from '@/components/ui/Modal'
+import GameCard from '@/components/GameSelector/GameSelectorCard'
+import IconButton from '@/components/ui/IconButton'
 import GameTypeSelect from './GameTypeSelect'
 
 import { useCalendarStore } from '@/store/useCalendar'

@@ -32,7 +32,7 @@ const RaceTab = ({ gameData }: RaceTabProps) => {
               key={index}
               onClick={() => setRaceIndex(index)}
               className={clsx(
-                'w-full max-w-[initial] select-none justify-center rounded-lg border-none py-1.5 text-sm font-medium uppercase drop-shadow-sm hover:bg-black/5 hover:drop-shadow-sm focus:outline-none sm:hover:scale-105 md:py-2.5'
+                'w-full max-w-[initial] select-none justify-center rounded-lg border-none py-1.5 text-sm font-medium uppercase drop-shadow-sm hover:bg-black/5 hover:drop-shadow-sm focus:outline-none md:py-2.5'
               )}
             >
               <Text className="text-xs font-bold text-theme-600 md:text-sm dark:text-theme-600">

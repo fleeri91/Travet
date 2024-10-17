@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { RadioGroup } from '@headlessui/react'
+import { RadioGroup, Radio, Label } from '@headlessui/react'
 import { Flex } from '@tremor/react'
 import { Game } from '@/types/ATG/CalendarDay'
 
@@ -26,13 +26,13 @@ const GameTypeSelect = ({ games, onSelectedGameType }: GameTypeSelectProps): JSX
       className="no-scrollbar relative inline-flex w-full gap-2 overflow-x-scroll py-2"
       id="game-type-selector"
     >
-      <RadioGroup.Label className="sr-only">Speltyp</RadioGroup.Label>
+      <Label className="sr-only">Speltyp</Label>
       {games.map(([gameType, gamesArray]) => (
-        <RadioGroup.Option
+        <Radio
           key={gameType}
           value={gameType}
           onClick={() => onSelectedGameType(gameType)}
-          className={({ active, checked }) =>
+          className={({ checked }) =>
             `${checked ? 'text-white' : 'bg-slate-300'}
               group relative flex cursor-pointer select-none rounded-lg border-none px-3 py-2 uppercase shadow-md transition-all focus:outline-none`
           }
@@ -46,11 +46,11 @@ const GameTypeSelect = ({ games, onSelectedGameType }: GameTypeSelectProps): JSX
                 </span>
               </span>
             )}
-            <RadioGroup.Label as="p" className={`font-medium text-white transition-all`}>
+            <Label as="p" className={`font-medium text-white transition-all`}>
               {gameType}
-            </RadioGroup.Label>
+            </Label>
           </Flex>
-        </RadioGroup.Option>
+        </Radio>
       ))}
     </RadioGroup>
   )

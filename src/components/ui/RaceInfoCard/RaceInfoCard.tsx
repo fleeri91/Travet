@@ -13,7 +13,7 @@ interface RaceInfoCardProps {
 
 const RaceInfoCard = ({ race }: RaceInfoCardProps) => {
   return (
-    <Card className={clsx('mb-2 select-none bg-theme-600 text-white')}>
+    <Card className={clsx('select-none bg-theme-600 text-white shadow-none ring-0')}>
       {race && (
         <Flex justifyContent="start">
           <Text className="space-x-2 text-sm text-white md:text-base">

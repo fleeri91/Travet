@@ -41,7 +41,7 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
   const renderedHandicaps: { [key: number]: boolean } = {}
 
   return (
-    <Table className="w-full select-none">
+    <Table className="w-full select-none p-4">
       <TableHead>
         <TableRow>
           <TableHeaderCell className="w-3/12">

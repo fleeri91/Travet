@@ -37,7 +37,11 @@ const RaceTab = ({ gameData }: RaceTabProps) => {
               </Tab>
             ))}
           </TabList>
-          <Flex className="hidden space-x-2 sm:flex" justifyContent="end" alignItems="end">
+          <Flex
+            className="fixed bottom-0 right-0 z-50 flex flex-col space-y-2 p-2 sm:relative sm:flex-row sm:space-x-2 sm:space-y-0 sm:p-0"
+            justifyContent="end"
+            alignItems="end"
+          >
             <Icon
               color={theme}
               variant="shadow"

@@ -20,6 +20,10 @@ export const _getStartForm = (records: RecordResult[]): FormType[] => {
   )
 
   for (let i = 0; i < filteredRecords.length; i++) {
+    if (parseInt(filteredRecords[i].place) > 9) {
+      filteredRecords[i].place = '0'
+    }
+
     if (
       filteredRecords[i].place ||
       filteredRecords[i].galloped ||

@@ -17,7 +17,10 @@ const Home = () => {
 
   const { filterOpen, setFilterOpen } = useModalsStore()
 
-  const { data } = useSWR<GameRoot>(gameId ? `game/?id=${gameId}` : null)
+  const { data } = useSWR<GameRoot>(gameId ? `game/?id=${gameId}` : null, {
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+  })
 
   return (
     <Flex flexDirection="row" className="my-8 max-w-screen-lg gap-2 px-4 lg:my-16">

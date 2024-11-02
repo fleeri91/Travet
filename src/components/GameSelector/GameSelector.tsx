@@ -20,7 +20,7 @@ import { CalendarDayRoot } from '@/types/ATG/CalendarDay'
 import { GameType } from '@/constants/GameType'
 import { filterGamesByTrack } from '@/utils/track'
 
-const GameSelector = ({}): JSX.Element | null => {
+const GameSelector = (): JSX.Element | null => {
   const {
     setCalendarData,
     setIsLoading,

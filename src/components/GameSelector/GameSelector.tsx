@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import useSWR from 'swr'
 import dayjs from 'dayjs'
 import sv from 'dayjs/locale/sv'
@@ -45,6 +45,8 @@ const GameSelector = (): JSX.Element | null => {
 
   const FIVE_DAYS = dayjs(today).add(5, 'day')
 
+  const hasSetGameId = useRef<boolean>(false)
+
   useEffect(() => {
     if (data) {
       setCalendarData(data)
@@ -52,7 +54,7 @@ const GameSelector = (): JSX.Element | null => {
   }, [data])
 
   useEffect(() => {
-    if (games.length) {
+    if (games.length && !hasSetGameId.current) {
       let gameId = ''
       for (let i = 0; i < games.length; i++) {
         const potentialId = games[i]?.[1]?.[0]?.id
@@ -61,8 +63,8 @@ const GameSelector = (): JSX.Element | null => {
           break
         }
       }
-
       setGameId(gameId)
+      hasSetGameId.current = true
     }
   }, [games])
 

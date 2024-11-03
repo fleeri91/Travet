@@ -29,7 +29,7 @@ const GameSelectorCard = ({
 
   return (
     <Card
-      className={`bg-${gameTypeColor(gameType)}-500 cursor-pointer select-none transition-all sm:hover:opacity-80`}
+      className={`bg-${gameTypeColor(gameType)}-500 cursor-pointer select-none text-sm transition-all sm:text-base sm:hover:opacity-80`}
       onClick={onClick}
     >
       <Grid numItems={3} className="w-full items-center">

@@ -29,7 +29,7 @@ const Switch = ({ label, srLabel, value, onChange, tooltip }: SwitchProps): JSX.
       <Flex>
         <Flex justifyContent="start">
           {label && (
-            <HeadlessUISwitch.Label className={'select-none text-lg'}>
+            <HeadlessUISwitch.Label className={'select-none sm:text-lg'}>
               {label}
             </HeadlessUISwitch.Label>
           )}

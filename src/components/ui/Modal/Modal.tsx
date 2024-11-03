@@ -69,7 +69,7 @@ const Modal = ({
             >
               <Dialog.Panel
                 className={clsx(
-                  'min-h-96 w-full transform rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all',
+                  'min-h-96 w-full transform rounded-2xl bg-white p-4 text-left align-middle shadow-xl transition-all sm:p-6',
                   size && fullWidth ? '' : SizeClasses[size]
                 )}
               >

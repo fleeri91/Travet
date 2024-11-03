@@ -23,7 +23,7 @@ const Home = () => {
   })
 
   return (
-    <Flex flexDirection="row" className="my-8 max-w-screen-lg gap-2 px-4 lg:my-16">
+    <Flex flexDirection="row" className="my-4 max-w-screen-lg px-2 sm:my-8 sm:px-4 lg:my-16">
       {data && <RaceTab gameData={data} />}
       <GameSelector />
       <Filter isOpen={filterOpen} onClose={() => setFilterOpen(false)} />

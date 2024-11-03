@@ -40,7 +40,7 @@ const GameTypeSelect = ({ games, onSelectedGameType }: GameTypeSelectProps): JSX
             value={gameType}
             className={({ checked }) =>
               `${checked ? 'text-white' : 'bg-slate-300'}
-              group relative flex cursor-pointer select-none rounded-lg border-none px-3 py-2 uppercase shadow-md transition-all focus:outline-none`
+              group relative flex cursor-pointer select-none rounded-lg border-none px-3 py-2 text-sm uppercase shadow-md transition-all focus:outline-none sm:text-base`
             }
             data-theme={gameType}
           >

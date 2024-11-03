@@ -62,8 +62,8 @@ const Filter = ({ isOpen, onClose }: FilterProps): JSX.Element => {
   }, [filter])
 
   return (
-    <Modal isOpen={isOpen} onClose={discardFilter} title="Filter">
-      <Flex className="space-y-4 py-4" flexDirection="col">
+    <Modal isOpen={isOpen} onClose={discardFilter}>
+      <Flex className="space-y-4 pb-4" flexDirection="col">
         <Switch
           onChange={() => toggleFilter('shoes')}
           value={filter.shoes}

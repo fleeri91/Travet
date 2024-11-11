@@ -124,9 +124,9 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
                 )}
               </TableCell>
               {records && filteredRecords && (
-                <TableCell className="flex justify-end space-x-2 py-2">
+                <TableCell className="flex justify-start space-x-2 py-2">
                   {(() => {
-                    const startRecord = _getStartRecord(filteredRecords)
+                    const startRecord = _getStartRecord(records, filteredRecords)
 
                     if (!startRecord.time && !startRecord.distance?.type) {
                       return null
@@ -134,16 +134,15 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
 
                     return (
                       <>
-                        {startRecord.time && <Text className="text-right">{startRecord.time}</Text>}
-                        {startRecord.distance?.type && (
-                          <Badge
-                            color={'neutral'}
-                            className="min-w-12"
-                            tooltip={startRecord.distance.number?.toString()}
-                          >
-                            {startRecord.distance.type}
-                          </Badge>
-                        )}
+                        {startRecord.time && <Text>{`${startRecord.time}`}</Text>}
+                        <Badge
+                          color={theme}
+                          className={clsx('min-w-12')}
+                          tooltip={startRecord.distance.number?.toString()}
+                        >
+                          {startRecord.distance.type}
+                        </Badge>
+                        {startRecord.recent && <Badge color={theme}>🔥</Badge>}
                       </>
                     )
                   })()}

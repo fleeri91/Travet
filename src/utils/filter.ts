@@ -55,17 +55,35 @@ export const _getGallopp = (records: RecordResult[], method: string): RecordResu
  */
 export const _getStartRecord = (
   records: RecordResult[],
-  length: number = records.length
-): { time: string; distance: { number: number | null; type: string } } => {
+  filteredRecords: RecordResult[],
+  length: number = filteredRecords.length
+): { time: string; recent: boolean; distance: { number: number | null; type: string } } => {
+  if (records.length === 0 || filteredRecords.length === 0) {
+    return { time: '', recent: false, distance: { number: null, type: '' } }
+  }
+
   let lowestKmTime = null
-  let recordDistance = null // Variable to track the distance
+  let recordDistance = null
+  let recent = false
+
+  const currentDate = dayjs()
+
+  const latestRecords = records
+    .filter((record) => {
+      const recordDate = dayjs(record.date) // Assuming `record.date` holds the timestamp
+      return (
+        !record.scratched && record.kmTime && recordDate.isAfter(currentDate.subtract(3, 'month'))
+      )
+    })
+    .slice(0, 5)
 
   for (let i = 0; i < length; i++) {
-    if (records[i] === undefined || records[i].kmTime === undefined) {
-      return { time: '', distance: { number: null, type: '' } }
+    const currentRecord = filteredRecords[i]
+    if (!currentRecord || !currentRecord.kmTime) {
+      return { time: '', recent: false, distance: { number: null, type: '' } }
     }
 
-    const kmTime = records[i].kmTime
+    const kmTime = currentRecord.kmTime
     if (
       kmTime &&
       (!lowestKmTime ||
@@ -76,7 +94,10 @@ export const _getStartRecord = (
           kmTime.tenths < lowestKmTime.tenths))
     ) {
       lowestKmTime = kmTime
-      recordDistance = records[i].start.distance // Store the distance
+      recordDistance = currentRecord.start.distance
+
+      // Set 'recent' if this record is one of the last 3 records in the `records` array
+      recent = latestRecords.includes(currentRecord)
     }
   }
 
@@ -94,6 +115,7 @@ export const _getStartRecord = (
   return {
     time:
       lowestKmTime?.minutes === undefined ? '' : `${lowestKmTime.seconds}.${lowestKmTime.tenths}`,
+    recent,
     distance: {
       number: recordDistance,
       type: distanceType,

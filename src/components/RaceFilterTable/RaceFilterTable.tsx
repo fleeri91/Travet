@@ -44,23 +44,22 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
     <Table className="w-full select-none p-1 sm:p-4">
       <TableHead>
         <TableRow>
-          <TableHeaderCell className="w-3/12">
+          <TableHeaderCell className="w-5/12">
             <Subtitle>Namn</Subtitle>
           </TableHeaderCell>
-          <TableHeaderCell className="w-2/12" />
-          <TableHeaderCell className="w-1/12">
+          <TableHeaderCell className="w-2/12">
             <Flex justifyContent="start">
               <Subtitle>Tid</Subtitle>
               <Icon tooltip={'Filtrerat resultat'} icon={RiInformationLine} />
             </Flex>
           </TableHeaderCell>
-          <TableHeaderCell className="w-[210px]">
+          <TableHeaderCell className="w-3/12">
             <Flex justifyContent="start">
               <Subtitle>Form</Subtitle>
               <Icon tooltip={'Hästens form senaste 3 månaderna'} icon={RiInformationLine} />
             </Flex>
           </TableHeaderCell>
-          <TableHeaderCell className="w-[210px]">
+          <TableHeaderCell className="w-3/12">
             <Flex justifyContent="start">
               <Subtitle>Gallopp</Subtitle>
               <Icon tooltip={'Gallopp senaste 5 starter'} icon={RiInformationLine} />
@@ -96,56 +95,60 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
             >
               <TableCell className="space-x-2 py-2">
                 <Flex justifyContent="start">
-                  <Text
-                    className={clsx(start.scratched && 'text-gray-300 line-through', 'space-x-2')}
-                  >
-                    <Badge color={theme} className="w-[25px]">
-                      {currentStart.number && currentStart.number}
-                    </Badge>
-                    <span>{currentStart.horse.name && currentStart.horse.name}</span>
-                    <span>
+                  <Badge color={theme} className="mr-2 w-[25px]">
+                    {currentStart.number && currentStart.number}
+                  </Badge>
+                  <Flex flexDirection="col" justifyContent="start" alignItems="start">
+                    <Text
+                      className={clsx(start.scratched && 'text-gray-300 line-through', 'space-x-2')}
+                    >
+                      {currentStart.horse.name && <span>{currentStart.horse.name}</span>}
+                      {currentStart && currentStart.horse.nationality && (
+                        <span>{'(' + currentStart.horse.nationality + ')'}</span>
+                      )}
+                      {currentStart && currentStart.horse.sex && (
+                        <span>
+                          {`${_getHorseSex(currentStart.horse.sex)}${currentStart.horse.age}`}
+                        </span>
+                      )}
+                    </Text>
+                    <Text
+                      className={clsx(start.scratched && 'text-gray-300 line-through', 'text-xs')}
+                    >
                       {currentStart &&
-                        currentStart.horse.nationality &&
-                        '(' + currentStart.horse.nationality + ')'}
-                    </span>
-                    <span>
-                      {currentStart &&
-                        currentStart.horse.sex &&
-                        `${_getHorseSex(currentStart.horse.sex)}${currentStart.horse.age}`}
-                    </span>
-                  </Text>
+                        currentStart.driver.firstName &&
+                        currentStart.driver.lastName && (
+                          <span>{`${currentStart.driver.firstName} ${currentStart.driver.lastName}`}</span>
+                        )}
+                    </Text>
+                  </Flex>
                 </Flex>
               </TableCell>
-              <TableCell className="py-2">
-                {start.scratched && (
-                  <Badge color={'neutral'} className=" font-semibold uppercase">
-                    Struken
-                  </Badge>
-                )}
-              </TableCell>
               {records && filteredRecords && (
-                <TableCell className="flex justify-start space-x-2 py-2">
-                  {(() => {
-                    const startRecord = _getStartRecord(records, filteredRecords)
+                <TableCell className="py-2">
+                  <Flex justifyContent="start" className="space-x-2">
+                    {(() => {
+                      const startRecord = _getStartRecord(records, filteredRecords)
 
-                    if (!startRecord.time && !startRecord.distance?.type) {
-                      return null
-                    }
+                      if (!startRecord.time && !startRecord.distance?.type) {
+                        return null
+                      }
 
-                    return (
-                      <>
-                        {startRecord.time && <Text>{`${startRecord.time}`}</Text>}
-                        <Badge
-                          color={theme}
-                          className={clsx('min-w-12')}
-                          tooltip={startRecord.distance.number?.toString()}
-                        >
-                          {startRecord.distance.type}
-                        </Badge>
-                        {startRecord.recent && <Badge color={theme}>🔥</Badge>}
-                      </>
-                    )
-                  })()}
+                      return (
+                        <>
+                          {startRecord.time && <Text>{`${startRecord.time}`}</Text>}
+                          <Badge
+                            color={theme}
+                            className={clsx('min-w-12')}
+                            tooltip={startRecord.distance.number?.toString()}
+                          >
+                            {startRecord.distance.type}
+                          </Badge>
+                          {startRecord.recent && <Badge color={theme}>🔥</Badge>}
+                        </>
+                      )
+                    })()}
+                  </Flex>
                 </TableCell>
               )}
               {records && (

@@ -82,26 +82,24 @@ const Filter = ({ isOpen, onClose }: FilterProps): JSX.Element => {
           label="Distans"
           tooltip="Filtrera hästens resultat på loppets aktuella distans"
         />
-        {filterState.distance && (
-          <Flex className="space-x-2">
-            <NumberInput
-              placeholder="Från"
-              value={
-                filterState.specificDistance?.from != null ? filterState.specificDistance.from : ''
-              }
-              onChange={handleSpecificDistanceFromChange}
-              min={0}
-            />
-            <NumberInput
-              placeholder="Till"
-              value={
-                filterState.specificDistance?.to != null ? filterState.specificDistance.to : ''
-              }
-              onChange={handleSpecificDistanceToChange}
-              min={0}
-            />
-          </Flex>
-        )}
+        <Flex className="space-x-2">
+          <NumberInput
+            placeholder="Från"
+            disabled={!filterState.distance}
+            value={
+              filterState.specificDistance?.from != null ? filterState.specificDistance.from : ''
+            }
+            onChange={handleSpecificDistanceFromChange}
+            min={0}
+          />
+          <NumberInput
+            placeholder="Till"
+            disabled={!filterState.distance}
+            value={filterState.specificDistance?.to != null ? filterState.specificDistance.to : ''}
+            onChange={handleSpecificDistanceToChange}
+            min={0}
+          />
+        </Flex>
         <Switch
           onChange={() => toggleFilter('money')}
           value={filter.money}

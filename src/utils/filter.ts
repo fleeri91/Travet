@@ -138,7 +138,6 @@ export const _recordFilter = (
   filter: FilterType
 ): RecordResult[] => {
   const currentDate = dayjs()
-  const currentDateOneAndHalfYearsAgo = currentDate.subtract(1, 'year').subtract(6, 'months')
   const data = records.filter((record) => {
     const basicConditions =
       !record.disqualified &&
@@ -149,7 +148,7 @@ export const _recordFilter = (
       record.place !== '0' &&
       (race.distance > 1940 ? record.start.distance > 1940 : true) &&
       // !FORBIDDEN_TRACKS.includes(record.track.id) &&
-      dayjs(record.date).isAfter(currentDateOneAndHalfYearsAgo)
+      dayjs(record.date).isAfter(currentDate.subtract(2, 'year'))
 
     const { shoes, sulky, distance, money, top, track, driver, condition, win, stl } = filter
 

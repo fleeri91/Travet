@@ -212,7 +212,7 @@ export const _recordFilter = (
     }
 
     if (iceTrack) {
-      filterConditions = filterConditions && record.track.condition === 'v'
+      filterConditions = filterConditions && record.track.condition === 'winter'
     }
 
     if (stl) {

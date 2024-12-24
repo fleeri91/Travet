@@ -146,7 +146,7 @@ export const _recordFilter = (
       !record.kmTime.code &&
       record.race.sport === race.sport &&
       record.place !== '0' &&
-      (race.distance > 1940 ? record.start.distance > 1940 : true) &&
+      // (race.distance > 1940 ? record.start.distance > 1940 : true) &&
       // !FORBIDDEN_TRACKS.includes(record.track.id) &&
       dayjs(record.date).isAfter(currentDate.subtract(2, 'year'))
 

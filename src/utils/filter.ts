@@ -150,7 +150,8 @@ export const _recordFilter = (
       // !FORBIDDEN_TRACKS.includes(record.track.id) &&
       dayjs(record.date).isAfter(currentDate.subtract(2, 'year'))
 
-    const { shoes, sulky, distance, money, top, track, driver, condition, win, stl } = filter
+    const { shoes, sulky, distance, money, top, track, driver, condition, iceTrack, win, stl } =
+      filter
 
     let filterConditions: boolean = true
 
@@ -208,6 +209,10 @@ export const _recordFilter = (
 
     if (condition) {
       filterConditions = filterConditions && record.track.condition === currentTrack.condition
+    }
+
+    if (iceTrack) {
+      filterConditions = filterConditions && record.track.condition === 'v'
     }
 
     if (stl) {

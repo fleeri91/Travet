@@ -25,6 +25,7 @@ const initialState: FilterState = {
     track: false,
     driver: false,
     condition: false,
+    iceTrack: false,
     win: false,
     stl: false,
   },

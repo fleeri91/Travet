@@ -134,7 +134,13 @@ const Filter = ({ isOpen, onClose }: FilterProps): JSX.Element => {
           onChange={() => toggleFilter('condition')}
           value={filter.condition}
           label="Banförhållande"
-          tooltip="Filtrera hästens resultat på banförhållande"
+          tooltip="Filtrera hästens resultat på nuvarande banförhållande"
+        />
+        <Switch
+          onChange={() => toggleFilter('iceTrack')}
+          value={filter.iceTrack}
+          label="Isbana"
+          tooltip="Filtrera hästens resultat på isbana"
         />
         <Switch
           onChange={() => toggleFilter('stl')}

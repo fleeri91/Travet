@@ -11,7 +11,7 @@ export type FilterType = {
   track: boolean
   driver: boolean
   condition: boolean
-  iceTrack: boolean
+  latestMonths: boolean
   win: boolean
   stl: boolean
 }

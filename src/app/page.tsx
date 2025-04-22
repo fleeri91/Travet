@@ -1,6 +1,6 @@
 'use client'
 
-import { Flex, Text, Button } from '@tremor/react'
+import { Flex, Button } from '@tremor/react'
 import useSWR from 'swr'
 
 import GameSelector from '@/components/GameSelector'

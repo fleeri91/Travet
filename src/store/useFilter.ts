@@ -13,15 +13,15 @@ type FilterActions = {
 
 const initialState: FilterState = {
   filter: {
-    shoes: false,
-    sulky: false,
-    distance: false,
+    shoes: true,
+    sulky: true,
+    distance: true,
     specificDistance: {
       from: '',
       to: '',
     },
     money: false,
-    top: false,
+    top: true,
     track: false,
     driver: false,
     condition: false,

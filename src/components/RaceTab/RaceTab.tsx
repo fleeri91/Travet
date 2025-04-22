@@ -14,9 +14,12 @@ interface RaceTabProps {
 }
 
 const RaceTab = ({ gameData }: RaceTabProps) => {
-  const [raceIndex, setRaceIndex] = useState<number>(0)
   const { setFilterOpen, setGameSelectorOpen } = useModalsStore()
   const { theme } = useThemeStore()
+
+  if (!gameData) {
+    return null
+  }
 
   return (
     <TabGroup>
@@ -26,7 +29,6 @@ const RaceTab = ({ gameData }: RaceTabProps) => {
             {gameData?.races?.map((race, index) => (
               <Tab
                 key={index}
-                onClick={() => setRaceIndex(index)}
                 className={clsx(
                   'w-full max-w-[initial] select-none justify-center border-none px-4 py-2 text-sm font-medium uppercase drop-shadow-sm hover:bg-black/5 hover:drop-shadow-sm focus:outline-none'
                 )}

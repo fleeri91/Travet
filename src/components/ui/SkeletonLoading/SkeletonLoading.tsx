@@ -1,29 +1,28 @@
 import { Card, Flex } from '@tremor/react'
 
 const SkeletonLoading = (): JSX.Element | null => (
-  <Flex flexDirection="col" role="status" className="w-full gap-2">
-    <Card className="p-2">
-      <Flex className="gap-2">
-        <div className="h-10 w-36 rounded-md bg-gray-200 dark:bg-gray-700"></div>
-        <div className="h-10 w-36 rounded-md bg-gray-200 dark:bg-gray-700"></div>
-        <div className="h-10 w-36 rounded-md bg-gray-200 dark:bg-gray-700"></div>
-        <div className="h-10 w-36 rounded-md bg-gray-200 dark:bg-gray-700"></div>
-        <div className="h-10 w-36 rounded-md bg-gray-200 dark:bg-gray-700"></div>
-        <div className="h-10 w-36 rounded-md bg-gray-200 dark:bg-gray-700"></div>
+  <Flex flexDirection="col" role="status" className="w-full gap-6">
+    <Card className="flex justify-between px-4 py-2">
+      <div className="h-10 w-96 rounded-md bg-gray-200 dark:bg-gray-700"></div>
+      <Flex justifyContent="end" className="gap-2">
+        <div className="h-10 w-10 rounded-md bg-gray-200 dark:bg-gray-700"></div>
+        <div className="h-10 w-10 rounded-md bg-gray-200 dark:bg-gray-700"></div>
       </Flex>
     </Card>
-    <Card>
-      <Flex flexDirection="col" className="gap-2" alignItems="start">
-        <div className="h-4 w-48 animate-pulse rounded-md bg-gray-200 dark:bg-gray-700" />
-        <div className="h-4 w-72 animate-pulse rounded-md bg-gray-200 dark:bg-gray-700" />
-        <div className="h-4 w-96 animate-pulse rounded-md bg-gray-200 dark:bg-gray-700" />
+    <Card className="flex flex-col gap-10">
+      <Flex>
+        <div className="h-16 w-full rounded-md bg-gray-200 dark:bg-gray-700"></div>
       </Flex>
-    </Card>
-    <Card>
-      <Flex className="mb-4 mt-6 gap-2">
-        <div className="h-4 w-full rounded-md bg-gray-200 dark:bg-gray-700"></div>
+      <Flex dir="row">
+        <div className="h-4 w-16 rounded-md bg-gray-200 dark:bg-gray-700"></div>
+        <div className="h-4 w-16 rounded-md bg-gray-200 dark:bg-gray-700"></div>
+        <div className="h-4 w-16 rounded-md bg-gray-200 dark:bg-gray-700"></div>
+        <div className="h-4 w-16 rounded-md bg-gray-200 dark:bg-gray-700"></div>
       </Flex>
-      <Flex flexDirection="col" className="gap-2">
+      <Flex className="flex-col gap-4">
+        <div className="h-10 w-full rounded-md bg-gray-200 dark:bg-gray-700"></div>
+        <div className="h-10 w-full rounded-md bg-gray-200 dark:bg-gray-700"></div>
+        <div className="h-10 w-full rounded-md bg-gray-200 dark:bg-gray-700"></div>
         <div className="h-10 w-full rounded-md bg-gray-200 dark:bg-gray-700"></div>
         <div className="h-10 w-full rounded-md bg-gray-200 dark:bg-gray-700"></div>
         <div className="h-10 w-full rounded-md bg-gray-200 dark:bg-gray-700"></div>

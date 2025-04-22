@@ -8,8 +8,8 @@ interface HandicapRowProps {
 
 const HandicapRow = ({ handicap }: HandicapRowProps) => {
   return (
-    <TableRow>
-      <TableCell className="w-full !border-none bg-gray-600 py-2 dark:bg-gray-950" colSpan={12}>
+    <TableRow className="!border-none bg-gray-600 py-2 odd:dark:bg-slate-900 even:dark:bg-slate-950">
+      <TableCell className="w-full" colSpan={12}>
         <Text className="text-white">{`Tillägg: ${handicap} meter`}</Text>
       </TableCell>
     </TableRow>

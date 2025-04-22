@@ -48,7 +48,7 @@ const RaceTab = ({ gameData }: RaceTabProps) => {
               color={theme}
               variant="shadow"
               icon={RiCalendarLine}
-              className="cursor-pointer bg-white bg-opacity-100"
+              className="cursor-pointer bg-white bg-opacity-100 dark:bg-slate-700"
               tooltip="Spelkalender"
               onClick={() => setGameSelectorOpen(true)}
             />
@@ -56,7 +56,7 @@ const RaceTab = ({ gameData }: RaceTabProps) => {
               color={theme}
               variant="shadow"
               icon={RiFilter3Line}
-              className="cursor-pointer bg-white bg-opacity-100"
+              className="cursor-pointer bg-white bg-opacity-100 dark:bg-slate-700"
               tooltip="Filter"
               onClick={() => setFilterOpen(true)}
             />

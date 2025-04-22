@@ -90,7 +90,7 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
             <TableRow
               key={startIndex}
               className={clsx(
-                'group table-fixed !border-none odd:bg-white even:bg-theme-50 dark:even:bg-slate-800'
+                'group table-fixed !border-none odd:bg-white even:bg-theme-50 dark:odd:bg-slate-900 dark:even:bg-slate-950'
               )}
             >
               <TableCell className="space-x-2 py-2">

@@ -3,12 +3,9 @@ import useSWR from 'swr'
 import dayjs from 'dayjs'
 import sv from 'dayjs/locale/sv'
 
-import { Flex, Icon, Subtitle } from '@tremor/react'
 import { RiArrowLeftSLine, RiArrowRightSLine } from '@remixicon/react'
 
-import Modal from '@/components/ui/Modal'
 import GameCard from '@/components/GameSelector/GameSelectorCard'
-import IconButton from '@/components/ui/IconButton'
 import GameTypeSelect from './GameTypeSelect'
 
 import { useCalendarStore } from '@/store/useCalendar'
@@ -78,7 +75,9 @@ const GameSelector = (): JSX.Element | null => {
     }
   }, [calendarData.games, calendarData.tracks])
 
-  return (
+  return <></>
+  {
+    /*
     <Modal isOpen={gameSelectorOpen} onClose={() => setGameSelectorOpen(false)}>
       <Flex flexDirection="col" className="gap-4">
         <Flex className="select-none gap-4" justifyContent="center">
@@ -133,7 +132,8 @@ const GameSelector = (): JSX.Element | null => {
         </Flex>
       </Flex>
     </Modal>
-  )
+  )*/
+  }
 }
 
 export default GameSelector

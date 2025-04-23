@@ -1,12 +1,6 @@
 import { ChangeEvent, useEffect, useState } from 'react'
-
-import { Button, Flex, Icon, NumberInput } from '@tremor/react'
-
-import Modal from '@/components/ui/Modal'
-import Switch from '@/components/ui/Switch'
-
+import { Button, Dialog, Flex, Switch, Text, TextField } from '@radix-ui/themes'
 import { useFilterStore } from '@/store/useFilter'
-
 import type { FilterType } from '@/types/Filter'
 
 interface FilterProps {
@@ -62,102 +56,102 @@ const Filter = ({ isOpen, onClose }: FilterProps): JSX.Element => {
   }, [filter])
 
   return (
-    <Modal isOpen={isOpen} onClose={discardFilter}>
-      <Flex className="space-y-4 pb-4" flexDirection="col">
-        <Switch
-          onChange={() => toggleFilter('shoes')}
-          value={filter.shoes}
-          label="Skor"
-          tooltip="Filtrera hästens resultat på aktuella skor"
-        />
-        <Switch
-          onChange={() => toggleFilter('sulky')}
-          value={filter.sulky}
-          label="Sulky"
-          tooltip="Filtrera hästens resultat på loppets aktuella sulky"
-        />
-        <Switch
-          onChange={() => toggleFilter('distance')}
-          value={filter.distance}
-          label="Distans"
-          tooltip="Filtrera hästens resultat på loppets aktuella distans"
-        />
-        <Flex className="space-x-2">
-          <NumberInput
-            placeholder="Från"
-            disabled={!filterState.distance}
-            value={
-              filterState.specificDistance?.from != null ? filterState.specificDistance.from : ''
-            }
-            onChange={handleSpecificDistanceFromChange}
-            min={0}
-          />
-          <NumberInput
-            placeholder="Till"
-            disabled={!filterState.distance}
-            value={filterState.specificDistance?.to != null ? filterState.specificDistance.to : ''}
-            onChange={handleSpecificDistanceToChange}
-            min={0}
-          />
+    <Dialog.Root open={isOpen}>
+      <Dialog.Content maxWidth="450px">
+        <Dialog.Title>Filtrera</Dialog.Title>
+
+        <Flex direction="column" gap="2">
+          <Flex direction="row" justify="between" align="center" gap="3">
+            <Text>Skor</Text>
+            <Switch checked={filterState.shoes} onCheckedChange={() => toggleFilter('shoes')} />
+          </Flex>
+          <Flex direction="row" justify="between" align="center" gap="3">
+            <Text>Sulky</Text>
+            <Switch checked={filterState.sulky} onCheckedChange={() => toggleFilter('sulky')} />
+          </Flex>
+          <Flex direction="row" justify="between" align="center" gap="3">
+            <Text>Distans</Text>
+            <Switch
+              checked={filterState.distance}
+              onCheckedChange={() => toggleFilter('distance')}
+            />
+          </Flex>
+
+          <Flex direction="row" justify="between" align="center" gap="3">
+            <TextField.Root
+              type="number"
+              placeholder="Från"
+              disabled={!filterState.distance}
+              value={
+                filterState.specificDistance?.from != null ? filterState.specificDistance.from : ''
+              }
+              onChange={handleSpecificDistanceFromChange}
+              min={0}
+              className="w-full"
+            />
+            <TextField.Root
+              type="number"
+              placeholder="Till"
+              disabled={!filterState.distance}
+              value={
+                filterState.specificDistance?.to != null ? filterState.specificDistance.to : ''
+              }
+              onChange={handleSpecificDistanceToChange}
+              min={0}
+              className="w-full"
+            />
+          </Flex>
+
+          <Flex direction="row" justify="between" align="center" gap="3">
+            <Text>Pengar</Text>
+            <Switch checked={filterState.money} onCheckedChange={() => toggleFilter('money')} />
+          </Flex>
+          <Flex direction="row" justify="between" align="center" gap="3">
+            <Text>Topplacering</Text>
+            <Switch checked={filterState.top} onCheckedChange={() => toggleFilter('top')} />
+          </Flex>
+          <Flex direction="row" justify="between" align="center" gap="3">
+            <Text>Vinst</Text>
+            <Switch checked={filterState.win} onCheckedChange={() => toggleFilter('win')} />
+          </Flex>
+          <Flex direction="row" justify="between" align="center" gap="3">
+            <Text>Aktuell bana</Text>
+            <Switch checked={filterState.track} onCheckedChange={() => toggleFilter('track')} />
+          </Flex>
+          <Flex direction="row" justify="between" align="center" gap="3">
+            <Text>Kusk</Text>
+            <Switch checked={filterState.driver} onCheckedChange={() => toggleFilter('driver')} />
+          </Flex>
+          <Flex direction="row" justify="between" align="center" gap="3">
+            <Text>Banförhållande</Text>
+            <Switch
+              checked={filterState.condition}
+              onCheckedChange={() => toggleFilter('condition')}
+            />
+          </Flex>
+          <Flex direction="row" justify="between" align="center" gap="3">
+            <Text>Senaste månaderna</Text>
+            <Switch
+              checked={filterState.latestMonths}
+              onCheckedChange={() => toggleFilter('latestMonths')}
+            />
+          </Flex>
+          <Flex direction="row" justify="between" align="center" gap="3">
+            <Text>STL</Text>
+            <Switch checked={filterState.stl} onCheckedChange={() => toggleFilter('stl')} />
+          </Flex>
         </Flex>
-        <Switch
-          onChange={() => toggleFilter('money')}
-          value={filter.money}
-          label="Pengar"
-          tooltip="Filtrera hästens resultat på loppets aktuella vinstpengar"
-        />
-        <Switch
-          onChange={() => toggleFilter('top')}
-          value={filter.top}
-          label="Topplacering"
-          tooltip="Filtrera hästens resultat på topp 3 placering"
-        />
-        <Switch
-          onChange={() => toggleFilter('win')}
-          value={filter.win}
-          label="Vinst"
-          tooltip="Filtrera hästens resultat på vinst"
-        />
-        <Switch
-          onChange={() => toggleFilter('track')}
-          value={filter.track}
-          label="Aktuell bana"
-          tooltip="Filtrera hästens resultat på loppets aktuella bana"
-        />
-        <Switch
-          onChange={() => toggleFilter('driver')}
-          value={filter.driver}
-          label="Kusk"
-          tooltip="Filtrera hästens resultat på kusk"
-        />
-        <Switch
-          onChange={() => toggleFilter('condition')}
-          value={filter.condition}
-          label="Banförhållande"
-          tooltip="Filtrera hästens resultat på nuvarande banförhållande"
-        />
-        <Switch
-          onChange={() => toggleFilter('latestMonths')}
-          value={filter.latestMonths}
-          label="Senaste månaderna"
-          tooltip="Filtrera hästens resultat inom de senaste månaderna"
-        />
-        <Switch
-          onChange={() => toggleFilter('stl')}
-          value={filter.stl}
-          label="STL Lopp"
-          tooltip="Filtrera hästens resultat på STL lopp"
-        />
-      </Flex>
-      <Flex justifyContent="end" className="mt-4 space-x-4">
-        <Button color="stone" onClick={discardFilter}>
-          Avbryt
-        </Button>
-        <Button color="green" onClick={applyFilter}>
-          Filtrera
-        </Button>
-      </Flex>
-    </Modal>
+
+        <Flex gap="3" mt="4" justify="end">
+          <Button color="gray" onClick={discardFilter} className="cursor-pointer">
+            Avbryt
+          </Button>
+          <Button color="green" onClick={applyFilter} className="cursor-pointer">
+            Filtrera
+          </Button>
+        </Flex>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }
 

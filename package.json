@@ -11,10 +11,8 @@
     "new": "plop"
   },
   "dependencies": {
-    "@headlessui/react": "^2.1.5",
-    "@headlessui/tailwindcss": "^0.2.0",
+    "@radix-ui/themes": "^3.2.1",
     "@remixicon/react": "^4.2.0",
-    "@tremor/react": "^3.14.1",
     "axios": "^1.6.8",
     "clsx": "^2.1.0",
     "dayjs": "^1.11.10",

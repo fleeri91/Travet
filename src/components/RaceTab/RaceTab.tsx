@@ -1,79 +1,50 @@
-import { useState } from 'react'
 import clsx from 'clsx'
-import { Card, Flex, Icon, Tab, TabGroup, TabList, TabPanel, TabPanels, Text } from '@tremor/react'
 import { RiFilter3Line, RiCalendarLine } from '@remixicon/react'
 
 import RaceFilterTable from '@/components/RaceFilterTable'
 import RaceInfoCard from '@/components/ui/RaceInfoCard'
+
 import { GameRoot } from '@/types/ATG/Game'
+import { Box, Flex, IconButton, Tabs } from '@radix-ui/themes'
 import { useModalsStore } from '@/store/useModals'
-import { useThemeStore } from '@/store/useTheme'
 
 interface RaceTabProps {
   gameData: GameRoot
 }
 
 const RaceTab = ({ gameData }: RaceTabProps) => {
-  const { setFilterOpen, setGameSelectorOpen } = useModalsStore()
-  const { theme } = useThemeStore()
+  const { filterOpen, setFilterOpen } = useModalsStore()
 
   if (!gameData) {
     return null
   }
 
   return (
-    <TabGroup>
-      <Card className="flex p-0 shadow-md ring-0 sm:px-4 sm:py-2">
-        <Flex>
-          <TabList color={theme} variant="solid" className="w-full sm:w-auto">
-            {gameData?.races?.map((race, index) => (
-              <Tab
-                key={index}
-                className={clsx(
-                  'w-full max-w-[initial] select-none justify-center border-none px-4 py-2 text-sm font-medium uppercase drop-shadow-sm hover:bg-black/5 hover:drop-shadow-sm focus:outline-none'
-                )}
-              >
-                <Text className="text-sm font-black text-theme-600 sm:text-base">
-                  {`${index + 1}`}
-                </Text>
-              </Tab>
-            ))}
-          </TabList>
-          <Flex
-            className="fixed bottom-0 right-0 z-10 flex flex-col space-y-2 p-2 sm:relative sm:flex-row sm:space-x-2 sm:space-y-0 sm:p-0"
-            justifyContent="end"
-            alignItems="end"
-          >
-            <Icon
-              color={theme}
-              variant="shadow"
-              icon={RiCalendarLine}
-              className="cursor-pointer bg-white bg-opacity-100 dark:bg-slate-700"
-              tooltip="Spelkalender"
-              onClick={() => setGameSelectorOpen(true)}
-            />
-            <Icon
-              color={theme}
-              variant="shadow"
-              icon={RiFilter3Line}
-              className="cursor-pointer bg-white bg-opacity-100 dark:bg-slate-700"
-              tooltip="Filter"
-              onClick={() => setFilterOpen(true)}
-            />
-          </Flex>
-        </Flex>
-      </Card>
-      <TabPanels>
-        {gameData?.races?.map((race, index) => (
-          <TabPanel key={index}>
-            <Card className="mt-4 p-0 shadow-md ring-0">
-              <RaceInfoCard race={race} />
-              <RaceFilterTable game={gameData} race={race} raceIndex={index} />
-            </Card>
-          </TabPanel>
+    <Tabs.Root defaultValue={gameData.races[0].id ?? ''}>
+      <Tabs.List>
+        {gameData.races?.map((race, index) => (
+          <Tabs.Trigger key={index} value={race.id} className="cursor-pointer">
+            {index + 1}
+          </Tabs.Trigger>
         ))}
-      </TabPanels>
-    </TabGroup>
+        <Flex gap="2" className="ml-auto">
+          <IconButton variant="soft" className="cursor-pointer" onClick={() => setFilterOpen(true)}>
+            <RiFilter3Line />
+          </IconButton>
+          <IconButton variant="soft" className="cursor-pointer">
+            <RiCalendarLine />
+          </IconButton>
+        </Flex>
+      </Tabs.List>
+      <Box pt="3">
+        {gameData?.races?.map((race, index) => (
+          <Tabs.Content key={index} value={race.id}>
+            <RaceInfoCard race={race} />
+            <RaceFilterTable game={gameData} race={race} raceIndex={index} />
+          </Tabs.Content>
+        ))}
+      </Box>
+    </Tabs.Root>
   )
 }
 

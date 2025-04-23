@@ -3,8 +3,8 @@ import axios from 'axios'
 
 import { CalendarDayRoot } from '@/types/ATG/CalendarDay'
 
-export const ALLOWED_COUNTRYCODES = ['SE', 'NO', 'DK', 'FI']
-export const ALLOWED_GAMETYPES = ['V75', 'GS75', 'V86', 'V64', 'V65', 'dd', 'ld', 'V5', 'V4']
+const ALLOWED_COUNTRYCODES = ['SE', 'NO', 'DK', 'FI']
+const ALLOWED_GAMETYPES = ['V75', 'GS75', 'V86', 'V64', 'V65', 'dd', 'ld', 'V5', 'V4']
 
 export async function GET(request: NextRequest) {
   const params = request.nextUrl.searchParams

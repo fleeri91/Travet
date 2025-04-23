@@ -1,7 +1,5 @@
 import dayjs from 'dayjs'
-import { Card, Subtitle, Flex, Grid } from '@tremor/react'
 
-import { gameTypeColor } from '@/utils/theme'
 import { GameType } from '@/constants/GameType'
 
 import { useCalendarStore } from '@/store/useCalendar'
@@ -27,7 +25,9 @@ const GameSelectorCard = ({
 
   if (!calendarData) return null
 
-  return (
+  return <></>
+  {
+    /*
     <Card
       className={`bg-${gameTypeColor(gameType)}-500 cursor-pointer select-none text-sm transition-all sm:text-base sm:hover:opacity-80`}
       onClick={onClick}
@@ -52,7 +52,8 @@ const GameSelectorCard = ({
         </Grid>
       </Grid>
     </Card>
-  )
+  */
+  }
 }
 
 export default GameSelectorCard

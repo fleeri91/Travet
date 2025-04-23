@@ -13,8 +13,8 @@ type FilterActions = {
 
 const initialState: FilterState = {
   filter: {
-    shoes: true,
-    sulky: true,
+    shoes: false,
+    sulky: false,
     distance: true,
     specificDistance: {
       from: '',

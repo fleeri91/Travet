@@ -1,9 +1,11 @@
 import type { Metadata } from 'next'
 import { Noto_Sans, Source_Code_Pro } from 'next/font/google'
-import './globals.css'
+import { Theme } from '@radix-ui/themes'
 
 import { SWRProvider } from '@/providers/SWRProvider'
-import { ThemeProvider } from '@/context/themeContext'
+
+import '@radix-ui/themes/styles.css'
+import './globals.css'
 
 const SourceCodePro = Source_Code_Pro({
   subsets: ['latin'],
@@ -32,10 +34,16 @@ const RootLayout = ({
   return (
     <html lang="en">
       <body className={`${NotoSans.className} ${SourceCodePro.className}`}>
-        <main className="flex justify-center ">
-          <ThemeProvider>
+        <main className="flex justify-center">
+          <Theme
+            appearance="dark"
+            accentColor="blue"
+            grayColor="gray"
+            panelBackground="solid"
+            className="w-full"
+          >
             <SWRProvider>{children}</SWRProvider>
-          </ThemeProvider>
+          </Theme>
         </main>
       </body>
     </html>

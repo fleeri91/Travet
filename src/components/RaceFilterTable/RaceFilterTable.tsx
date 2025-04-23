@@ -2,31 +2,17 @@
 
 import { Fragment } from 'react'
 import clsx from 'clsx'
-import {
-  Badge,
-  Flex,
-  Icon,
-  Text,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeaderCell,
-  TableRow,
-  Subtitle,
-} from '@tremor/react'
-import { RiInformationLine } from '@remixicon/react'
 
 import HandicapRow from './HandicapRow'
 
 import { useFilterStore } from '@/store/useFilter'
-import { useThemeStore } from '@/store/useTheme'
 
 import { GameRoot, Race, Start } from '@/types/ATG/Game'
 import { FormType } from '@/types/Filter'
 
 import { _getHorseSex } from '@/utils/atg'
 import { _getGallopp, _getStartForm, _getStartRecord, _recordFilter } from '@/utils/filter'
+import { Badge, Flex, Table, Text } from '@radix-ui/themes'
 
 interface RaceFilterTableProps {
   game: GameRoot
@@ -36,38 +22,20 @@ interface RaceFilterTableProps {
 
 const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.Element | null => {
   const { filter } = useFilterStore()
-  const { theme } = useThemeStore()
 
   const renderedHandicaps: { [key: number]: boolean } = {}
 
   return (
-    <Table className="w-full select-none p-1 sm:p-4">
-      <TableHead>
-        <TableRow>
-          <TableHeaderCell className="w-5/12">
-            <Subtitle>Namn</Subtitle>
-          </TableHeaderCell>
-          <TableHeaderCell className="w-2/12">
-            <Flex justifyContent="start">
-              <Subtitle>Tid</Subtitle>
-              <Icon tooltip={'Filtrerat resultat'} icon={RiInformationLine} />
-            </Flex>
-          </TableHeaderCell>
-          <TableHeaderCell className="w-3/12">
-            <Flex justifyContent="start">
-              <Subtitle>Form</Subtitle>
-              <Icon tooltip={'Hästens form senaste 3 månaderna'} icon={RiInformationLine} />
-            </Flex>
-          </TableHeaderCell>
-          <TableHeaderCell className="w-3/12">
-            <Flex justifyContent="start">
-              <Subtitle>Gallopp</Subtitle>
-              <Icon tooltip={'Gallopp senaste 5 starter'} icon={RiInformationLine} />
-            </Flex>
-          </TableHeaderCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>
+    <Table.Root>
+      <Table.Header>
+        <Table.Row>
+          <Table.ColumnHeaderCell>Namn</Table.ColumnHeaderCell>
+          <Table.ColumnHeaderCell>Tid</Table.ColumnHeaderCell>
+          <Table.ColumnHeaderCell>Form</Table.ColumnHeaderCell>
+          <Table.ColumnHeaderCell>Gallopp</Table.ColumnHeaderCell>
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
         {race?.starts.map((start: Start, startIndex: number) => {
           if (!game.races[raceIndex] || !game.races[raceIndex].starts[startIndex]) {
             return
@@ -87,18 +55,13 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
           let handicap = currentStart.distance - currentRace.distance
 
           const renderDataRow = () => (
-            <TableRow
-              key={startIndex}
-              className={clsx(
-                'group table-fixed !border-none odd:bg-white even:bg-theme-50 dark:odd:bg-slate-900 dark:even:bg-slate-950'
-              )}
-            >
-              <TableCell className="space-x-2 py-2">
-                <Flex justifyContent="start">
-                  <Badge color={theme} className="mr-2 w-[25px]">
+            <Table.Row key={startIndex}>
+              <Table.RowHeaderCell className="w-full space-x-2">
+                <Flex gap="4" align="center">
+                  <Badge size="2" className="flex w-6 select-none justify-center">
                     {currentStart.number && currentStart.number}
                   </Badge>
-                  <Flex flexDirection="col" justifyContent="start" alignItems="start">
+                  <Flex direction="column" justify="start" align="start">
                     <Text
                       className={clsx(start.scratched && 'text-gray-300 line-through', 'space-x-2')}
                     >
@@ -123,10 +86,10 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
                     </Text>
                   </Flex>
                 </Flex>
-              </TableCell>
+              </Table.RowHeaderCell>
               {records && filteredRecords && (
-                <TableCell className="py-2">
-                  <Flex justifyContent="start" className="space-x-2">
+                <Table.Cell>
+                  <Flex justify="start" align="center" className="h-full space-x-2">
                     {(() => {
                       const startRecord = _getStartRecord(records, filteredRecords)
 
@@ -137,53 +100,61 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
                       return (
                         <>
                           {startRecord.time && <Text>{`${startRecord.time}`}</Text>}
-                          <Badge
-                            color={theme}
-                            className={clsx('min-w-12')}
-                            tooltip={startRecord.distance.number?.toString()}
-                          >
+                          <Badge size="2" className="flex min-w-12 justify-center">
                             {startRecord.distance.type}
                           </Badge>
-                          {startRecord.recent && <Badge color={theme}>🔥</Badge>}
+                          {startRecord.recent && (
+                            <Badge size="2" className="flex w-6 select-none justify-center">
+                              🔥
+                            </Badge>
+                          )}
                         </>
                       )
                     })()}
                   </Flex>
-                </TableCell>
+                </Table.Cell>
               )}
               {records && (
-                <TableCell className="min-w-[210px] space-x-2 py-2">
-                  {_getStartForm(records).map((record: FormType, index: number) => (
-                    <Badge
-                      key={index}
-                      className=""
-                      color={
-                        record.disqualified || record.place === '0' || record.place > '5'
-                          ? 'red'
-                          : record.place >= '4' && record.place <= '6'
-                            ? 'gray'
-                            : 'green'
-                      }
-                    >
-                      {record.disqualified ? 'D' : record.place}
-                    </Badge>
-                  ))}
-                </TableCell>
+                <Table.Cell className="min-w-[210px]">
+                  <Flex justify="start" align="center" className="h-full space-x-2">
+                    {_getStartForm(records).map((record: FormType, index: number) => (
+                      <Badge
+                        key={index}
+                        size="2"
+                        className="flex w-6 select-none justify-center"
+                        color={
+                          record.disqualified || record.place === '0'
+                            ? 'red'
+                            : record.place >= '4' && record.place <= '6'
+                              ? 'gray'
+                              : 'green'
+                        }
+                      >
+                        {record.disqualified ? 'D' : record.place}
+                      </Badge>
+                    ))}
+                  </Flex>
+                </Table.Cell>
               )}
-              <TableCell className="min-w-[210px] space-x-2 py-2">
-                {_getGallopp(records, currentRace.startMethod).map((record: any, index: number) => (
-                  <Badge
-                    key={index}
-                    className=""
-                    color={
-                      record.start.postPosition === currentStart.postPosition ? 'red' : 'yellow'
-                    }
-                  >
-                    {record.disqualified ? `D` : record.galloped ? `G` : ``}
-                  </Badge>
-                ))}
-              </TableCell>
-            </TableRow>
+              <Table.Cell className="min-w-[210px] space-x-2">
+                <Flex justify="start" align="center" className="h-full space-x-2">
+                  {_getGallopp(records, currentRace.startMethod).map(
+                    (record: any, index: number) => (
+                      <Badge
+                        key={index}
+                        size="2"
+                        className="flex w-6 select-none justify-center"
+                        color={
+                          record.start.postPosition === currentStart.postPosition ? 'red' : 'yellow'
+                        }
+                      >
+                        {record.disqualified ? `D` : record.galloped ? `G` : ``}
+                      </Badge>
+                    )
+                  )}
+                </Flex>
+              </Table.Cell>
+            </Table.Row>
           )
 
           const renderHandicapRow = () => {
@@ -201,8 +172,8 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
             </Fragment>
           )
         })}
-      </TableBody>
-    </Table>
+      </Table.Body>
+    </Table.Root>
   )
 }
 

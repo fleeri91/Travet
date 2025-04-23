@@ -1,23 +1,24 @@
 'use client'
 
 import useSWR from 'swr'
+import { useRouter } from 'next/navigation'
+import dayjs from 'dayjs'
+import sv from 'dayjs/locale/sv'
+import { Box, Container, Grid, Spinner, Text, Card, Flex, IconButton } from '@radix-ui/themes'
+import { RiArrowLeftSLine, RiArrowRightSLine } from '@remixicon/react'
 
-import GameSelector from '@/components/GameSelector'
-import RaceTab from '@/components/RaceTab'
-import Filter from '@/components/Filter'
-
-import { useGameStore } from '@/store/useGame'
-
-import { GameRoot } from '@/types/ATG/Game'
-import { Box, Container, Spinner } from '@radix-ui/themes'
-import { useModalsStore } from '@/store/useModals'
+import { CalendarDayRoot } from '@/types/ATG/CalendarDay'
+import { useCalendarStore } from '@/store/useCalendar'
+import { GameStatus } from '@/constants/GameStatus'
 
 const Home = () => {
-  const { gameId } = useGameStore()
-  const { filterOpen, setFilterOpen } = useModalsStore()
+  const router = useRouter()
+  const { selectedDate, today, setPreviousDate, setNextDate } = useCalendarStore()
 
-  const { data, error, isLoading, mutate } = useSWR<GameRoot>(
-    gameId ? `game/?id=${gameId}` : null,
+  const FIVE_DAYS = dayjs(today).add(4, 'day')
+
+  const { data, isLoading, error } = useSWR<CalendarDayRoot>(
+    selectedDate ? `/day?date=${selectedDate}` : null,
     {
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
@@ -34,12 +35,80 @@ const Home = () => {
     )
   }
 
+  if (error) {
+    return (
+      <Box className="flex h-screen w-full items-center justify-center">
+        <Text size="4">Hoppsan! Något gick fel..</Text>
+      </Box>
+    )
+  }
+
   return (
     <Box className="my-16">
       <Container size="3">
-        {data && <RaceTab gameData={data} />}
-        <GameSelector />
-        <Filter isOpen={filterOpen} onClose={() => setFilterOpen(false)} />
+        <Box className="p-4">
+          <Flex justify="center" align="center" gap="4">
+            <IconButton
+              variant="soft"
+              onClick={() => setPreviousDate(selectedDate)}
+              className="cursor-pointer disabled:cursor-not-allowed"
+            >
+              <RiArrowLeftSLine />
+            </IconButton>
+            <Text as="div" size="5" className="flex min-w-24 justify-center capitalize">
+              {selectedDate == today ? 'Idag' : dayjs(selectedDate).locale(sv).format('DD/MM dd')}
+            </Text>
+            <IconButton
+              variant="soft"
+              onClick={() => setNextDate(selectedDate)}
+              disabled={dayjs(selectedDate).isAfter(FIVE_DAYS, 'day')}
+              className="cursor-pointer disabled:cursor-not-allowed"
+            >
+              <RiArrowRightSLine />
+            </IconButton>
+          </Flex>
+        </Box>
+        {data?.games && (
+          <Grid columns={{ initial: '1', sm: '2', md: '3' }} gap="3" width="auto">
+            {Object.keys(data.games).flatMap((gameType) =>
+              data.games[gameType].map((game) => {
+                const trackNames =
+                  data.tracks
+                    .filter((track) => game.tracks?.includes(track.id))
+                    .map((track) => track.name)
+                    .join(', ') || ''
+
+                return (
+                  <Card
+                    key={game.id}
+                    onClick={() => router.push(`/game/${game.id}`)}
+                    className="h-32 cursor-pointer"
+                  >
+                    <Flex direction="column" justify="center" align="center" className="h-full">
+                      <Text size="6" weight="bold" className="uppercase">
+                        {gameType}
+                      </Text>
+                      <Text as="div" size="2" color="gray">
+                        {trackNames}
+                      </Text>
+                      <Text as="div" size="2" color="gray">
+                        {game.status == GameStatus.bettable &&
+                          dayjs(game.startTime).format('HH:mm')}
+                        {game.status == GameStatus.ongoing && 'Pågående'}
+                        {game.status == GameStatus.results && 'Avslutad'}
+                      </Text>
+                    </Flex>
+                  </Card>
+                )
+              })
+            )}
+            {Object.keys(data.games).length === 0 && (
+              <Box>
+                <Text>No games available for this date</Text>
+              </Box>
+            )}
+          </Grid>
+        )}
       </Container>
     </Box>
   )

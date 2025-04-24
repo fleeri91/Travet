@@ -125,7 +125,7 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
                         color={
                           record.disqualified || record.place === '0'
                             ? 'red'
-                            : record.place >= '4' && record.place <= '6'
+                            : record.place >= '4'
                               ? 'gray'
                               : 'green'
                         }

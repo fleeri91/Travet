@@ -10,7 +10,7 @@ interface RaceInfoCardProps {
 }
 
 const RaceInfoCard = ({ race }: RaceInfoCardProps) => (
-  <Card className={'select-none'}>
+  <Card className="min-h-24 select-none">
     {race && (
       <Flex>
         <Text className="space-x-2 text-sm md:text-base">

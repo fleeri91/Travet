@@ -1,29 +1,22 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import useSWR from 'swr'
+import { Box, Button, Container, Spinner, Text } from '@radix-ui/themes'
 
-import GameSelector from '@/components/GameSelector'
 import RaceTab from '@/components/RaceTab'
-import Filter from '@/components/Filter'
 
 import { GameRoot } from '@/types/ATG/Game'
-import { Box, Button, Container, Flex, Spinner, Text } from '@radix-ui/themes'
-import { useModalsStore } from '@/store/useModals'
-import { useRouter } from 'next/navigation'
 
 const GamePage = ({ params }: { params: { gameId: string } }) => {
   const router = useRouter()
-  const { filterOpen, setFilterOpen } = useModalsStore()
 
-  const { data, error, isLoading, mutate } = useSWR<GameRoot>(
-    params.gameId ? `game/?id=${params.gameId}` : null,
-    {
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-      errorRetryCount: 3,
-      errorRetryInterval: 5000,
-    }
-  )
+  const { data, isLoading } = useSWR<GameRoot>(params.gameId ? `game/?id=${params.gameId}` : null, {
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+    errorRetryCount: 3,
+    errorRetryInterval: 5000,
+  })
 
   if (isLoading) {
     return (
@@ -48,11 +41,7 @@ const GamePage = ({ params }: { params: { gameId: string } }) => {
 
   return (
     <Box className="my-16">
-      <Container size="3">
-        {data && <RaceTab gameData={data} />}
-        <GameSelector />
-        <Filter isOpen={filterOpen} onClose={() => setFilterOpen(false)} />
-      </Container>
+      <Container size="3">{data && <RaceTab gameData={data} />}</Container>
     </Box>
   )
 }

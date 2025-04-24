@@ -1,19 +1,21 @@
-import clsx from 'clsx'
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { Box, Flex, IconButton, Tabs } from '@radix-ui/themes'
 import { RiFilter3Line, RiCalendarLine } from '@remixicon/react'
 
 import RaceFilterTable from '@/components/RaceFilterTable'
 import RaceInfoCard from '@/components/ui/RaceInfoCard'
+import Filter from '@/components/Filter'
 
 import { GameRoot } from '@/types/ATG/Game'
-import { Box, Flex, IconButton, Tabs } from '@radix-ui/themes'
-import { useModalsStore } from '@/store/useModals'
 
 interface RaceTabProps {
   gameData: GameRoot
 }
 
 const RaceTab = ({ gameData }: RaceTabProps) => {
-  const { filterOpen, setFilterOpen } = useModalsStore()
+  const router = useRouter()
+  const [filterOpen, setFilterOpen] = useState<boolean>(false)
 
   if (!gameData) {
     return null
@@ -31,7 +33,7 @@ const RaceTab = ({ gameData }: RaceTabProps) => {
           <IconButton variant="soft" className="cursor-pointer" onClick={() => setFilterOpen(true)}>
             <RiFilter3Line />
           </IconButton>
-          <IconButton variant="soft" className="cursor-pointer">
+          <IconButton variant="soft" className="cursor-pointer" onClick={() => router.push('/')}>
             <RiCalendarLine />
           </IconButton>
         </Flex>
@@ -44,6 +46,7 @@ const RaceTab = ({ gameData }: RaceTabProps) => {
           </Tabs.Content>
         ))}
       </Box>
+      <Filter isOpen={filterOpen} onClose={() => setFilterOpen(false)} />
     </Tabs.Root>
   )
 }

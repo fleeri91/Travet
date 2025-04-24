@@ -1,6 +1,8 @@
 import { ChangeEvent, useEffect, useState } from 'react'
 import { Button, Dialog, Flex, Switch, Text, TextField } from '@radix-ui/themes'
+
 import { useFilterStore } from '@/store/useFilter'
+
 import type { FilterType } from '@/types/Filter'
 
 interface FilterProps {
@@ -56,7 +58,7 @@ const Filter = ({ isOpen, onClose }: FilterProps): JSX.Element => {
   }, [filter])
 
   return (
-    <Dialog.Root open={isOpen}>
+    <Dialog.Root open={isOpen} onOpenChange={onClose}>
       <Dialog.Content maxWidth="450px">
         <Dialog.Title>Filtrera</Dialog.Title>
 

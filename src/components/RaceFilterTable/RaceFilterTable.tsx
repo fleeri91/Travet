@@ -2,6 +2,7 @@
 
 import { Fragment } from 'react'
 import clsx from 'clsx'
+import { Badge, Flex, Table, Text } from '@radix-ui/themes'
 
 import HandicapRow from './HandicapRow'
 
@@ -12,7 +13,6 @@ import { FormType } from '@/types/Filter'
 
 import { _getHorseSex } from '@/utils/atg'
 import { _getGallopp, _getStartForm, _getStartRecord, _recordFilter } from '@/utils/filter'
-import { Badge, Flex, Table, Text } from '@radix-ui/themes'
 
 interface RaceFilterTableProps {
   game: GameRoot
@@ -55,10 +55,10 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
           let handicap = currentStart.distance - currentRace.distance
 
           const renderDataRow = () => (
-            <Table.Row key={startIndex}>
+            <Table.Row key={startIndex} className="select-none">
               <Table.RowHeaderCell className="w-full space-x-2">
                 <Flex gap="4" align="center">
-                  <Badge size="2" className="flex w-6 select-none justify-center">
+                  <Badge size="2" className="flex w-6 justify-center">
                     {currentStart.number && currentStart.number}
                   </Badge>
                   <Flex direction="column" justify="start" align="start">
@@ -104,7 +104,7 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
                             {startRecord.distance.type}
                           </Badge>
                           {startRecord.recent && (
-                            <Badge size="2" className="flex w-6 select-none justify-center">
+                            <Badge size="2" className="flex w-6 justify-center">
                               🔥
                             </Badge>
                           )}
@@ -121,7 +121,7 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
                       <Badge
                         key={index}
                         size="2"
-                        className="flex w-6 select-none justify-center"
+                        className="flex w-6 justify-center"
                         color={
                           record.disqualified || record.place === '0'
                             ? 'red'
@@ -143,7 +143,7 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
                       <Badge
                         key={index}
                         size="2"
-                        className="flex w-6 select-none justify-center"
+                        className="flex w-6 justify-center"
                         color={
                           record.start.postPosition === currentStart.postPosition ? 'red' : 'yellow'
                         }

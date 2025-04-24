@@ -9,7 +9,7 @@ interface HandicapRowProps {
 const HandicapRow = ({ handicap }: HandicapRowProps) => (
   <Table.Row>
     <Table.Cell colSpan={12}>
-      <Text>{`Tillägg: ${handicap} meter`}</Text>
+      <Text className="font-extrabold">{`Tillägg: ${handicap} meter`}</Text>
     </Table.Cell>
   </Table.Row>
 )

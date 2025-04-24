@@ -13,6 +13,7 @@ export const api = axios.create({
 })
 
 export const fetcher = async (url: string, baseURL?: string) => {
+  await new Promise((resolve) => setTimeout(resolve, 800))
   const axiosInstance = baseURL ? axios.create({ baseURL }) : api
   const res = await axiosInstance.get(url)
   return res.data

@@ -4,7 +4,17 @@ import useSWR from 'swr'
 import { useRouter } from 'next/navigation'
 import dayjs from 'dayjs'
 import sv from 'dayjs/locale/sv'
-import { Box, Container, Grid, Spinner, Text, Card, Flex, IconButton } from '@radix-ui/themes'
+import {
+  Box,
+  Container,
+  Grid,
+  Text,
+  Card,
+  Flex,
+  IconButton,
+  Skeleton,
+  Button,
+} from '@radix-ui/themes'
 import { RiArrowLeftSLine, RiArrowRightSLine } from '@remixicon/react'
 
 import { CalendarDayRoot } from '@/types/ATG/CalendarDay'
@@ -17,7 +27,15 @@ const Home = () => {
 
   const FIVE_DAYS = dayjs(today).add(4, 'day')
 
-  const { data, isLoading, error } = useSWR<CalendarDayRoot>(
+  const delayedFetcher = async (url: string) => {
+    await new Promise((resolve) => setTimeout(resolve, 2000))
+
+    const res = await fetch(url)
+    if (!res.ok) throw new Error('Failed to fetch')
+    return res.json()
+  }
+
+  const { data, isLoading, error, mutate } = useSWR<CalendarDayRoot>(
     selectedDate ? `/day?date=${selectedDate}` : null,
     {
       revalidateOnFocus: false,
@@ -29,16 +47,42 @@ const Home = () => {
 
   if (isLoading) {
     return (
-      <Box className="flex h-screen w-full items-center justify-center">
-        <Spinner size="3" />
+      <Box className="my-16">
+        <Container size="3">
+          <Box className="p-4">
+            <Flex justify="center" align="center" gap="4">
+              <Box className="h-8 w-8">
+                <Skeleton loading className="h-full w-full" />
+              </Box>
+              <Box className="flex h-8 w-24">
+                <Skeleton loading className="h-full w-full" />
+              </Box>
+              <Box className="h-8 w-8">
+                <Skeleton loading className="h-full w-full" />
+              </Box>
+            </Flex>
+          </Box>
+          <Grid columns={{ initial: '1', sm: '2', md: '3' }} gap="3" width="auto">
+            {Array.from({ length: 9 }).map((_, i) => (
+              <Card key={i} className="h-32 p-0">
+                <Skeleton loading className="h-full w-full" />
+              </Card>
+            ))}
+          </Grid>
+        </Container>
       </Box>
     )
   }
 
   if (error) {
     return (
-      <Box className="flex h-screen w-full items-center justify-center">
-        <Text size="4">Hoppsan! Något gick fel..</Text>
+      <Box className="flex h-screen w-full flex-col items-center justify-center gap-4">
+        <Text as="div" size="4">
+          Hoppsan! Något gick fel..
+        </Text>
+        <Button onClick={() => mutate()} className="cursor-pointer">
+          Försök igen
+        </Button>
       </Box>
     )
   }

@@ -41,7 +41,9 @@ const GamePage = ({ params }: { params: { gameId: string } }) => {
 
   return (
     <Box className="my-16">
-      <Container size="3">{data && <RaceTab gameData={data} />}</Container>
+      <Container size="3" className="px-4">
+        {data && <RaceTab gameData={data} />}
+      </Container>
     </Box>
   )
 }

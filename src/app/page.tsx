@@ -89,7 +89,7 @@ const Home = () => {
 
   return (
     <Box className="my-16">
-      <Container size="3">
+      <Container size="3" className="px-4">
         <Box className="p-4">
           <Flex justify="center" align="center" gap="4">
             <IconButton

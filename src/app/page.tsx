@@ -27,14 +27,6 @@ const Home = () => {
 
   const FIVE_DAYS = dayjs(today).add(4, 'day')
 
-  const delayedFetcher = async (url: string) => {
-    await new Promise((resolve) => setTimeout(resolve, 2000))
-
-    const res = await fetch(url)
-    if (!res.ok) throw new Error('Failed to fetch')
-    return res.json()
-  }
-
   const { data, isLoading, error, mutate } = useSWR<CalendarDayRoot>(
     selectedDate ? `/day?date=${selectedDate}` : null,
     {

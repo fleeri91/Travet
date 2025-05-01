@@ -55,10 +55,17 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
           let handicap = currentStart.distance - currentRace.distance
 
           const renderDataRow = () => (
-            <Table.Row key={startIndex} className="select-none">
+            <Table.Row
+              key={startIndex}
+              className={clsx('select-none', start.scratched && 'opacity-60')}
+            >
               <Table.RowHeaderCell className="w-full space-x-2">
                 <Flex gap="4" align="center">
-                  <Badge size="2" className="flex w-6 justify-center">
+                  <Badge
+                    color={start.scratched ? 'gray' : 'blue'}
+                    size="2"
+                    className="flex w-6 justify-center"
+                  >
                     {currentStart.number && currentStart.number}
                   </Badge>
                   <Flex direction="column" justify="start" align="start">

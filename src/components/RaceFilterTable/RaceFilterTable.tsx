@@ -79,7 +79,10 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
                   <Flex direction="column" justify="start" align="start">
                     <Text
                       size="3"
-                      className={clsx(start.scratched && 'text-gray-300 line-through', 'space-x-2')}
+                      className={clsx(
+                        start.scratched && 'text-gray-300 line-through',
+                        'space-x-2 whitespace-nowrap'
+                      )}
                     >
                       {currentStart.horse.name && <span>{currentStart.horse.name}</span>}
                       {currentStart && currentStart.horse.nationality && (

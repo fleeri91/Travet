@@ -76,7 +76,7 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
                   >
                     <Text size="2">{currentStart.number && currentStart.number}</Text>
                   </Badge>
-                  <Flex direction="column" justify="start" align="start">
+                  <Flex direction="column" justify="start" align="start" className="mr-8">
                     <Text
                       size="3"
                       className={clsx(

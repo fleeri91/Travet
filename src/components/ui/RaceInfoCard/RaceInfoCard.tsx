@@ -13,7 +13,7 @@ const RaceInfoCard = ({ race }: RaceInfoCardProps) => (
   <Card className="min-h-24 select-none">
     {race && (
       <Flex>
-        <Text className="space-x-2 text-sm md:text-base">
+        <Text size="4" className="space-x-2">
           <span>{race.track.name}</span>
           <span>{race.distance + 'm'}</span>
           <span>{_getRaceStartMethod(race.startMethod)}</span>
@@ -22,10 +22,10 @@ const RaceInfoCard = ({ race }: RaceInfoCardProps) => (
     )}
     <Flex>
       {race && race.track.condition && (
-        <Text className="text-xs md:text-sm">{`Banförhållande: ${_getTrackCondition(race.track.condition)}`}</Text>
+        <Text size="2">{`Banförhållande: ${_getTrackCondition(race.track.condition)}`}</Text>
       )}
     </Flex>
-    <Flex>{race && <Text className="text-xs md:text-sm">{race.name}</Text>}</Flex>
+    <Flex>{race && <Text size="2">{race.name}</Text>}</Flex>
   </Card>
 )
 

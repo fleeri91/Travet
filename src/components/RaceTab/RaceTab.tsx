@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Box, Flex, IconButton, SegmentedControl, Tabs } from '@radix-ui/themes'
+import { Box, Flex, IconButton, SegmentedControl, Tabs, Text } from '@radix-ui/themes'
 import { RiFilter3Line, RiCalendarLine } from '@remixicon/react'
 
 import RaceFilterTable from '@/components/RaceFilterTable'
@@ -29,7 +29,9 @@ const RaceTab = ({ gameData }: RaceTabProps) => {
       <Tabs.List>
         {gameData.races?.map((race, index) => (
           <Tabs.Trigger key={index} value={race.id} className="cursor-pointer">
-            {index + 1}
+            <Text size="3" weight="bold">
+              {index + 1}
+            </Text>
           </Tabs.Trigger>
         ))}
         <Flex gap="2" className="ml-auto">
@@ -54,13 +56,13 @@ const RaceTab = ({ gameData }: RaceTabProps) => {
           className="mb-4 w-full"
         >
           <SegmentedControl.Item value="start" className="cursor-pointer">
-            Startlista
+            <Text size="3">Startlista</Text>
           </SegmentedControl.Item>
           <SegmentedControl.Item value="statistics" className="cursor-pointer">
-            Statistik
+            <Text size="3">Statistik</Text>
           </SegmentedControl.Item>
           <SegmentedControl.Item value="h2h" className="cursor-pointer">
-            Head 2 Head
+            <Text size="3">Head 2 Head</Text>
           </SegmentedControl.Item>
         </SegmentedControl.Root>
         {gameData?.races?.map((race, index) => (

@@ -29,10 +29,18 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
     <Table.Root>
       <Table.Header>
         <Table.Row>
-          <Table.ColumnHeaderCell>Namn</Table.ColumnHeaderCell>
-          <Table.ColumnHeaderCell>Tid</Table.ColumnHeaderCell>
-          <Table.ColumnHeaderCell>Form</Table.ColumnHeaderCell>
-          <Table.ColumnHeaderCell>Gallopp</Table.ColumnHeaderCell>
+          <Table.ColumnHeaderCell>
+            <Text size="3">Namn</Text>
+          </Table.ColumnHeaderCell>
+          <Table.ColumnHeaderCell>
+            <Text size="3">Tid</Text>
+          </Table.ColumnHeaderCell>
+          <Table.ColumnHeaderCell>
+            <Text size="3">Form</Text>
+          </Table.ColumnHeaderCell>
+          <Table.ColumnHeaderCell>
+            <Text size="3">Gallopp</Text>
+          </Table.ColumnHeaderCell>
         </Table.Row>
       </Table.Header>
       <Table.Body>
@@ -64,12 +72,13 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
                   <Badge
                     color={start.scratched ? 'gray' : 'blue'}
                     size="2"
-                    className="flex w-6 justify-center"
+                    className="flex w-7 justify-center"
                   >
-                    {currentStart.number && currentStart.number}
+                    <Text size="2">{currentStart.number && currentStart.number}</Text>
                   </Badge>
                   <Flex direction="column" justify="start" align="start">
                     <Text
+                      size="3"
                       className={clsx(start.scratched && 'text-gray-300 line-through', 'space-x-2')}
                     >
                       {currentStart.horse.name && <span>{currentStart.horse.name}</span>}
@@ -83,7 +92,8 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
                       )}
                     </Text>
                     <Text
-                      className={clsx(start.scratched && 'text-gray-300 line-through', 'text-xs')}
+                      size="2"
+                      className={clsx(start.scratched && 'text-gray-300 line-through')}
                     >
                       {currentStart &&
                         currentStart.driver.firstName &&
@@ -96,7 +106,7 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
               </Table.RowHeaderCell>
               {records && filteredRecords && (
                 <Table.Cell>
-                  <Flex justify="start" align="center" className="h-full space-x-2">
+                  <Flex justify="start" align="center" className="h-full min-w-[120px] space-x-2">
                     {(() => {
                       const startRecord = _getStartRecord(records, filteredRecords)
 
@@ -106,13 +116,13 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
 
                       return (
                         <>
-                          {startRecord.time && <Text>{`${startRecord.time}`}</Text>}
+                          {startRecord.time && <Text size="3">{`${startRecord.time}`}</Text>}
                           <Badge size="2" className="flex min-w-12 justify-center">
-                            {startRecord.distance.type}
+                            <Text size="2">{startRecord.distance.type}</Text>
                           </Badge>
                           {startRecord.recent && (
                             <Badge size="2" className="flex w-6 justify-center">
-                              🔥
+                              <Text size="2">🔥</Text>
                             </Badge>
                           )}
                         </>
@@ -128,7 +138,7 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
                       <Badge
                         key={index}
                         size="2"
-                        className="flex w-6 justify-center"
+                        className="flex w-7 justify-center"
                         color={
                           record.disqualified || record.place === '0'
                             ? 'red'
@@ -137,7 +147,7 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
                               : 'green'
                         }
                       >
-                        {record.disqualified ? 'D' : record.place}
+                        <Text size="2">{record.disqualified ? 'D' : record.place}</Text>
                       </Badge>
                     ))}
                   </Flex>
@@ -150,12 +160,14 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
                       <Badge
                         key={index}
                         size="2"
-                        className="flex w-6 justify-center"
+                        className="flex w-7 justify-center"
                         color={
                           record.start.postPosition === currentStart.postPosition ? 'red' : 'yellow'
                         }
                       >
-                        {record.disqualified ? `D` : record.galloped ? `G` : ``}
+                        <Text size="2">
+                          {record.disqualified ? `D` : record.galloped ? `G` : ``}
+                        </Text>
                       </Badge>
                     )
                   )}

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Box, Flex, IconButton, SegmentedControl, Tabs, Text } from '@radix-ui/themes'
+import { Box, Flex, IconButton, SegmentedControl, Tabs, Text, Tooltip } from '@radix-ui/themes'
 import { RiFilter3Line, RiCalendarLine } from '@remixicon/react'
 
 import RaceFilterTable from '@/components/RaceFilterTable'
@@ -38,17 +38,21 @@ const RaceTab = ({ gameData }: RaceTabProps) => {
         </Flex>
         <Flex gap="2" className="ml-auto">
           {view == 'start' && (
-            <IconButton
-              variant="soft"
-              className="cursor-pointer"
-              onClick={() => setFilterOpen(true)}
-            >
-              <RiFilter3Line />
-            </IconButton>
+            <Tooltip content="Filter">
+              <IconButton
+                variant="soft"
+                className="cursor-pointer"
+                onClick={() => setFilterOpen(true)}
+              >
+                <RiFilter3Line />
+              </IconButton>
+            </Tooltip>
           )}
-          <IconButton variant="soft" className="cursor-pointer" onClick={() => router.push('/')}>
-            <RiCalendarLine />
-          </IconButton>
+          <Tooltip content="Kalender">
+            <IconButton variant="soft" className="cursor-pointer" onClick={() => router.push('/')}>
+              <RiCalendarLine />
+            </IconButton>
+          </Tooltip>
         </Flex>
       </Tabs.List>
       <Box pt="3">

@@ -2,7 +2,8 @@
 
 import { Fragment } from 'react'
 import clsx from 'clsx'
-import { Badge, Flex, Table, Text } from '@radix-ui/themes'
+import { Badge, Flex, IconButton, Table, Text, Tooltip } from '@radix-ui/themes'
+import { RiInformationLine } from '@remixicon/react'
 
 import HandicapRow from './HandicapRow'
 
@@ -33,13 +34,34 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
             <Text size="3">Namn</Text>
           </Table.ColumnHeaderCell>
           <Table.ColumnHeaderCell>
-            <Text size="3">Tid</Text>
+            <Flex align="center" gap="2">
+              <Text size="3">Tid</Text>
+              <Tooltip content="Rekordtid utifrån filter">
+                <IconButton variant="soft" radius="full">
+                  <RiInformationLine />
+                </IconButton>
+              </Tooltip>
+            </Flex>
           </Table.ColumnHeaderCell>
           <Table.ColumnHeaderCell>
-            <Text size="3">Form</Text>
+            <Flex align="center" gap="2">
+              <Text size="3">Form</Text>
+              <Tooltip content="Form 5 senaste starter inom 3 månader">
+                <IconButton variant="soft" radius="full">
+                  <RiInformationLine />
+                </IconButton>
+              </Tooltip>
+            </Flex>
           </Table.ColumnHeaderCell>
           <Table.ColumnHeaderCell>
-            <Text size="3">Gallopp</Text>
+            <Flex align="center" gap="2">
+              <Text size="3">Gallopp</Text>
+              <Tooltip content="Gallopp 5 senaste starter inom 3 månader.">
+                <IconButton variant="soft" radius="full">
+                  <RiInformationLine />
+                </IconButton>
+              </Tooltip>
+            </Flex>
           </Table.ColumnHeaderCell>
         </Table.Row>
       </Table.Header>

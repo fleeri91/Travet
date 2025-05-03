@@ -26,14 +26,16 @@ const RaceTab = ({ gameData }: RaceTabProps) => {
 
   return (
     <Tabs.Root defaultValue={gameData.races[0].id ?? ''}>
-      <Tabs.List>
-        {gameData.races?.map((race, index) => (
-          <Tabs.Trigger key={index} value={race.id} className="cursor-pointer">
-            <Text size="3" weight="bold">
-              {index + 1}
-            </Text>
-          </Tabs.Trigger>
-        ))}
+      <Tabs.List className="gap-x-4">
+        <Flex>
+          {gameData.races?.map((race, index) => (
+            <Tabs.Trigger key={index} value={race.id} className="cursor-pointer">
+              <Text size="3" weight="bold">
+                {index + 1}
+              </Text>
+            </Tabs.Trigger>
+          ))}
+        </Flex>
         <Flex gap="2" className="ml-auto">
           {view == 'start' && (
             <IconButton
@@ -52,17 +54,18 @@ const RaceTab = ({ gameData }: RaceTabProps) => {
       <Box pt="3">
         <SegmentedControl.Root
           value={view}
+          size="3"
           onValueChange={(value: 'start' | 'statistics' | 'h2h') => setView(value)}
           className="mb-4 w-full"
         >
           <SegmentedControl.Item value="start" className="cursor-pointer">
-            <Text size="3">Startlista</Text>
+            <Text className="text-sm sm:text-base">Startlista</Text>
           </SegmentedControl.Item>
           <SegmentedControl.Item value="statistics" className="cursor-pointer">
-            <Text size="3">Statistik</Text>
+            <Text className="text-sm sm:text-base">Statistik</Text>
           </SegmentedControl.Item>
           <SegmentedControl.Item value="h2h" className="cursor-pointer">
-            <Text size="3">Head 2 Head</Text>
+            <Text className="text-sm sm:text-base">Head 2 Head</Text>
           </SegmentedControl.Item>
         </SegmentedControl.Root>
         {gameData?.races?.map((race, index) => (

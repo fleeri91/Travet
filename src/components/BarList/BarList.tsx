@@ -1,9 +1,5 @@
-// Tremor BarList [v1.0.0]
-
 import React from 'react'
 import clsx from 'clsx'
-
-// import { cx, focusRing } from '@/lib/utils'
 
 type Bar<T> = T & {
   key?: string

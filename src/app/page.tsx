@@ -40,7 +40,7 @@ const Home = () => {
   if (isLoading) {
     return (
       <Box className="my-16">
-        <Container size="3">
+        <Container size="4">
           <Box className="p-4">
             <Flex justify="center" align="center" gap="4">
               <Box className="h-8 w-8">
@@ -56,7 +56,7 @@ const Home = () => {
           </Box>
           <Grid columns={{ initial: '1', sm: '2', md: '3' }} gap="3" width="auto">
             {Array.from({ length: 9 }).map((_, i) => (
-              <Card key={i} className="h-32 p-0">
+              <Card key={i} className="h-44 p-0">
                 <Skeleton loading className="h-full w-full" />
               </Card>
             ))}
@@ -81,7 +81,7 @@ const Home = () => {
 
   return (
     <Box className="my-16">
-      <Container size="3" className="px-4">
+      <Container size="4" className="px-4">
         <Box className="p-4">
           <Flex justify="center" align="center" gap="4">
             <IconButton
@@ -118,16 +118,16 @@ const Home = () => {
                   <Card
                     key={game.id}
                     onClick={() => router.push(`/game/${game.id}`)}
-                    className="h-32 cursor-pointer"
+                    className="h-44 cursor-pointer"
                   >
                     <Flex direction="column" justify="center" align="center" className="h-full">
-                      <Text size="6" weight="bold" className="uppercase">
+                      <Text size="8" weight="bold" className="uppercase">
                         {gameType}
                       </Text>
-                      <Text as="div" size="2" color="gray">
+                      <Text as="div" size="4" color="gray">
                         {trackNames}
                       </Text>
-                      <Text as="div" size="2" color="gray">
+                      <Text as="div" size="3" color="gray">
                         {game.status == GameStatus.bettable &&
                           dayjs(game.startTime).format('HH:mm')}
                         {game.status == GameStatus.ongoing && 'Pågående'}

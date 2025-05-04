@@ -134,6 +134,18 @@ const Home = () => {
                         {game.status == GameStatus.results && 'Avslutad'}
                       </Text>
                     </Flex>
+                    {game.jackpotAmount && (
+                      <Box className="absolute -left-[10px] -top-[0px] h-[150px] w-[150px] overflow-hidden">
+                        <Text
+                          as="span"
+                          weight="bold"
+                          size="3"
+                          className="absolute -right-[25px] top-[30px] w-[225px] -rotate-45 bg-yellow-500 py-[15px] text-center uppercase leading-none text-black"
+                        >
+                          Jackpot
+                        </Text>
+                      </Box>
+                    )}
                   </Card>
                 )
               })

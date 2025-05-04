@@ -74,9 +74,11 @@ const RaceTab = ({ gameData }: RaceTabProps) => {
         </SegmentedControl.Root>
         {gameData?.races?.map((race, index) => (
           <Tabs.Content key={index} value={race.id}>
-            <RaceInfoCard race={race} />
+            <RaceInfoCard race={race} raceIndex={index} />
             {view === 'start' && <RaceFilterTable game={gameData} race={race} raceIndex={index} />}
-            {view === 'statistics' && <RaceStatistics />}
+            {view === 'statistics' && (
+              <RaceStatistics game={gameData} race={race} raceIndex={index} />
+            )}
             {view === 'h2h' && <H2H />}
           </Tabs.Content>
         ))}

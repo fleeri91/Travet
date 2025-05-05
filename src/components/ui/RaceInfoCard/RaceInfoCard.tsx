@@ -36,7 +36,7 @@ const RaceInfoCard = ({ race, raceIndex }: RaceInfoCardProps) => {
   }
 
   return (
-    <Card className="min-h-24 select-none">
+    <Card className="min-h-32 select-none">
       {race && (
         <Flex>
           <Heading size="5" className="space-x-2">

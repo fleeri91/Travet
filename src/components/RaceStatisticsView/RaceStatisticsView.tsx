@@ -58,6 +58,14 @@ const RaceStatisticsView = ({ raceId }: RaceStatisticsProps): JSX.Element | null
           <Text>Häst vinstprocent</Text>
           <BarList data={data.HorseWinPercentage} className="mt-4" />
         </Card>
+        <Card>
+          <Text>Häst platsprocent</Text>
+          <BarList data={data.HorsePlacePercentage} className="mt-4" />
+        </Card>
+        <Card>
+          <Text>Häst poäng per start</Text>
+          <BarList data={data.HorsePlacePercentage} className="mt-4" />
+        </Card>
       </Grid>
     </Box>
   )

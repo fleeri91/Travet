@@ -51,8 +51,8 @@ const RaceStatisticsView = ({ raceId }: RaceStatisticsProps): JSX.Element | null
     <Box className="mt-4">
       <Grid columns={{ initial: '1', sm: '2', md: '3' }} gap="3" width="auto">
         <Card>
-          <Text>Häst pengar per ålder</Text>
-          <BarList data={data.HorseMoneyPerAge} className="mt-4" />
+          <Text>Häst pengar per start</Text>
+          <BarList data={data.HorseMoneyPerStart} className="mt-4" />
         </Card>
         <Card>
           <Text>Häst vinstprocent</Text>

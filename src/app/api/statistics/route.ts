@@ -22,8 +22,8 @@ export async function GET(request: NextRequest) {
 
     const raceData: RaceRoot = response.data
 
-    const HorseMoneyPerAge: BarlistData[] = raceData.starts.map((start) => {
-      const roundedValue = Math.round(start.horse.money / start.horse.age)
+    const HorseMoneyPerStart: BarlistData[] = raceData.starts.map((start) => {
+      const roundedValue = Math.round(start.horse.money / start.horse.statistics.life.starts)
       return {
         name: start.horse.name,
         value: roundedValue,
@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
     })
 
     const raceStatistics: RaceStatistics = {
-      HorseMoneyPerAge,
+      HorseMoneyPerStart,
       HorseWinPercentage,
     }
 

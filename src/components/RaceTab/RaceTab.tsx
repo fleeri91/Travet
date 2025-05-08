@@ -4,9 +4,9 @@ import { Box, Flex, IconButton, SegmentedControl, Tabs, Text, Tooltip } from '@r
 import { RiFilter3Line, RiCalendarLine } from '@remixicon/react'
 
 import RaceFilterTable from '@/components/RaceFilterTable'
-import RaceStatistics from '@/components/RaceStatistics'
+import RaceStatisticsView from '@/components/RaceStatisticsView'
 import H2H from '@/components/H2H'
-import RaceInfoCard from '@/components/ui/RaceInfoCard'
+import RaceInfoCard from '@/components/RaceInfoCard'
 import Filter from '@/components/Filter'
 
 import { GameRoot } from '@/types/ATG/Game'
@@ -76,9 +76,7 @@ const RaceTab = ({ gameData }: RaceTabProps) => {
           <Tabs.Content key={index} value={race.id}>
             <RaceInfoCard race={race} raceIndex={index} />
             {view === 'start' && <RaceFilterTable game={gameData} race={race} raceIndex={index} />}
-            {view === 'statistics' && (
-              <RaceStatistics game={gameData} race={race} raceIndex={index} />
-            )}
+            {view === 'statistics' && <RaceStatisticsView raceId={race.id} />}
             {view === 'h2h' && <H2H />}
           </Tabs.Content>
         ))}

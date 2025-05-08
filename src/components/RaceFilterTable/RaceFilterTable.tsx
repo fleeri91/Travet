@@ -14,13 +14,13 @@ import {
 
 import HandicapRow from './HandicapRow'
 import { useFilterStore } from '@/store/useFilter'
-import { ATGGameRoot, Race, Start } from '@/types/ATG/Game'
 import { FormType } from '@/types/Filter'
 import { _getHorseSex } from '@/utils/atg'
 import { _getGallopp, _getStartForm, _getStartRecord, _recordFilter } from '@/utils/filter'
+import { Game, Race, Start } from '@/types/Game'
 
 interface RaceFilterTableProps {
-  game: ATGGameRoot
+  game: Game
   race: Race | null
   raceIndex: number
 }

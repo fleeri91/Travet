@@ -6,7 +6,7 @@ import { Card, Flex, Text, Heading } from '@radix-ui/themes'
 
 import { _getRaceStartMethod, _getTrackCondition } from '@/utils/atg'
 
-import { Race } from '@/types/ATG/Game'
+import { Race } from '@/types/Game'
 
 import { useCalendarStore } from '@/store/useCalendar'
 

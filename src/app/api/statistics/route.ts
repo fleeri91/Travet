@@ -37,17 +37,15 @@ export async function GET(request: NextRequest) {
       }
     })
 
-    const HorsePlacePercentage: BarlistData[] = raceData.starts
-      .filter((start) => !start.scratched)
-      .map((start) => ({
-        name: start.horse.name,
-        value: start.horse.statistics.life.placePercentage || 0,
-      }))
+    const HorsePlacePercentage: BarlistData[] = raceData.starts.map((start) => ({
+      name: start.horse.name,
+      value: start.horse.statistics.life.placePercentage || 0,
+    }))
 
     const HorsePointPerStart: BarlistData[] = raceData.starts.map((start) => {
-      const startPoints =
-        start.horse.statistics.life.startPoints > 0 ? start.horse.statistics.life.startPoints : 1
-      const value = Math.round(start.horse.statistics.life.earnings / startPoints)
+      const value = Math.round(
+        start.horse.statistics.life.startPoints / start.horse.statistics.life.starts
+      )
       return {
         name: start.horse.name,
         value,

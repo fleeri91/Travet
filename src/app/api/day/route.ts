@@ -1,7 +1,7 @@
 import { NextResponse, NextRequest } from 'next/server'
 import axios from 'axios'
 
-import { CalendarDayRoot } from '@/types/ATG/CalendarDay'
+import { ATGCalendarDayRoot } from '@/types/ATG/CalendarDay'
 
 const ALLOWED_COUNTRYCODES = ['SE', 'NO', 'DK', 'FI']
 const ALLOWED_GAMETYPES = ['V75', 'GS75', 'V86', 'V64', 'V65', 'dd', 'ld', 'V5', 'V4']
@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
       throw new Error('Failed to fetch game data')
     }
 
-    const data: CalendarDayRoot = response.data
+    const data: ATGCalendarDayRoot = response.data
 
     const filteredTracks = data.tracks.filter(
       (track) => ALLOWED_COUNTRYCODES.includes(track.countryCode) && track.sport === 'trot'
@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
 
     const allowedTrackIds = new Set(filteredTracks.map((track) => track.id))
 
-    const filteredGames: CalendarDayRoot['games'] = {}
+    const filteredGames: ATGCalendarDayRoot['games'] = {}
     Object.keys(data.games)
       .filter((gameType) => ALLOWED_GAMETYPES.includes(gameType))
       .forEach((gameType) => {
@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
         })
       })
 
-    const filteredData: CalendarDayRoot = {
+    const filteredData: ATGCalendarDayRoot = {
       ...data,
       tracks: filteredTracks,
       games: filteredGames,

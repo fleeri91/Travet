@@ -9,10 +9,10 @@ import H2H from '@/components/H2H'
 import RaceInfoCard from '@/components/RaceInfoCard'
 import Filter from '@/components/Filter'
 
-import { GameRoot } from '@/types/ATG/Game'
+import { ATGGameRoot } from '@/types/ATG/Game'
 
 interface RaceTabProps {
-  gameData: GameRoot
+  gameData: ATGGameRoot
 }
 
 const RaceTab = ({ gameData }: RaceTabProps) => {

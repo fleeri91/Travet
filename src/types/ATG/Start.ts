@@ -1,4 +1,4 @@
-export interface StartRoot {
+export interface ATGStartRoot {
   raceId: string
   startNumber: number
   sport: string

@@ -1,6 +1,6 @@
 import { RecordResult } from './Record'
 
-export interface GameRoot {
+export interface ATGGameRoot {
   id: string
   status: string
   races: Race[]

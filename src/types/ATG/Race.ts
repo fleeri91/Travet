@@ -1,4 +1,4 @@
-export interface RaceRoot {
+export interface ATGRaceRoot {
   id: string
   name: string
   date: string

@@ -1,4 +1,4 @@
-export interface CalendarDayRoot {
+export interface ATGCalendarDayRoot {
   date: string
   tracks: Track[]
   games: Games

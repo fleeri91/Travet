@@ -1,8 +1,8 @@
 import { NextResponse, NextRequest } from 'next/server'
 import axios from 'axios'
 
-import { GameRoot, Start } from '@/types/ATG/Game'
-import { RecordRoot } from '@/types/ATG/Record'
+import { ATGGameRoot, Start } from '@/types/ATG/Game'
+import { ATGRecordRoot } from '@/types/ATG/Record'
 
 export async function GET(request: NextRequest) {
   const params = request.nextUrl.searchParams
@@ -15,14 +15,14 @@ export async function GET(request: NextRequest) {
       throw new Error('Failed to fetch game data')
     }
 
-    let data: GameRoot | null = null
+    let data: ATGGameRoot | null = null
 
     if (response.data) {
-      const gameData: GameRoot = response.data as GameRoot
+      const gameData: ATGGameRoot = response.data as ATGGameRoot
       const raceData = await Promise.all(
         gameData.races.map(async (race) => {
           const startRequests = race.starts.map(async (start) => {
-            const startResponse = await axios.get<RecordRoot>(
+            const startResponse = await axios.get<ATGRecordRoot>(
               `${process.env.NEXT_PUBLIC_API_URL}/races/${race.id}/start/${start.number}`
             )
             const startWithData: Start = {

@@ -6,17 +6,20 @@ import { Box, Button, Container, Spinner, Text } from '@radix-ui/themes'
 
 import RaceTab from '@/components/RaceTab'
 
-import { GameRoot } from '@/types/ATG/Game'
+import { ATGGameRoot } from '@/types/ATG/Game'
 
 const GamePage = ({ params }: { params: { gameId: string } }) => {
   const router = useRouter()
 
-  const { data, isLoading } = useSWR<GameRoot>(params.gameId ? `game/?id=${params.gameId}` : null, {
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false,
-    errorRetryCount: 3,
-    errorRetryInterval: 5000,
-  })
+  const { data, isLoading } = useSWR<ATGGameRoot>(
+    params.gameId ? `game/?id=${params.gameId}` : null,
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+      errorRetryCount: 3,
+      errorRetryInterval: 5000,
+    }
+  )
 
   if (isLoading) {
     return (

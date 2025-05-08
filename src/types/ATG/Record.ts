@@ -1,4 +1,4 @@
-export interface RecordRoot {
+export interface ATGRecordRoot {
   raceId: string
   startNumber: number
   sport: string

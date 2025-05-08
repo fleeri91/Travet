@@ -17,7 +17,7 @@ import {
 } from '@radix-ui/themes'
 import { RiArrowLeftSLine, RiArrowRightSLine } from '@remixicon/react'
 
-import { CalendarDayRoot } from '@/types/ATG/CalendarDay'
+import { ATGCalendarDayRoot } from '@/types/ATG/CalendarDay'
 import { useCalendarStore } from '@/store/useCalendar'
 import { GameStatus } from '@/constants/GameStatus'
 
@@ -27,7 +27,7 @@ const Home = () => {
 
   const FIVE_DAYS = dayjs(today).add(4, 'day')
 
-  const { data, isLoading, error, mutate } = useSWR<CalendarDayRoot>(
+  const { data, isLoading, error, mutate } = useSWR<ATGCalendarDayRoot>(
     selectedDate ? `/day?date=${selectedDate}` : null,
     {
       revalidateOnFocus: false,

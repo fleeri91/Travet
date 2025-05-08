@@ -1,8 +1,9 @@
 import { NextResponse, NextRequest } from 'next/server'
 import axios from 'axios'
 
-import { ATGGameRoot, Start } from '@/types/ATG/Game'
+import { ATGGameRoot } from '@/types/ATG/Game'
 import { ATGRecordRoot } from '@/types/ATG/Record'
+import { Start } from '@/types/Game'
 
 export async function GET(request: NextRequest) {
   const params = request.nextUrl.searchParams

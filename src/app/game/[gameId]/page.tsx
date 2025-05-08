@@ -19,7 +19,7 @@ import { RiFilter3Line, RiCalendarLine } from '@remixicon/react'
 
 import RaceInfoCard from '@/components/RaceInfoCard'
 import RaceFilterTable from '@/components/RaceFilterTable'
-import RaceStatisticsView from '@/components/RaceStatisticsView'
+import RaceStatisticsRanking from '@/components/RaceStatisticsRanking'
 import H2H from '@/components/H2H'
 import Filter from '@/components/Filter'
 
@@ -116,7 +116,7 @@ const GamePage = ({ params }: { params: { gameId: string } }) => {
               <Tabs.Content key={index} value={race.id}>
                 <RaceInfoCard race={race} raceIndex={index} />
                 {view === 'start' && <RaceFilterTable game={data} race={race} raceIndex={index} />}
-                {view === 'statistics' && <RaceStatisticsView raceId={race.id} />}
+                {view === 'statistics' && <RaceStatisticsRanking />}
                 {view === 'h2h' && <H2H />}
               </Tabs.Content>
             ))}

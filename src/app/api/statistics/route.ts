@@ -1,7 +1,7 @@
 import { NextResponse, NextRequest } from 'next/server'
 import axios from 'axios'
 
-import { RaceRoot } from '@/types/ATG/Race'
+import { ATGRaceRoot } from '@/types/ATG/Race'
 import { BarlistData } from '@/types/BarlistData'
 import { RaceStatistics } from '@/types/RaceStatistics'
 
@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'No data found for the provided race ID' }, { status: 404 })
     }
 
-    const raceData: RaceRoot = response.data
+    const raceData: ATGRaceRoot = response.data
 
     const HorseMoneyPerStart: BarlistData[] = raceData.starts.map((start) => {
       const roundedValue = Math.round(start.horse.money / start.horse.statistics.life.starts)

@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useState } from 'react'
-import { Button, Dialog, Flex, Switch, Text, TextField } from '@radix-ui/themes'
+import { Button, Dialog, Flex, RadioGroup, Switch, Text, TextField } from '@radix-ui/themes'
 
 import { useFilterStore } from '@/store/useFilter'
 
@@ -43,6 +43,13 @@ const Filter = ({ isOpen, onClose }: FilterProps): JSX.Element => {
     }))
   }
 
+  const handleTimespanChange = (value: 'latestMonths' | 'latestYear' | 'all') => {
+    setFilterState((prevFilterState: FilterType) => ({
+      ...prevFilterState,
+      timespan: value,
+    }))
+  }
+
   const discardFilter = () => {
     setFilterState(filter)
     onClose()
@@ -62,7 +69,7 @@ const Filter = ({ isOpen, onClose }: FilterProps): JSX.Element => {
       <Dialog.Content maxWidth="450px">
         <Dialog.Title>Filtrera</Dialog.Title>
 
-        <Flex direction="column" gap="2">
+        <Flex direction="column" gap="3">
           <Flex direction="row" justify="between" align="center" gap="3">
             <Text>Skor</Text>
             <Switch checked={filterState.shoes} onCheckedChange={() => toggleFilter('shoes')} />
@@ -132,19 +139,24 @@ const Filter = ({ isOpen, onClose }: FilterProps): JSX.Element => {
             />
           </Flex>
           <Flex direction="row" justify="between" align="center" gap="3">
-            <Text>Senaste månaderna</Text>
-            <Switch
-              checked={filterState.latestMonths}
-              onCheckedChange={() => toggleFilter('latestMonths')}
-            />
-          </Flex>
-          <Flex direction="row" justify="between" align="center" gap="3">
             <Text>STL</Text>
             <Switch checked={filterState.stl} onCheckedChange={() => toggleFilter('stl')} />
           </Flex>
+          <Flex direction="column" gap="3">
+            <Text>Tidsspann</Text>
+            <RadioGroup.Root
+              name="timespan"
+              value={filterState.timespan}
+              onValueChange={handleTimespanChange}
+            >
+              <RadioGroup.Item value="latestMonths">Senaste månaderna</RadioGroup.Item>
+              <RadioGroup.Item value="latestYear">Senaste året</RadioGroup.Item>
+              <RadioGroup.Item value="all">Alla</RadioGroup.Item>
+            </RadioGroup.Root>
+          </Flex>
         </Flex>
 
-        <Flex gap="3" mt="4" justify="end">
+        <Flex gap="3" mt="9" justify="end">
           <Button color="gray" onClick={discardFilter} className="cursor-pointer">
             Avbryt
           </Button>

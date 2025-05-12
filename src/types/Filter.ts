@@ -11,7 +11,7 @@ export type FilterType = {
   track: boolean
   driver: boolean
   condition: boolean
-  latestMonths: boolean
+  timespan: 'latestMonths' | 'latestYear' | 'all'
   win: boolean
   stl: boolean
 }

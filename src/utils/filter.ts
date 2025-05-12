@@ -1,8 +1,8 @@
 import dayjs from 'dayjs'
 
-import { FORBIDDEN_TRACKS } from '@/constants/Tracks'
 import { FilterType, FormType } from '@/types/Filter'
-import { Race, Start, Track } from '@/types/ATG/Game'
+import { Race, Start } from '@/types/Game'
+import { Track } from '@/types/ATG/Game'
 import { RecordResult } from '@/types/ATG/Record'
 
 /**
@@ -146,11 +146,9 @@ export const _recordFilter = (
       !record.kmTime.code &&
       record.race.sport === race.sport &&
       record.place !== '0' &&
-      // (race.distance > 1940 ? record.start.distance > 1940 : true) &&
-      // !FORBIDDEN_TRACKS.includes(record.track.id) &&
       dayjs(record.date).isAfter(currentDate.subtract(2, 'year'))
 
-    const { shoes, sulky, distance, money, top, track, driver, condition, latestMonths, win, stl } =
+    const { shoes, sulky, distance, money, top, track, driver, condition, timespan, win, stl } =
       filter
 
     let filterConditions: boolean = true
@@ -211,9 +209,14 @@ export const _recordFilter = (
       filterConditions = filterConditions && record.track.condition === currentTrack.condition
     }
 
-    if (latestMonths) {
+    if (filter.timespan === 'latestMonths') {
       filterConditions =
-        filterConditions && dayjs(record.date).isAfter(currentDate.subtract(3, 'months'))
+        filterConditions && dayjs(record.date).isAfter(currentDate.subtract(3, 'month'))
+    } else if (filter.timespan === 'latestYear') {
+      filterConditions =
+        filterConditions && dayjs(record.date).isAfter(currentDate.subtract(12, 'month'))
+    } else if (filter.timespan === 'all') {
+      filterConditions = filterConditions && true
     }
 
     if (stl) {

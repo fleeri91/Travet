@@ -25,7 +25,7 @@ const initialState: FilterState = {
     track: false,
     driver: false,
     condition: false,
-    latestMonths: false,
+    timespan: 'latestYear',
     win: false,
     stl: false,
   },

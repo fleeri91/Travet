@@ -7,8 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prettier": "npx prettier . --write",
-    "new": "plop"
+    "prettier": "npx prettier . --write"
   },
   "dependencies": {
     "@radix-ui/themes": "^3.2.1",
@@ -31,7 +30,6 @@
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.1.4",
-    "plop": "^4.0.1",
     "postcss": "^8",
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.6.11",

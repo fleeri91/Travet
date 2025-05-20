@@ -56,7 +56,7 @@ const GamePage = (props: { params: Promise<{ gameId: string }> }) => {
     }
   }, [data])
 
-  if (!isLoading) {
+  if (isLoading) {
     return (
       <Flex className="h-screen items-center">
         <Spinner size="3" className='mx-auto' />

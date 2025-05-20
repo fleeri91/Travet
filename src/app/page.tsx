@@ -45,13 +45,13 @@ const Home = () => {
           <Box className="p-4">
             <Flex justify="center" align="center" gap="4">
               <Box className="h-8 w-8">
-                <Skeleton loading className="h-full w-full" />
+                <Skeleton loading minHeight="100%" />
               </Box>
               <Box className="flex h-8 w-24">
-                <Skeleton loading className="h-full w-full" />
+                <Skeleton loading minHeight="100%" />
               </Box>
               <Box className="h-8 w-8">
-                <Skeleton loading className="h-full w-full" />
+                <Skeleton loading minHeight="100%" />
               </Box>
             </Flex>
           </Box>
@@ -61,9 +61,9 @@ const Home = () => {
             width="auto"
           >
             {Array.from({ length: 9 }).map((_, i) => (
-              <Card key={i} className="h-44 p-0">
-                <Skeleton loading className="h-full w-full" />
-              </Card>
+              <Box key={i} className="h-44">
+                <Skeleton minHeight="100%" loading />
+              </Box>
             ))}
           </Grid>
         </Container>

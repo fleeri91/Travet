@@ -56,11 +56,11 @@ const GamePage = (props: { params: Promise<{ gameId: string }> }) => {
     }
   }, [data])
 
-  if (isLoading) {
+  if (!isLoading) {
     return (
-      <Box className="flex h-screen w-full items-center justify-center">
-        <Spinner size="3" />
-      </Box>
+      <Flex className="h-screen items-center">
+        <Spinner size="3" className='mx-auto' />
+      </Flex>
     )
   }
 

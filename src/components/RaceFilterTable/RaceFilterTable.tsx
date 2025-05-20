@@ -164,11 +164,12 @@ const RaceFilterTable = ({
             <Flex
               justify="start"
               align="center"
-              className="h-full min-w-[120px] space-x-2"
+              gap="2"
+              className="h-full min-w-[120px]"
             >
-              <Badge>
+              <span>
                 {startRecord.time && <Text size="3">{startRecord.time}</Text>}
-              </Badge>
+              </span>
               <Badge size="2" className="flex min-w-12 justify-center">
                 <Text size="2">{startRecord.distance.type}</Text>
               </Badge>

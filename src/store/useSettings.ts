@@ -6,6 +6,8 @@ type SettingsActions = {}
 
 const initialState: SettingsState = {}
 
-export const useSettingsStore = create<SettingsState & SettingsActions>((set) => ({
-  ...initialState,
-}))
+export const useSettingsStore = create<SettingsState & SettingsActions>(
+  (set) => ({
+    ...initialState,
+  })
+)

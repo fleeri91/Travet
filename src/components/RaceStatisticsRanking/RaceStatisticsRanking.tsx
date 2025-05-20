@@ -4,11 +4,15 @@ import BarList from '@/components/BarList'
 
 import { RaceStatistics } from '@/types/RaceStatistics'
 
+import type { JSX } from 'react'
+
 interface RaceStatisticsProps {
   raceStatistics: RaceStatistics
 }
 
-const RaceStatisticsRanking = ({ raceStatistics }: RaceStatisticsProps): JSX.Element | null => {
+const RaceStatisticsRanking = ({
+  raceStatistics,
+}: RaceStatisticsProps): JSX.Element | null => {
   if (!raceStatistics) {
     return null
   }

@@ -20,7 +20,10 @@ export const computeRaceStatistics = (starts: Start[]): RaceStatistics => {
     HorsePointPerStart: starts.map((start) => ({
       name: start.horse.name,
       value: start.horse.statistics.life.starts
-        ? Math.round(start.horse.statistics.life.startPoints / start.horse.statistics.life.starts)
+        ? Math.round(
+            start.horse.statistics.life.startPoints /
+              start.horse.statistics.life.starts
+          )
         : 0,
     })),
   }

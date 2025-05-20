@@ -1,6 +1,6 @@
 'use client'
 
-import { Fragment, useMemo } from 'react'
+import { Fragment, useMemo, type JSX } from 'react'
 import clsx from 'clsx'
 import { Badge, Flex, IconButton, Table, Text, Tooltip } from '@radix-ui/themes'
 import { RiInformationLine, RiSortAsc, RiSortDesc } from '@remixicon/react'
@@ -16,7 +16,12 @@ import HandicapRow from './HandicapRow'
 import { useFilterStore } from '@/store/useFilter'
 import { FormType } from '@/types/Filter'
 import { _getHorseSex } from '@/utils/atg'
-import { _getGallopp, _getStartForm, _getStartRecord, _recordFilter } from '@/utils/filter'
+import {
+  _getGallopp,
+  _getStartForm,
+  _getStartRecord,
+  _recordFilter,
+} from '@/utils/filter'
 import { Game, Race, Start } from '@/types/Game'
 
 interface RaceFilterTableProps {
@@ -35,7 +40,11 @@ interface TableData {
   startIndex: number
 }
 
-const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.Element | null => {
+const RaceFilterTable = ({
+  game,
+  race,
+  raceIndex,
+}: RaceFilterTableProps): JSX.Element | null => {
   const { filter } = useFilterStore()
 
   const data = useMemo(() => {
@@ -43,7 +52,10 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
 
     return race.starts
       .map((start: Start, startIndex: number) => {
-        if (!game.races[raceIndex] || !game.races[raceIndex].starts[startIndex]) {
+        if (
+          !game.races[raceIndex] ||
+          !game.races[raceIndex].starts[startIndex]
+        ) {
           return null
         }
 
@@ -89,7 +101,12 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
               >
                 <Text size="2">{currentStart.number}</Text>
               </Badge>
-              <Flex direction="column" justify="start" align="start" className="mr-8">
+              <Flex
+                direction="column"
+                justify="start"
+                align="start"
+                className="mr-8"
+              >
                 <Text
                   size="3"
                   className={clsx(
@@ -97,7 +114,9 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
                     'space-x-2 whitespace-nowrap'
                   )}
                 >
-                  {currentStart.horse.name && <span>{currentStart.horse.name}</span>}
+                  {currentStart.horse.name && (
+                    <span>{currentStart.horse.name}</span>
+                  )}
                   {currentStart.horse.nationality && (
                     <span>{`(${currentStart.horse.nationality})`}</span>
                   )}
@@ -105,10 +124,16 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
                     <span>{`${_getHorseSex(currentStart.horse.sex)}${currentStart.horse.age}`}</span>
                   )}
                 </Text>
-                <Text size="2" className={clsx(start.scratched && 'text-gray-300 line-through')}>
-                  {currentStart.driver.firstName && currentStart.driver.lastName && (
-                    <span>{`${currentStart.driver.firstName} ${currentStart.driver.lastName}`}</span>
+                <Text
+                  size="2"
+                  className={clsx(
+                    start.scratched && 'text-gray-300 line-through'
                   )}
+                >
+                  {currentStart.driver.firstName &&
+                    currentStart.driver.lastName && (
+                      <span>{`${currentStart.driver.firstName} ${currentStart.driver.lastName}`}</span>
+                    )}
                 </Text>
               </Flex>
             </Flex>
@@ -136,8 +161,14 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
           if (!startRecord.time && !startRecord.distance?.type) return null
 
           return (
-            <Flex justify="start" align="center" className="h-full min-w-[120px] space-x-2">
-              {startRecord.time && <Text size="3">{startRecord.time}</Text>}
+            <Flex
+              justify="start"
+              align="center"
+              className="h-full min-w-[120px] space-x-2"
+            >
+              <Badge>
+                {startRecord.time && <Text size="3">{startRecord.time}</Text>}
+              </Badge>
               <Badge size="2" className="flex min-w-12 justify-center">
                 <Text size="2">{startRecord.distance.type}</Text>
               </Badge>
@@ -150,8 +181,14 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
           )
         },
         sortingFn: (rowA, rowB) => {
-          const recordA = _getStartRecord(rowA.original.records, rowA.original.filteredRecords)
-          const recordB = _getStartRecord(rowB.original.records, rowB.original.filteredRecords)
+          const recordA = _getStartRecord(
+            rowA.original.records,
+            rowA.original.filteredRecords
+          )
+          const recordB = _getStartRecord(
+            rowB.original.records,
+            rowB.original.filteredRecords
+          )
           const timeA = recordA.time ? parseFloat(recordA.time) : Infinity
           const timeB = recordB.time ? parseFloat(recordB.time) : Infinity
           return timeA - timeB
@@ -189,7 +226,9 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
                         : 'green'
                   }
                 >
-                  <Text size="2">{record.disqualified ? 'D' : record.place}</Text>
+                  <Text size="2">
+                    {record.disqualified ? 'D' : record.place}
+                  </Text>
                 </Badge>
               ))}
             </Flex>
@@ -213,16 +252,24 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
           const { records, currentRace, currentStart } = row.original
           return (
             <Flex justify="start" align="center" className="h-full space-x-2">
-              {_getGallopp(records, currentRace.startMethod).map((record: any, index: number) => (
-                <Badge
-                  key={index}
-                  size="2"
-                  className="flex w-7 justify-center"
-                  color={record.start.postPosition === currentStart.postPosition ? 'red' : 'yellow'}
-                >
-                  <Text size="2">{record.disqualified ? 'D' : record.galloped ? 'G' : ''}</Text>
-                </Badge>
-              ))}
+              {_getGallopp(records, currentRace.startMethod).map(
+                (record: any, index: number) => (
+                  <Badge
+                    key={index}
+                    size="2"
+                    className="flex w-7 justify-center"
+                    color={
+                      record.start.postPosition === currentStart.postPosition
+                        ? 'red'
+                        : 'yellow'
+                    }
+                  >
+                    <Text size="2">
+                      {record.disqualified ? 'D' : record.galloped ? 'G' : ''}
+                    </Text>
+                  </Badge>
+                )
+              )}
             </Flex>
           )
         },
@@ -258,14 +305,18 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
                     }
                   }
                 }}
-                style={{ cursor: header.column.getCanSort() ? 'pointer' : 'default' }}
+                style={{
+                  cursor: header.column.getCanSort() ? 'pointer' : 'default',
+                }}
                 className="w-full"
               >
                 <Flex align="center" gap="2">
-                  {flexRender(header.column.columnDef.header, header.getContext())}
-                  {header.column.id === 'tid' && header.column.getIsSorted() === 'asc' && (
-                    <RiSortAsc />
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext()
                   )}
+                  {header.column.id === 'tid' &&
+                    header.column.getIsSorted() === 'asc' && <RiSortAsc />}
                 </Flex>
               </Table.ColumnHeaderCell>
             ))}
@@ -288,7 +339,9 @@ const RaceFilterTable = ({ game, race, raceIndex }: RaceFilterTableProps): JSX.E
           return (
             <Fragment key={startIndex}>
               {renderHandicapRow()}
-              <Table.Row className={clsx('select-none', start.scratched && 'opacity-60')}>
+              <Table.Row
+                className={clsx('select-none', start.scratched && 'opacity-60')}
+              >
                 {row.getVisibleCells().map((cell) => (
                   <Table.Cell key={cell.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}

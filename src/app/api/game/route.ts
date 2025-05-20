@@ -10,7 +10,9 @@ export async function GET(request: NextRequest) {
   let id = params.get('id')
 
   try {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/games/${id}`)
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/games/${id}`
+    )
 
     if (!response) {
       throw new Error('Failed to fetch game data')

@@ -16,7 +16,8 @@ export const _getStartForm = (records: RecordResult[]): FormType[] => {
   const currentDateThreeMonthsAgo = currentDate.subtract(3, 'months')
 
   const filteredRecords = records.filter(
-    (record) => dayjs(record.date).isAfter(currentDateThreeMonthsAgo) && !record.oddsCode
+    (record) =>
+      dayjs(record.date).isAfter(currentDateThreeMonthsAgo) && !record.oddsCode
   )
 
   for (let i = 0; i < filteredRecords.length; i++) {
@@ -42,8 +43,13 @@ export const _getStartForm = (records: RecordResult[]): FormType[] => {
   return lastFive
 }
 
-export const _getGallopp = (records: RecordResult[], method: string): RecordResult[] => {
-  const startMethodRecords = records.filter((record) => record.race.startMethod === method)
+export const _getGallopp = (
+  records: RecordResult[],
+  method: string
+): RecordResult[] => {
+  const startMethodRecords = records.filter(
+    (record) => record.race.startMethod === method
+  )
   return startMethodRecords.slice(0, 5).filter((record) => record.galloped)
 }
 
@@ -57,7 +63,11 @@ export const _getStartRecord = (
   records: RecordResult[],
   filteredRecords: RecordResult[],
   length: number = filteredRecords.length
-): { time: string; recent: boolean; distance: { number: number | null; type: string } } => {
+): {
+  time: string
+  recent: boolean
+  distance: { number: number | null; type: string }
+} => {
   if (records.length === 0 || filteredRecords.length === 0) {
     return { time: '', recent: false, distance: { number: null, type: '' } }
   }
@@ -72,7 +82,9 @@ export const _getStartRecord = (
     .filter((record) => {
       const recordDate = dayjs(record.date) // Assuming `record.date` holds the timestamp
       return (
-        !record.scratched && record.kmTime && recordDate.isAfter(currentDate.subtract(3, 'month'))
+        !record.scratched &&
+        record.kmTime &&
+        recordDate.isAfter(currentDate.subtract(3, 'month'))
       )
     })
     .slice(0, 5)
@@ -88,7 +100,8 @@ export const _getStartRecord = (
       kmTime &&
       (!lowestKmTime ||
         kmTime.minutes < lowestKmTime.minutes ||
-        (kmTime.minutes === lowestKmTime.minutes && kmTime.seconds < lowestKmTime.seconds) ||
+        (kmTime.minutes === lowestKmTime.minutes &&
+          kmTime.seconds < lowestKmTime.seconds) ||
         (kmTime.minutes === lowestKmTime.minutes &&
           kmTime.seconds === lowestKmTime.seconds &&
           kmTime.tenths < lowestKmTime.tenths))
@@ -114,7 +127,9 @@ export const _getStartRecord = (
 
   return {
     time:
-      lowestKmTime?.minutes === undefined ? '' : `${lowestKmTime.seconds}.${lowestKmTime.tenths}`,
+      lowestKmTime?.minutes === undefined
+        ? ''
+        : `${lowestKmTime.seconds}.${lowestKmTime.tenths}`,
     recent,
     distance: {
       number: recordDistance,
@@ -148,8 +163,19 @@ export const _recordFilter = (
       record.place !== '0' &&
       dayjs(record.date).isAfter(currentDate.subtract(2, 'year'))
 
-    const { shoes, sulky, distance, money, top, track, driver, condition, timespan, win, stl } =
-      filter
+    const {
+      shoes,
+      sulky,
+      distance,
+      money,
+      top,
+      track,
+      driver,
+      condition,
+      timespan,
+      win,
+      stl,
+    } = filter
 
     let filterConditions: boolean = true
 
@@ -162,30 +188,41 @@ export const _recordFilter = (
 
     if (sulky) {
       filterConditions =
-        filterConditions && record.start.horse.sulky?.type?.text === start.horse?.sulky?.type?.text
+        filterConditions &&
+        record.start.horse.sulky?.type?.text === start.horse?.sulky?.type?.text
     }
 
     if (distance) {
-      if (filter.specificDistance?.from && filter.specificDistance?.from !== '') {
+      if (
+        filter.specificDistance?.from &&
+        filter.specificDistance?.from !== ''
+      ) {
         filterConditions =
-          filterConditions && (record.start.distance ?? 0) >= parseInt(filter.specificDistance.from)
+          filterConditions &&
+          (record.start.distance ?? 0) >= parseInt(filter.specificDistance.from)
       }
 
       if (filter.specificDistance?.to && filter.specificDistance?.to !== '') {
         filterConditions =
-          filterConditions && (record.start.distance ?? 0) <= parseInt(filter.specificDistance.to)
+          filterConditions &&
+          (record.start.distance ?? 0) <= parseInt(filter.specificDistance.to)
       }
 
-      if (filter.specificDistance?.from === '' && filter.specificDistance?.to === '') {
+      if (
+        filter.specificDistance?.from === '' &&
+        filter.specificDistance?.to === ''
+      ) {
         filterConditions =
-          filterConditions && (record.start.distance ?? 0) >= (race.distance ?? 0) - 200
+          filterConditions &&
+          (record.start.distance ?? 0) >= (race.distance ?? 0) - 200
       }
     }
 
     if (money) {
       if (race.prize !== null) {
         filterConditions =
-          filterConditions && record.race.firstPrize / 100000 >= getRacePrize(race.prize)
+          filterConditions &&
+          record.race.firstPrize / 100000 >= getRacePrize(race.prize)
       }
     }
 
@@ -202,26 +239,31 @@ export const _recordFilter = (
     }
 
     if (driver) {
-      filterConditions = filterConditions && record.start.driver.id === start.driver.id
+      filterConditions =
+        filterConditions && record.start.driver.id === start.driver.id
     }
 
     if (condition) {
-      filterConditions = filterConditions && record.track.condition === currentTrack.condition
+      filterConditions =
+        filterConditions && record.track.condition === currentTrack.condition
     }
 
     if (filter.timespan === 'latestMonths') {
       filterConditions =
-        filterConditions && dayjs(record.date).isAfter(currentDate.subtract(3, 'month'))
+        filterConditions &&
+        dayjs(record.date).isAfter(currentDate.subtract(3, 'month'))
     } else if (filter.timespan === 'latestYear') {
       filterConditions =
-        filterConditions && dayjs(record.date).isAfter(currentDate.subtract(12, 'month'))
+        filterConditions &&
+        dayjs(record.date).isAfter(currentDate.subtract(12, 'month'))
     } else if (filter.timespan === 'all') {
       filterConditions = filterConditions && true
     }
 
     if (stl) {
       if (race.prize !== null) {
-        filterConditions = filterConditions && record.race.firstPrize >= 10000000
+        filterConditions =
+          filterConditions && record.race.firstPrize >= 10000000
       }
     }
 

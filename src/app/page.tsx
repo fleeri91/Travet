@@ -23,7 +23,8 @@ import { GameStatus } from '@/constants/GameStatus'
 
 const Home = () => {
   const router = useRouter()
-  const { selectedDate, today, setPreviousDate, setNextDate } = useCalendarStore()
+  const { selectedDate, today, setPreviousDate, setNextDate } =
+    useCalendarStore()
 
   const FIVE_DAYS = dayjs(today).add(4, 'day')
 
@@ -54,7 +55,11 @@ const Home = () => {
               </Box>
             </Flex>
           </Box>
-          <Grid columns={{ initial: '1', sm: '2', md: '3' }} gap="3" width="auto">
+          <Grid
+            columns={{ initial: '1', sm: '2', md: '3' }}
+            gap="3"
+            width="auto"
+          >
             {Array.from({ length: 9 }).map((_, i) => (
               <Card key={i} className="h-44 p-0">
                 <Skeleton loading className="h-full w-full" />
@@ -91,8 +96,14 @@ const Home = () => {
             >
               <RiArrowLeftSLine />
             </IconButton>
-            <Text as="div" size="5" className="flex min-w-24 justify-center capitalize">
-              {selectedDate == today ? 'Idag' : dayjs(selectedDate).locale(sv).format('DD/MM dd')}
+            <Text
+              as="div"
+              size="5"
+              className="flex min-w-24 justify-center capitalize"
+            >
+              {selectedDate == today
+                ? 'Idag'
+                : dayjs(selectedDate).locale(sv).format('DD/MM dd')}
             </Text>
             <IconButton
               variant="soft"
@@ -105,7 +116,11 @@ const Home = () => {
           </Flex>
         </Box>
         {data?.games && (
-          <Grid columns={{ initial: '1', sm: '2', md: '3' }} gap="3" width="auto">
+          <Grid
+            columns={{ initial: '1', sm: '2', md: '3' }}
+            gap="3"
+            width="auto"
+          >
             {Object.keys(data.games).flatMap((gameType) =>
               data.games[gameType].map((game) => {
                 const trackNames =
@@ -120,7 +135,12 @@ const Home = () => {
                     onClick={() => router.push(`/game/${game.id}`)}
                     className="h-44 cursor-pointer"
                   >
-                    <Flex direction="column" justify="center" align="center" className="h-full">
+                    <Flex
+                      direction="column"
+                      justify="center"
+                      align="center"
+                      className="h-full"
+                    >
                       <Text size="8" weight="bold" className="uppercase">
                         {gameType}
                       </Text>
@@ -135,12 +155,12 @@ const Home = () => {
                       </Text>
                     </Flex>
                     {game.jackpotAmount && (
-                      <Box className="absolute -left-[10px] -top-[0px] h-[150px] w-[150px] overflow-hidden">
+                      <Box className="absolute -top-[0px] -left-[10px] h-[150px] w-[150px] overflow-hidden">
                         <Text
                           as="span"
                           weight="bold"
                           size="3"
-                          className="absolute -right-[25px] top-[30px] w-[225px] -rotate-45 bg-yellow-500 py-[15px] text-center uppercase leading-none text-black"
+                          className="absolute top-[30px] -right-[25px] w-[225px] -rotate-45 bg-yellow-500 py-[15px] text-center leading-none text-black uppercase"
                         >
                           Jackpot
                         </Text>

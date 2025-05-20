@@ -16,13 +16,18 @@ const initialState: CalendarState = {
   selectedDate: dayjs().format('YYYY-MM-DD'),
 }
 
-export const useCalendarStore = create<CalendarState & CalendarActions>((set) => ({
-  ...initialState,
-  setPreviousDate: (date: string) =>
-    set((state) => ({
-      ...state,
-      selectedDate: dayjs(date).subtract(1, 'day').format('YYYY-MM-DD'),
-    })),
-  setNextDate: (date: string) =>
-    set((state) => ({ ...state, selectedDate: dayjs(date).add(1, 'day').format('YYYY-MM-DD') })),
-}))
+export const useCalendarStore = create<CalendarState & CalendarActions>(
+  (set) => ({
+    ...initialState,
+    setPreviousDate: (date: string) =>
+      set((state) => ({
+        ...state,
+        selectedDate: dayjs(date).subtract(1, 'day').format('YYYY-MM-DD'),
+      })),
+    setNextDate: (date: string) =>
+      set((state) => ({
+        ...state,
+        selectedDate: dayjs(date).add(1, 'day').format('YYYY-MM-DD'),
+      })),
+  })
+)

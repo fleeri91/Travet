@@ -10,20 +10,30 @@ export async function GET(request: NextRequest) {
   const id = params.get('id')
 
   if (!id || typeof id !== 'string') {
-    return NextResponse.json({ error: 'Invalid or missing id parameter' }, { status: 400 })
+    return NextResponse.json(
+      { error: 'Invalid or missing id parameter' },
+      { status: 400 }
+    )
   }
 
   try {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/races/${id}`)
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/races/${id}`
+    )
 
     if (!response.data) {
-      return NextResponse.json({ error: 'No data found for the provided race ID' }, { status: 404 })
+      return NextResponse.json(
+        { error: 'No data found for the provided race ID' },
+        { status: 404 }
+      )
     }
 
     const raceData: ATGRaceRoot = response.data
 
     const HorseMoneyPerStart: BarlistData[] = raceData.starts.map((start) => {
-      const roundedValue = Math.round(start.horse.money / start.horse.statistics.life.starts)
+      const roundedValue = Math.round(
+        start.horse.money / start.horse.statistics.life.starts
+      )
       return {
         name: start.horse.name,
         value: roundedValue,
@@ -37,14 +47,17 @@ export async function GET(request: NextRequest) {
       }
     })
 
-    const HorsePlacePercentage: BarlistData[] = raceData.starts.map((start) => ({
-      name: start.horse.name,
-      value: start.horse.statistics.life.placePercentage || 0,
-    }))
+    const HorsePlacePercentage: BarlistData[] = raceData.starts.map(
+      (start) => ({
+        name: start.horse.name,
+        value: start.horse.statistics.life.placePercentage || 0,
+      })
+    )
 
     const HorsePointPerStart: BarlistData[] = raceData.starts.map((start) => {
       const value = Math.round(
-        start.horse.statistics.life.startPoints / start.horse.statistics.life.starts
+        start.horse.statistics.life.startPoints /
+          start.horse.statistics.life.starts
       )
       return {
         name: start.horse.name,
@@ -67,6 +80,9 @@ export async function GET(request: NextRequest) {
         { status: error.response?.status || 500 }
       )
     }
-    return NextResponse.json({ error: 'An unexpected error occurred' }, { status: 500 })
+    return NextResponse.json(
+      { error: 'An unexpected error occurred' },
+      { status: 500 }
+    )
   }
 }

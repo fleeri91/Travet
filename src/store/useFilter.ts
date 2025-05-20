@@ -33,6 +33,8 @@ const initialState: FilterState = {
 
 export const useFilterStore = create<FilterState & FilterActions>((set) => ({
   ...initialState,
-  setFilter: (filter: FilterType) => set((state) => ({ ...state, filter: filter })),
-  resetFilter: (filter: FilterType) => set((state) => ({ ...state, filter: initialState.filter })),
+  setFilter: (filter: FilterType) =>
+    set((state) => ({ ...state, filter: filter })),
+  resetFilter: (filter: FilterType) =>
+    set((state) => ({ ...state, filter: initialState.filter })),
 }))

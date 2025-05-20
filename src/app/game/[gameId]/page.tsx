@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useMemo, useState, use } from 'react'
 import { useRouter } from 'next/navigation'
 import useSWR from 'swr'
 import {
@@ -26,17 +26,21 @@ import Filter from '@/components/Filter'
 import { Game, Race } from '@/types/Game'
 import { computeRaceStatistics } from '@/utils/statistics'
 
-const GamePage = ({ params }: { params: { gameId: string } }) => {
+const GamePage = (props: { params: Promise<{ gameId: string }> }) => {
+  const params = use(props.params)
   const router = useRouter()
   const [filterOpen, setFilterOpen] = useState<boolean>(false)
   const [view, setView] = useState<'start' | 'statistics' | 'h2h'>('start')
 
-  const { data, isLoading } = useSWR<Game>(params.gameId ? `game/?id=${params.gameId}` : null, {
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false,
-    errorRetryCount: 3,
-    errorRetryInterval: 5000,
-  })
+  const { data, isLoading } = useSWR<Game>(
+    params.gameId ? `game/?id=${params.gameId}` : null,
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+      errorRetryCount: 3,
+      errorRetryInterval: 5000,
+    }
+  )
 
   const gameData = useMemo<Game | null>(() => {
     if (!data) return null
@@ -80,7 +84,11 @@ const GamePage = ({ params }: { params: { gameId: string } }) => {
           <Tabs.List className="gap-x-4">
             <Flex>
               {gameData.races?.map((race, index) => (
-                <Tabs.Trigger key={index} value={race.id} className="cursor-pointer">
+                <Tabs.Trigger
+                  key={index}
+                  value={race.id}
+                  className="cursor-pointer"
+                >
                   <Text size="3" weight="bold">
                     {index + 1}
                   </Text>
@@ -114,13 +122,18 @@ const GamePage = ({ params }: { params: { gameId: string } }) => {
             <SegmentedControl.Root
               value={view}
               size="3"
-              onValueChange={(value: 'start' | 'statistics' | 'h2h') => setView(value)}
+              onValueChange={(value: 'start' | 'statistics' | 'h2h') =>
+                setView(value)
+              }
               className="mb-4 w-full"
             >
               <SegmentedControl.Item value="start" className="cursor-pointer">
                 <Text className="text-sm sm:text-base">Startlista</Text>
               </SegmentedControl.Item>
-              <SegmentedControl.Item value="statistics" className="cursor-pointer">
+              <SegmentedControl.Item
+                value="statistics"
+                className="cursor-pointer"
+              >
                 <Text className="text-sm sm:text-base">Statistik</Text>
               </SegmentedControl.Item>
               <SegmentedControl.Item value="h2h" className="cursor-pointer">
@@ -131,7 +144,11 @@ const GamePage = ({ params }: { params: { gameId: string } }) => {
               <Tabs.Content key={index} value={race.id}>
                 <RaceInfoCard race={race} raceIndex={index} />
                 {view === 'start' && (
-                  <RaceFilterTable game={gameData} race={race} raceIndex={index} />
+                  <RaceFilterTable
+                    game={gameData}
+                    race={race}
+                    raceIndex={index}
+                  />
                 )}
                 {view === 'statistics' && (
                   <RaceStatisticsRanking raceStatistics={race.statistics[0]} />

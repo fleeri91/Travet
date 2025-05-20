@@ -1,5 +1,13 @@
-import { ChangeEvent, useEffect, useState } from 'react'
-import { Button, Dialog, Flex, RadioGroup, Switch, Text, TextField } from '@radix-ui/themes'
+import { ChangeEvent, useEffect, useState, type JSX } from 'react'
+import {
+  Button,
+  Dialog,
+  Flex,
+  RadioGroup,
+  Switch,
+  Text,
+  TextField,
+} from '@radix-ui/themes'
 
 import { useFilterStore } from '@/store/useFilter'
 
@@ -21,7 +29,9 @@ const Filter = ({ isOpen, onClose }: FilterProps): JSX.Element => {
     }))
   }
 
-  const handleSpecificDistanceFromChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleSpecificDistanceFromChange = (
+    event: ChangeEvent<HTMLInputElement>
+  ) => {
     const value = event.target.value
     setFilterState((prevFilterState: FilterType) => ({
       ...prevFilterState,
@@ -32,7 +42,9 @@ const Filter = ({ isOpen, onClose }: FilterProps): JSX.Element => {
     }))
   }
 
-  const handleSpecificDistanceToChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleSpecificDistanceToChange = (
+    event: ChangeEvent<HTMLInputElement>
+  ) => {
     const value = event.target.value
     setFilterState((prevFilterState: FilterType) => ({
       ...prevFilterState,
@@ -43,7 +55,9 @@ const Filter = ({ isOpen, onClose }: FilterProps): JSX.Element => {
     }))
   }
 
-  const handleTimespanChange = (value: 'latestMonths' | 'latestYear' | 'all') => {
+  const handleTimespanChange = (
+    value: 'latestMonths' | 'latestYear' | 'all'
+  ) => {
     setFilterState((prevFilterState: FilterType) => ({
       ...prevFilterState,
       timespan: value,
@@ -72,11 +86,17 @@ const Filter = ({ isOpen, onClose }: FilterProps): JSX.Element => {
         <Flex direction="column" gap="3">
           <Flex direction="row" justify="between" align="center" gap="3">
             <Text>Skor</Text>
-            <Switch checked={filterState.shoes} onCheckedChange={() => toggleFilter('shoes')} />
+            <Switch
+              checked={filterState.shoes}
+              onCheckedChange={() => toggleFilter('shoes')}
+            />
           </Flex>
           <Flex direction="row" justify="between" align="center" gap="3">
             <Text>Sulky</Text>
-            <Switch checked={filterState.sulky} onCheckedChange={() => toggleFilter('sulky')} />
+            <Switch
+              checked={filterState.sulky}
+              onCheckedChange={() => toggleFilter('sulky')}
+            />
           </Flex>
           <Flex direction="row" justify="between" align="center" gap="3">
             <Text>Distans</Text>
@@ -92,7 +112,9 @@ const Filter = ({ isOpen, onClose }: FilterProps): JSX.Element => {
               placeholder="Från"
               disabled={!filterState.distance}
               value={
-                filterState.specificDistance?.from != null ? filterState.specificDistance.from : ''
+                filterState.specificDistance?.from != null
+                  ? filterState.specificDistance.from
+                  : ''
               }
               onChange={handleSpecificDistanceFromChange}
               min={0}
@@ -103,7 +125,9 @@ const Filter = ({ isOpen, onClose }: FilterProps): JSX.Element => {
               placeholder="Till"
               disabled={!filterState.distance}
               value={
-                filterState.specificDistance?.to != null ? filterState.specificDistance.to : ''
+                filterState.specificDistance?.to != null
+                  ? filterState.specificDistance.to
+                  : ''
               }
               onChange={handleSpecificDistanceToChange}
               min={0}
@@ -113,23 +137,38 @@ const Filter = ({ isOpen, onClose }: FilterProps): JSX.Element => {
 
           <Flex direction="row" justify="between" align="center" gap="3">
             <Text>Pengar</Text>
-            <Switch checked={filterState.money} onCheckedChange={() => toggleFilter('money')} />
+            <Switch
+              checked={filterState.money}
+              onCheckedChange={() => toggleFilter('money')}
+            />
           </Flex>
           <Flex direction="row" justify="between" align="center" gap="3">
             <Text>Topplacering</Text>
-            <Switch checked={filterState.top} onCheckedChange={() => toggleFilter('top')} />
+            <Switch
+              checked={filterState.top}
+              onCheckedChange={() => toggleFilter('top')}
+            />
           </Flex>
           <Flex direction="row" justify="between" align="center" gap="3">
             <Text>Vinst</Text>
-            <Switch checked={filterState.win} onCheckedChange={() => toggleFilter('win')} />
+            <Switch
+              checked={filterState.win}
+              onCheckedChange={() => toggleFilter('win')}
+            />
           </Flex>
           <Flex direction="row" justify="between" align="center" gap="3">
             <Text>Aktuell bana</Text>
-            <Switch checked={filterState.track} onCheckedChange={() => toggleFilter('track')} />
+            <Switch
+              checked={filterState.track}
+              onCheckedChange={() => toggleFilter('track')}
+            />
           </Flex>
           <Flex direction="row" justify="between" align="center" gap="3">
             <Text>Kusk</Text>
-            <Switch checked={filterState.driver} onCheckedChange={() => toggleFilter('driver')} />
+            <Switch
+              checked={filterState.driver}
+              onCheckedChange={() => toggleFilter('driver')}
+            />
           </Flex>
           <Flex direction="row" justify="between" align="center" gap="3">
             <Text>Banförhållande</Text>
@@ -140,7 +179,10 @@ const Filter = ({ isOpen, onClose }: FilterProps): JSX.Element => {
           </Flex>
           <Flex direction="row" justify="between" align="center" gap="3">
             <Text>STL</Text>
-            <Switch checked={filterState.stl} onCheckedChange={() => toggleFilter('stl')} />
+            <Switch
+              checked={filterState.stl}
+              onCheckedChange={() => toggleFilter('stl')}
+            />
           </Flex>
           <Flex direction="column" gap="3">
             <Text>Tidsspann</Text>
@@ -149,7 +191,9 @@ const Filter = ({ isOpen, onClose }: FilterProps): JSX.Element => {
               value={filterState.timespan}
               onValueChange={handleTimespanChange}
             >
-              <RadioGroup.Item value="latestMonths">Senaste månaderna</RadioGroup.Item>
+              <RadioGroup.Item value="latestMonths">
+                Senaste månaderna
+              </RadioGroup.Item>
               <RadioGroup.Item value="latestYear">Senaste året</RadioGroup.Item>
               <RadioGroup.Item value="all">Alla</RadioGroup.Item>
             </RadioGroup.Root>
@@ -157,10 +201,18 @@ const Filter = ({ isOpen, onClose }: FilterProps): JSX.Element => {
         </Flex>
 
         <Flex gap="3" mt="9" justify="end">
-          <Button color="gray" onClick={discardFilter} className="cursor-pointer">
+          <Button
+            color="gray"
+            onClick={discardFilter}
+            className="cursor-pointer"
+          >
             Avbryt
           </Button>
-          <Button color="green" onClick={applyFilter} className="cursor-pointer">
+          <Button
+            color="green"
+            onClick={applyFilter}
+            className="cursor-pointer"
+          >
             Filtrera
           </Button>
         </Flex>

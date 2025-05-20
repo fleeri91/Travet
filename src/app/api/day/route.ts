@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
 
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/calendar/day/${date}`
+      `${process.env.API_URL}/calendar/day/${date}`
     )
 
     if (!response.data) {

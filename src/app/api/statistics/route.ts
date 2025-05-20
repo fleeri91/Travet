@@ -17,9 +17,7 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/races/${id}`
-    )
+    const response = await axios.get(`${process.env.API_URL}/races/${id}`)
 
     if (!response.data) {
       return NextResponse.json(

@@ -1,6 +1,6 @@
 'use client'
 
-import { Table, Text, Box } from '@radix-ui/themes'
+import { Table, Text } from '@radix-ui/themes'
 
 interface HandicapRowProps {
   handicap: number

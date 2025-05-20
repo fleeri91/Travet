@@ -4,13 +4,21 @@ import BarList from '@/components/BarList'
 
 import { RaceStatistics } from '@/types/RaceStatistics'
 
-interface RaceStatisticsProps {}
+interface RaceStatisticsProps {
+  raceStatistics: RaceStatistics
+}
 
-const RaceStatisticsRanking = ({}: RaceStatisticsProps): JSX.Element | null => {
+const RaceStatisticsRanking = ({ raceStatistics }: RaceStatisticsProps): JSX.Element | null => {
+  if (!raceStatistics) {
+    return null
+  }
+
   return (
     <Box className="mt-4">
       <Grid columns={{ initial: '1', sm: '2', md: '3' }} gap="3" width="auto">
-        <Card></Card>
+        <Card>
+          <BarList data={raceStatistics.HorseMoneyPerStart} />
+        </Card>
       </Grid>
     </Box>
   )

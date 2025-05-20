@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import useSWR from 'swr'
 import {
@@ -23,7 +23,8 @@ import RaceStatisticsRanking from '@/components/RaceStatisticsRanking'
 import H2H from '@/components/H2H'
 import Filter from '@/components/Filter'
 
-import { Game } from '@/types/Game'
+import { Game, Race } from '@/types/Game'
+import { computeRaceStatistics } from '@/utils/statistics'
 
 const GamePage = ({ params }: { params: { gameId: string } }) => {
   const router = useRouter()
@@ -37,6 +38,20 @@ const GamePage = ({ params }: { params: { gameId: string } }) => {
     errorRetryInterval: 5000,
   })
 
+  const gameData = useMemo<Game | null>(() => {
+    if (!data) return null
+
+    const enrichedRaces: Race[] = data.races.map((apiRace) => ({
+      ...apiRace,
+      statistics: [computeRaceStatistics(apiRace.starts)],
+    }))
+
+    return {
+      id: data.id,
+      races: enrichedRaces,
+    }
+  }, [data])
+
   if (isLoading) {
     return (
       <Box className="flex h-screen w-full items-center justify-center">
@@ -45,7 +60,7 @@ const GamePage = ({ params }: { params: { gameId: string } }) => {
     )
   }
 
-  if (!data?.races) {
+  if (!gameData?.races) {
     return (
       <Box className="flex h-screen w-full flex-col items-center justify-center gap-4">
         <Text as="div" size="4">
@@ -61,10 +76,10 @@ const GamePage = ({ params }: { params: { gameId: string } }) => {
   return (
     <Box className="my-16">
       <Container size="4" className="px-4">
-        <Tabs.Root defaultValue={data.races[0].id ?? ''}>
+        <Tabs.Root defaultValue={gameData.races[0].id ?? ''}>
           <Tabs.List className="gap-x-4">
             <Flex>
-              {data.races?.map((race, index) => (
+              {gameData.races?.map((race, index) => (
                 <Tabs.Trigger key={index} value={race.id} className="cursor-pointer">
                   <Text size="3" weight="bold">
                     {index + 1}
@@ -73,7 +88,7 @@ const GamePage = ({ params }: { params: { gameId: string } }) => {
               ))}
             </Flex>
             <Flex gap="2" className="ml-auto">
-              {view == 'start' && (
+              {view === 'start' && (
                 <Tooltip content="Filter">
                   <IconButton
                     variant="soft"
@@ -112,11 +127,15 @@ const GamePage = ({ params }: { params: { gameId: string } }) => {
                 <Text className="text-sm sm:text-base">Head 2 Head</Text>
               </SegmentedControl.Item>
             </SegmentedControl.Root>
-            {data?.races?.map((race, index) => (
+            {gameData.races?.map((race, index) => (
               <Tabs.Content key={index} value={race.id}>
                 <RaceInfoCard race={race} raceIndex={index} />
-                {view === 'start' && <RaceFilterTable game={data} race={race} raceIndex={index} />}
-                {view === 'statistics' && <RaceStatisticsRanking />}
+                {view === 'start' && (
+                  <RaceFilterTable game={gameData} race={race} raceIndex={index} />
+                )}
+                {view === 'statistics' && (
+                  <RaceStatisticsRanking raceStatistics={race.statistics[0]} />
+                )}
                 {view === 'h2h' && <H2H />}
               </Tabs.Content>
             ))}

@@ -1,4 +1,4 @@
-import { Box, Card, Grid, Skeleton, Text } from '@radix-ui/themes'
+import { Box, Card, Grid, Text, Heading } from '@radix-ui/themes'
 
 import BarList from '@/components/BarList'
 
@@ -17,6 +17,9 @@ const RaceStatisticsRanking = ({ raceStatistics }: RaceStatisticsProps): JSX.Ele
     <Box className="mt-4">
       <Grid columns={{ initial: '1', sm: '2', md: '3' }} gap="3" width="auto">
         <Card>
+          <Heading as="h2" size="4" mb="4">
+            Pengar per start
+          </Heading>
           <BarList data={raceStatistics.HorseMoneyPerStart} />
         </Card>
       </Grid>

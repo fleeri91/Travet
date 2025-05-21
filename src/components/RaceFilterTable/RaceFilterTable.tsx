@@ -3,7 +3,7 @@
 import { Fragment, useMemo, type JSX } from 'react'
 import clsx from 'clsx'
 import { Badge, Flex, IconButton, Table, Text, Tooltip } from '@radix-ui/themes'
-import { RiInformationLine, RiSortAsc, RiSortDesc } from '@remixicon/react'
+import { RiInformationLine, RiSortAsc } from '@remixicon/react'
 import {
   ColumnDef,
   flexRender,
@@ -88,7 +88,7 @@ const RaceFilterTable = ({
     () => [
       {
         accessorKey: 'name',
-        header: () => <Text size="3">Namn</Text>,
+        header: () => <Text size={{ initial: '2', xl: '3' }}>Namn</Text>,
         enableSorting: false,
         cell: ({ row }) => {
           const { start, currentStart } = row.original
@@ -108,7 +108,7 @@ const RaceFilterTable = ({
                 className="mr-8"
               >
                 <Text
-                  size="3"
+                  size={{ initial: '2', xl: '3' }}
                   className={clsx(
                     start.scratched && 'text-gray-300 line-through',
                     'space-x-2 whitespace-nowrap'
@@ -125,7 +125,7 @@ const RaceFilterTable = ({
                   )}
                 </Text>
                 <Text
-                  size="2"
+                  size={{ initial: '1', xl: '2' }}
                   className={clsx(
                     start.scratched && 'text-gray-300 line-through'
                   )}
@@ -144,7 +144,7 @@ const RaceFilterTable = ({
         accessorKey: 'tid',
         header: () => (
           <Flex align="center" gap="2">
-            <Text size="3">Tid</Text>
+            <Text size={{ initial: '2', xl: '3' }}>Tid</Text>
             <Tooltip content="Rekordtid utifrån filter">
               <IconButton variant="soft" radius="full">
                 <RiInformationLine />
@@ -165,7 +165,7 @@ const RaceFilterTable = ({
               justify="start"
               align="center"
               gap="2"
-              className="h-full min-w-[120px]"
+              className="h-full min-w-[148px]"
             >
               <span>
                 {startRecord.time && <Text size="3">{startRecord.time}</Text>}
@@ -199,7 +199,7 @@ const RaceFilterTable = ({
         accessorKey: 'form',
         header: () => (
           <Flex align="center" gap="2">
-            <Text size="3">Form</Text>
+            <Text size={{ initial: '2', xl: '3' }}>Form</Text>
             <Tooltip content="Form 5 senaste starter inom 3 månader">
               <IconButton variant="soft" radius="full">
                 <RiInformationLine />
@@ -213,7 +213,11 @@ const RaceFilterTable = ({
           if (!records) return null
 
           return (
-            <Flex justify="start" align="center" className="h-full space-x-2">
+            <Flex
+              justify="start"
+              align="center"
+              className="h-full min-w-[200px] space-x-2"
+            >
               {_getStartForm(records).map((record: FormType, index: number) => (
                 <Badge
                   key={index}
@@ -240,7 +244,7 @@ const RaceFilterTable = ({
         accessorKey: 'gallopp',
         header: () => (
           <Flex align="center" gap="2">
-            <Text size="3">Gallopp</Text>
+            <Text size={{ initial: '2', xl: '3' }}>Gallopp</Text>
             <Tooltip content="Gallopp 5 senaste starter inom 3 månader.">
               <IconButton variant="soft" radius="full">
                 <RiInformationLine />
@@ -252,7 +256,11 @@ const RaceFilterTable = ({
         cell: ({ row }) => {
           const { records, currentRace, currentStart } = row.original
           return (
-            <Flex justify="start" align="center" className="h-full space-x-2">
+            <Flex
+              justify="start"
+              align="center"
+              className="h-full min-w-[172px] space-x-2"
+            >
               {_getGallopp(records, currentRace.startMethod).map(
                 (record: any, index: number) => (
                   <Badge
@@ -290,7 +298,7 @@ const RaceFilterTable = ({
   const renderedHandicaps: { [key: number]: boolean } = {}
 
   return (
-    <Table.Root>
+    <Table.Root size={{ initial: '1', xl: '2' }}>
       <Table.Header>
         {table.getHeaderGroups().map((headerGroup) => (
           <Table.Row key={headerGroup.id}>
@@ -311,7 +319,7 @@ const RaceFilterTable = ({
                 }}
                 className="w-full"
               >
-                <Flex align="center" gap="2">
+                <Flex align="center" gap="2" height="100%">
                   {flexRender(
                     header.column.columnDef.header,
                     header.getContext()

@@ -39,24 +39,28 @@ const RaceInfoCard = ({ race, raceIndex }: RaceInfoCardProps) => {
     <Card className="min-h-32 select-none">
       {race && (
         <Flex>
-          <Heading size="5" className="space-x-2">
+          <Heading size={{ initial: '4', xl: '5' }} className="space-x-2">
             {`Avdelning ${raceIndex + 1} ${getFormattedDate(race.scheduledStartTime)}`}
           </Heading>
         </Flex>
       )}
       {race && (
         <Flex>
-          <Text size="3">
+          <Text size={{ initial: '2', xl: '3' }}>
             {`${race.track.name} ${race.distance + 'm'} ${_getRaceStartMethod(race.startMethod)}`}
           </Text>
         </Flex>
       )}
       <Flex>
         {race && race.track.condition && (
-          <Text size="3">{`Banförhållande: ${_getTrackCondition(race.track.condition)}`}</Text>
+          <Text
+            size={{ initial: '2', xl: '3' }}
+          >{`Banförhållande: ${_getTrackCondition(race.track.condition)}`}</Text>
         )}
       </Flex>
-      <Flex>{race && <Text size="3">{race.name}</Text>}</Flex>
+      <Flex>
+        {race && <Text size={{ initial: '2', xl: '3' }}>{race.name}</Text>}
+      </Flex>
     </Card>
   )
 }

@@ -59,7 +59,7 @@ const GamePage = (props: { params: Promise<{ gameId: string }> }) => {
   if (isLoading) {
     return (
       <Flex className="h-screen items-center">
-        <Spinner size="3" className='mx-auto' />
+        <Spinner size="3" className="mx-auto" />
       </Flex>
     )
   }
@@ -78,17 +78,13 @@ const GamePage = (props: { params: Promise<{ gameId: string }> }) => {
   }
 
   return (
-    <Box className="my-16">
-      <Container size="4" className="px-4">
+    <Box my="9">
+      <Container size="4" px="4">
         <Tabs.Root defaultValue={gameData.races[0].id ?? ''}>
-          <Tabs.List className="gap-x-4">
+          <Tabs.List className="pr-2">
             <Flex>
               {gameData.races?.map((race, index) => (
-                <Tabs.Trigger
-                  key={index}
-                  value={race.id}
-                  className="cursor-pointer"
-                >
+                <Tabs.Trigger key={index} value={race.id}>
                   <Text size="3" weight="bold">
                     {index + 1}
                   </Text>

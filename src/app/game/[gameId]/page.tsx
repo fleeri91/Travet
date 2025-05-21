@@ -25,6 +25,7 @@ import Filter from '@/components/Filter'
 
 import { Game, Race } from '@/types/Game'
 import { computeRaceStatistics } from '@/utils/statistics'
+import AdBanner from '@/components/AdSense/AdBanner'
 
 const GamePage = (props: { params: Promise<{ gameId: string }> }) => {
   const params = use(props.params)
@@ -155,6 +156,9 @@ const GamePage = (props: { params: Promise<{ gameId: string }> }) => {
           </Box>
           <Filter isOpen={filterOpen} onClose={() => setFilterOpen(false)} />
         </Tabs.Root>
+        <Box mt="9">
+          <AdBanner pId="1299064064705433" dataAdSlot="8253813352" />
+        </Box>
       </Container>
     </Box>
   )

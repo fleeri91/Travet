@@ -1,6 +1,6 @@
 'use client'
 
-import { Fragment, useMemo, type JSX } from 'react'
+import { Fragment, useMemo, useState, type JSX } from 'react'
 import clsx from 'clsx'
 import { Badge, Flex, IconButton, Table, Text, Tooltip } from '@radix-ui/themes'
 import { RiInformationLine, RiSortAsc } from '@remixicon/react'
@@ -23,6 +23,7 @@ import {
   _recordFilter,
 } from '@/utils/filter'
 import { Game, Race, Start } from '@/types/Game'
+import H2H from '../H2H'
 
 interface RaceFilterTableProps {
   game: Game
@@ -46,6 +47,16 @@ const RaceFilterTable = ({
   raceIndex,
 }: RaceFilterTableProps): JSX.Element | null => {
   const { filter } = useFilterStore()
+
+  const [selectedHorseId, setSelectedHorseId] = useState<
+    string | number | null
+  >(null)
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+
+  const handleRowClick = (horseId: string | number) => {
+    setSelectedHorseId(horseId)
+    setIsModalOpen(true)
+  }
 
   const data = useMemo(() => {
     if (!race?.starts || !game.races[raceIndex]) return []
@@ -298,70 +309,88 @@ const RaceFilterTable = ({
   const renderedHandicaps: { [key: number]: boolean } = {}
 
   return (
-    <Table.Root size={{ initial: '1', xl: '2' }}>
-      <Table.Header>
-        {table.getHeaderGroups().map((headerGroup) => (
-          <Table.Row key={headerGroup.id}>
-            {headerGroup.headers.map((header) => (
-              <Table.ColumnHeaderCell
-                key={header.id}
-                onClick={() => {
-                  if (header.column.id === 'tid') {
-                    if (header.column.getIsSorted() === 'asc') {
-                      header.column.clearSorting()
-                    } else {
-                      header.column.toggleSorting(false)
+    <>
+      <Table.Root size={{ initial: '1', xl: '2' }}>
+        <Table.Header>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <Table.Row key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <Table.ColumnHeaderCell
+                  key={header.id}
+                  onClick={() => {
+                    if (header.column.id === 'tid') {
+                      if (header.column.getIsSorted() === 'asc') {
+                        header.column.clearSorting()
+                      } else {
+                        header.column.toggleSorting(false)
+                      }
                     }
-                  }
-                }}
-                style={{
-                  cursor: header.column.getCanSort() ? 'pointer' : 'default',
-                }}
-                className="w-full"
-              >
-                <Flex align="center" gap="2" height="100%">
-                  {flexRender(
-                    header.column.columnDef.header,
-                    header.getContext()
-                  )}
-                  {header.column.id === 'tid' &&
-                    header.column.getIsSorted() === 'asc' && <RiSortAsc />}
-                </Flex>
-              </Table.ColumnHeaderCell>
-            ))}
-          </Table.Row>
-        ))}
-      </Table.Header>
-      <Table.Body>
-        {table.getRowModel().rows.map((row) => {
-          const { start, handicap, startIndex } = row.original
+                  }}
+                  style={{
+                    cursor: header.column.getCanSort() ? 'pointer' : 'default',
+                  }}
+                  className="w-full"
+                >
+                  <Flex align="center" gap="2" height="100%">
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )}
+                    {header.column.id === 'tid' &&
+                      header.column.getIsSorted() === 'asc' && <RiSortAsc />}
+                  </Flex>
+                </Table.ColumnHeaderCell>
+              ))}
+            </Table.Row>
+          ))}
+        </Table.Header>
+        <Table.Body>
+          {table.getRowModel().rows.map((row) => {
+            const { start, handicap, startIndex } = row.original
 
-          const renderHandicapRow = () => {
-            if (isSorted) return null
-            if (handicap > 0 && !renderedHandicaps[handicap]) {
-              renderedHandicaps[handicap] = true
-              return <HandicapRow handicap={handicap} />
+            const renderHandicapRow = () => {
+              if (isSorted) return null
+              if (handicap > 0 && !renderedHandicaps[handicap]) {
+                renderedHandicaps[handicap] = true
+                return <HandicapRow handicap={handicap} />
+              }
+              return null
             }
-            return null
-          }
 
-          return (
-            <Fragment key={startIndex}>
-              {renderHandicapRow()}
-              <Table.Row
-                className={clsx('select-none', start.scratched && 'opacity-60')}
-              >
-                {row.getVisibleCells().map((cell) => (
-                  <Table.Cell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </Table.Cell>
-                ))}
-              </Table.Row>
-            </Fragment>
-          )
-        })}
-      </Table.Body>
-    </Table.Root>
+            return (
+              <Fragment key={startIndex}>
+                {renderHandicapRow()}
+                <Table.Row
+                  className={clsx(
+                    'select-none',
+                    start.scratched && 'opacity-60'
+                  )}
+                  onClick={() =>
+                    handleRowClick(row.original.currentStart.horse.id)
+                  }
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <Table.Cell key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </Table.Cell>
+                  ))}
+                </Table.Row>
+              </Fragment>
+            )
+          })}
+        </Table.Body>
+      </Table.Root>
+      {selectedHorseId && isModalOpen && (
+        <H2H
+          horseId={selectedHorseId}
+          onClose={() => setIsModalOpen(false)}
+          game={game}
+        />
+      )}
+    </>
   )
 }
 

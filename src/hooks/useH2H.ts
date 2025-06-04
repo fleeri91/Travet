@@ -5,9 +5,9 @@ import { RecordResult } from '@/types/ATG/Record'
 interface H2HEntry {
   opponentHorseId: number
   opponentName: string
+  opponentStartNumber: number
   wins: number
   losses: number
-  draws: number
   commonRaces: number
 }
 
@@ -73,7 +73,6 @@ export function useHeadToHead(starts: Start[]): H2HResult {
             commonRaces++
             if (aRank < bRank) wins++
             else if (aRank > bRank) losses++
-            else draws++
           }
         }
 
@@ -81,9 +80,9 @@ export function useHeadToHead(starts: Start[]): H2HResult {
           h2h[aId].push({
             opponentHorseId: bId,
             opponentName: b.horse.name,
+            opponentStartNumber: b.number,
             wins,
             losses,
-            draws,
             commonRaces,
           })
         }

@@ -31,7 +31,7 @@ const GamePage = (props: { params: Promise<{ gameId: string }> }) => {
   const params = use(props.params)
   const router = useRouter()
   const [filterOpen, setFilterOpen] = useState<boolean>(false)
-  const [view, setView] = useState<'start' | 'statistics' | 'h2h'>('start')
+  const [view, setView] = useState<'start' | 'statistics'>('start')
 
   const { data, isLoading } = useSWR<Game>(
     params.gameId ? `game/?id=${params.gameId}` : null,
@@ -119,9 +119,7 @@ const GamePage = (props: { params: Promise<{ gameId: string }> }) => {
             <SegmentedControl.Root
               value={view}
               size="3"
-              onValueChange={(value: 'start' | 'statistics' | 'h2h') =>
-                setView(value)
-              }
+              onValueChange={(value: 'start' | 'statistics') => setView(value)}
               className="mb-4 w-full"
             >
               <SegmentedControl.Item value="start" className="cursor-pointer">
@@ -132,9 +130,6 @@ const GamePage = (props: { params: Promise<{ gameId: string }> }) => {
                 className="cursor-pointer"
               >
                 <Text className="text-sm sm:text-base">Statistik</Text>
-              </SegmentedControl.Item>
-              <SegmentedControl.Item value="h2h" className="cursor-pointer">
-                <Text className="text-sm sm:text-base">Head 2 Head</Text>
               </SegmentedControl.Item>
             </SegmentedControl.Root>
             {gameData.races?.map((race, index) => (
@@ -150,7 +145,6 @@ const GamePage = (props: { params: Promise<{ gameId: string }> }) => {
                 {view === 'statistics' && (
                   <RaceStatisticsRanking raceStatistics={race.statistics[0]} />
                 )}
-                {view === 'h2h' && <H2H />}
               </Tabs.Content>
             ))}
           </Box>

@@ -20,7 +20,6 @@ import { RiFilter3Line, RiCalendarLine } from '@remixicon/react'
 import RaceInfoCard from '@/components/RaceInfoCard'
 import RaceFilterTable from '@/components/RaceFilterTable'
 import RaceStatisticsRanking from '@/components/RaceStatisticsRanking'
-import H2H from '@/components/H2H'
 import Filter from '@/components/Filter'
 
 import { Game, Race } from '@/types/Game'
@@ -150,9 +149,11 @@ const GamePage = (props: { params: Promise<{ gameId: string }> }) => {
           </Box>
           <Filter isOpen={filterOpen} onClose={() => setFilterOpen(false)} />
         </Tabs.Root>
-        <Box mt="9">
-          <AdBanner pId="1299064064705433" dataAdSlot="8253813352" />
-        </Box>
+        {process.env.NODE_ENV === 'production' && (
+          <Box mt="9">
+            <AdBanner pId="1299064064705433" dataAdSlot="8253813352" />
+          </Box>
+        )}
       </Container>
     </Box>
   )

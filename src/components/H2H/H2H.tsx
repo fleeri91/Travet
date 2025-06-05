@@ -159,6 +159,53 @@ const H2H = ({ horseId, onClose, game }: H2HProps): JSX.Element | null => {
                     </div>
                   </Flex>
                 </div>
+
+                {/* Additional Info: Distance, Places */}
+                <Flex justify="between">
+                  <Flex mt="2" className="text-gray-700" direction="column">
+                    {entry.distance && (
+                      <Text size="2" weight="bold">
+                        {entry.position
+                          ? `${entry.distance}:${entry.position}`
+                          : `${entry.distance}`}
+                      </Text>
+                    )}
+
+                    {entry.startPlace && (
+                      <Text size="2" weight="bold">
+                        {`Placering: ${entry.startPlace}`}
+                      </Text>
+                    )}
+                    {entry.galopped && entry.galopped == true && (
+                      <Text size="2" weight="bold">
+                        {`Galopp: ${entry.galopped ? 'Ja' : 'Nej'}`}
+                      </Text>
+                    )}
+                  </Flex>
+                  <Flex
+                    mt="2"
+                    className="text-right text-gray-700"
+                    direction="column"
+                  >
+                    {entry.distance && (
+                      <Text size="2" weight="bold">
+                        {entry.opponentPlace
+                          ? `${entry.distance}:${entry.opponentPlace}`
+                          : `${entry.distance}`}
+                      </Text>
+                    )}
+                    {entry.opponentPlace && (
+                      <Text size="2" weight="bold">
+                        {`Placering: ${entry.opponentPlace}`}
+                      </Text>
+                    )}
+                    {entry.galopped && entry.opponentGalopped == true && (
+                      <Text size="2" weight="bold">
+                        {`Galopp: ${entry.opponentGalopped ? 'Ja' : 'Nej'}`}
+                      </Text>
+                    )}
+                  </Flex>
+                </Flex>
               </Card>
             ))}
           </Flex>

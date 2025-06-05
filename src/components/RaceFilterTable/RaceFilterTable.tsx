@@ -363,7 +363,9 @@ const RaceFilterTable = ({
                 <Table.Row
                   className={clsx(
                     'select-none',
-                    start.scratched && 'opacity-60'
+                    start.scratched && 'opacity-60',
+                    'cursor-pointer',
+                    'transition-all duration-200 ease-in-out hover:bg-gray-800'
                   )}
                   onClick={() =>
                     handleRowClick(row.original.currentStart.horse.id)

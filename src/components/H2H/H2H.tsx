@@ -35,7 +35,32 @@ const H2H = ({ horseId, onClose, game }: H2HProps): JSX.Element | null => {
   const selectedStart = raceStarts.find((s) => s.horse.id === Number(horseId))
   const horseH2H = h2hData[Number(horseId)]
 
-  if (!selectedStart || !horseH2H || horseH2H.length === 0) return null
+  if (!selectedStart || !horseH2H || horseH2H.length === 0) {
+    return (
+      <Dialog.Root open onOpenChange={onClose}>
+        <Dialog.Content size="3">
+          <VisuallyHidden>
+            <Dialog.Title>Head 2 Head</Dialog.Title>
+          </VisuallyHidden>
+          <div className="flex justify-between">
+            <Heading size={{ initial: '4', sm: '5' }} align="left">
+              Head 2 Head
+            </Heading>
+            <Box>
+              <IconButton variant="ghost" color="gray" onClick={onClose}>
+                <RiCloseLine />
+              </IconButton>
+            </Box>
+          </div>
+          <Dialog.Description>
+            <Text size="2" color="gray">
+              Inga data tillgängliga för denna häst.
+            </Text>
+          </Dialog.Description>
+        </Dialog.Content>
+      </Dialog.Root>
+    )
+  }
 
   return (
     <Dialog.Root open onOpenChange={onClose}>

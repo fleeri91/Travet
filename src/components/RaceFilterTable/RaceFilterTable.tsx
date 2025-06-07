@@ -310,7 +310,7 @@ const RaceFilterTable = ({
 
   return (
     <>
-      <Table.Root size={{ initial: '1', xl: '2' }}>
+      <Table.Root size={'1'}>
         <Table.Header>
           {table.getHeaderGroups().map((headerGroup) => (
             <Table.Row key={headerGroup.id}>

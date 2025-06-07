@@ -1,6 +1,7 @@
 import { ChangeEvent, useEffect, useState, type JSX } from 'react'
 import {
   Button,
+  Card,
   Dialog,
   Flex,
   RadioGroup,
@@ -84,120 +85,145 @@ const Filter = ({ isOpen, onClose }: FilterProps): JSX.Element => {
         <Dialog.Title>Filtrera</Dialog.Title>
 
         <Flex direction="column" gap="3">
-          <Flex direction="row" justify="between" align="center" gap="3">
-            <Text>Skor</Text>
-            <Switch
-              checked={filterState.shoes}
-              onCheckedChange={() => toggleFilter('shoes')}
-            />
-          </Flex>
-          <Flex direction="row" justify="between" align="center" gap="3">
-            <Text>Sulky</Text>
-            <Switch
-              checked={filterState.sulky}
-              onCheckedChange={() => toggleFilter('sulky')}
-            />
-          </Flex>
-          <Flex direction="row" justify="between" align="center" gap="3">
-            <Text>Distans</Text>
-            <Switch
-              checked={filterState.distance}
-              onCheckedChange={() => toggleFilter('distance')}
-            />
-          </Flex>
+          <Card variant="surface" size="1">
+            <Flex direction="row" justify="between" align="center" gap="3">
+              <Text>Skor</Text>
+              <Switch
+                checked={filterState.shoes}
+                onCheckedChange={() => toggleFilter('shoes')}
+              />
+            </Flex>
+          </Card>
+          <Card variant="surface" size="1">
+            <Flex direction="row" justify="between" align="center" gap="3">
+              <Text>Sulky</Text>
+              <Switch
+                checked={filterState.sulky}
+                onCheckedChange={() => toggleFilter('sulky')}
+              />
+            </Flex>
+          </Card>
+          <Card variant="surface" size="1">
+            <Flex direction="column" gap="4">
+              <Flex direction="row" justify="between" align="center" gap="3">
+                <Text>Distans</Text>
+                <Switch
+                  checked={filterState.distance}
+                  onCheckedChange={() => toggleFilter('distance')}
+                />
+              </Flex>
+              <Flex direction="row" justify="between" align="center" gap="3">
+                <TextField.Root
+                  type="number"
+                  placeholder="Från"
+                  disabled={!filterState.distance}
+                  value={
+                    filterState.specificDistance?.from != null
+                      ? filterState.specificDistance.from
+                      : ''
+                  }
+                  onChange={handleSpecificDistanceFromChange}
+                  min={0}
+                  className="w-full"
+                />
+                <TextField.Root
+                  type="number"
+                  placeholder="Till"
+                  disabled={!filterState.distance}
+                  value={
+                    filterState.specificDistance?.to != null
+                      ? filterState.specificDistance.to
+                      : ''
+                  }
+                  onChange={handleSpecificDistanceToChange}
+                  min={0}
+                  className="w-full"
+                />
+              </Flex>
+            </Flex>
+          </Card>
 
-          <Flex direction="row" justify="between" align="center" gap="3">
-            <TextField.Root
-              type="number"
-              placeholder="Från"
-              disabled={!filterState.distance}
-              value={
-                filterState.specificDistance?.from != null
-                  ? filterState.specificDistance.from
-                  : ''
-              }
-              onChange={handleSpecificDistanceFromChange}
-              min={0}
-              className="w-full"
-            />
-            <TextField.Root
-              type="number"
-              placeholder="Till"
-              disabled={!filterState.distance}
-              value={
-                filterState.specificDistance?.to != null
-                  ? filterState.specificDistance.to
-                  : ''
-              }
-              onChange={handleSpecificDistanceToChange}
-              min={0}
-              className="w-full"
-            />
-          </Flex>
-
-          <Flex direction="row" justify="between" align="center" gap="3">
-            <Text>Pengar</Text>
-            <Switch
-              checked={filterState.money}
-              onCheckedChange={() => toggleFilter('money')}
-            />
-          </Flex>
-          <Flex direction="row" justify="between" align="center" gap="3">
-            <Text>Topplacering</Text>
-            <Switch
-              checked={filterState.top}
-              onCheckedChange={() => toggleFilter('top')}
-            />
-          </Flex>
-          <Flex direction="row" justify="between" align="center" gap="3">
-            <Text>Vinst</Text>
-            <Switch
-              checked={filterState.win}
-              onCheckedChange={() => toggleFilter('win')}
-            />
-          </Flex>
-          <Flex direction="row" justify="between" align="center" gap="3">
-            <Text>Aktuell bana</Text>
-            <Switch
-              checked={filterState.track}
-              onCheckedChange={() => toggleFilter('track')}
-            />
-          </Flex>
-          <Flex direction="row" justify="between" align="center" gap="3">
-            <Text>Kusk</Text>
-            <Switch
-              checked={filterState.driver}
-              onCheckedChange={() => toggleFilter('driver')}
-            />
-          </Flex>
-          <Flex direction="row" justify="between" align="center" gap="3">
-            <Text>Banförhållande</Text>
-            <Switch
-              checked={filterState.condition}
-              onCheckedChange={() => toggleFilter('condition')}
-            />
-          </Flex>
-          <Flex direction="row" justify="between" align="center" gap="3">
-            <Text>STL</Text>
-            <Switch
-              checked={filterState.stl}
-              onCheckedChange={() => toggleFilter('stl')}
-            />
-          </Flex>
-          <Flex direction="column" gap="3">
-            <Text>Tidsspann</Text>
-            <RadioGroup.Root
-              name="timespan"
-              value={filterState.timespan}
-              onValueChange={handleTimespanChange}
-            >
-              <RadioGroup.Item value="latestMonths">
-                Senaste månaderna
-              </RadioGroup.Item>
-              <RadioGroup.Item value="latestYear">Senaste året</RadioGroup.Item>
-              <RadioGroup.Item value="all">Alla</RadioGroup.Item>
-            </RadioGroup.Root>
-          </Flex>
+          <Card variant="surface" size="1">
+            <Flex direction="row" justify="between" align="center" gap="3">
+              <Text>Pengar</Text>
+              <Switch
+                checked={filterState.money}
+                onCheckedChange={() => toggleFilter('money')}
+              />
+            </Flex>
+          </Card>
+          <Card variant="surface" size="1">
+            <Flex direction="row" justify="between" align="center" gap="3">
+              <Text>Topplacering</Text>
+              <Switch
+                checked={filterState.top}
+                onCheckedChange={() => toggleFilter('top')}
+              />
+            </Flex>
+          </Card>
+          <Card variant="surface" size="1">
+            <Flex direction="row" justify="between" align="center" gap="3">
+              <Text>Vinst</Text>
+              <Switch
+                checked={filterState.win}
+                onCheckedChange={() => toggleFilter('win')}
+              />
+            </Flex>
+          </Card>
+          <Card variant="surface" size="1">
+            <Flex direction="row" justify="between" align="center" gap="3">
+              <Text>Aktuell bana</Text>
+              <Switch
+                checked={filterState.track}
+                onCheckedChange={() => toggleFilter('track')}
+              />
+            </Flex>
+          </Card>
+          <Card variant="surface" size="1">
+            <Flex direction="row" justify="between" align="center" gap="3">
+              <Text>Kusk</Text>
+              <Switch
+                checked={filterState.driver}
+                onCheckedChange={() => toggleFilter('driver')}
+              />
+            </Flex>
+          </Card>
+          <Card variant="surface" size="1">
+            <Flex direction="row" justify="between" align="center" gap="3">
+              <Text>Banförhållande</Text>
+              <Switch
+                checked={filterState.condition}
+                onCheckedChange={() => toggleFilter('condition')}
+              />
+            </Flex>
+          </Card>
+          <Card variant="surface" size="1">
+            <Flex direction="row" justify="between" align="center" gap="3">
+              <Text>STL</Text>
+              <Switch
+                checked={filterState.stl}
+                onCheckedChange={() => toggleFilter('stl')}
+              />
+            </Flex>
+          </Card>
+          <Card variant="surface" size="1">
+            <Flex direction="column" gap="3">
+              <Text>Tidsspann</Text>
+              <RadioGroup.Root
+                name="timespan"
+                value={filterState.timespan}
+                onValueChange={handleTimespanChange}
+              >
+                <RadioGroup.Item value="latestMonths">
+                  Senaste månaderna
+                </RadioGroup.Item>
+                <RadioGroup.Item value="latestYear">
+                  Senaste året
+                </RadioGroup.Item>
+                <RadioGroup.Item value="all">Alla</RadioGroup.Item>
+              </RadioGroup.Root>
+            </Flex>
+          </Card>
         </Flex>
 
         <Flex gap="3" mt="9" justify="end">

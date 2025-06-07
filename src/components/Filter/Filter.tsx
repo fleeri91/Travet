@@ -95,16 +95,28 @@ const Filter = ({ isOpen, onClose }: FilterProps): JSX.Element => {
             onValueChange={(values: string[]) => {
               const updated = { ...filterState }
 
-              const booleanKeys: (keyof FilterType)[] = [
+              const booleanKeys: (keyof Pick<
+                FilterType,
+                | 'shoes'
+                | 'sulky'
+                | 'distance'
+                | 'money'
+                | 'top'
+                | 'track'
+                | 'driver'
+                | 'condition'
+                | 'win'
+                | 'stl'
+              >)[] = [
                 'shoes',
                 'sulky',
                 'distance',
                 'money',
                 'top',
-                'win',
                 'track',
                 'driver',
                 'condition',
+                'win',
                 'stl',
               ]
 

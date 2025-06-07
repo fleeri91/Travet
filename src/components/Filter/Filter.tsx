@@ -5,6 +5,8 @@ import {
   Dialog,
   Flex,
   RadioGroup,
+  CheckboxCards,
+  RadioCards,
   Switch,
   Text,
   TextField,
@@ -85,143 +87,106 @@ const Filter = ({ isOpen, onClose }: FilterProps): JSX.Element => {
         <Dialog.Title>Filtrera</Dialog.Title>
 
         <Flex direction="column" gap="3">
-          <Card variant="surface" size="1">
-            <Flex direction="row" justify="between" align="center" gap="3">
-              <Text>Skor</Text>
-              <Switch
-                checked={filterState.shoes}
-                onCheckedChange={() => toggleFilter('shoes')}
+          <CheckboxCards.Root
+            className="select-none"
+            value={Object.entries(filterState)
+              .filter(([key, val]) => typeof val === 'boolean' && val)
+              .map(([key]) => key)}
+            onValueChange={(values: string[]) => {
+              const updated = { ...filterState }
+
+              const booleanKeys: (keyof FilterType)[] = [
+                'shoes',
+                'sulky',
+                'distance',
+                'money',
+                'top',
+                'win',
+                'track',
+                'driver',
+                'condition',
+                'stl',
+              ]
+
+              booleanKeys.forEach((key) => {
+                updated[key] = values.includes(key)
+              })
+
+              setFilterState(updated)
+            }}
+            columns={{ initial: '1', sm: '2' }}
+          >
+            <CheckboxCards.Item value="shoes">Skor</CheckboxCards.Item>
+            <CheckboxCards.Item value="sulky">Sulky</CheckboxCards.Item>
+            <CheckboxCards.Item value="money">Pengar</CheckboxCards.Item>
+            <CheckboxCards.Item value="top">Topplacering</CheckboxCards.Item>
+            <CheckboxCards.Item value="win">Vinst</CheckboxCards.Item>
+            <CheckboxCards.Item value="track">Aktuell bana</CheckboxCards.Item>
+            <CheckboxCards.Item value="driver">Kusk</CheckboxCards.Item>
+            <CheckboxCards.Item value="condition">
+              Banförhållande
+            </CheckboxCards.Item>
+            <CheckboxCards.Item value="stl">STL</CheckboxCards.Item>
+            <CheckboxCards.Item value="distance">Distans</CheckboxCards.Item>
+          </CheckboxCards.Root>
+
+          <Card size="1" className="col-span-1" mt="4" mb="4">
+            <Text> Välj specifik distans</Text>
+            <Flex
+              direction="row"
+              justify="between"
+              align="center"
+              gap="3"
+              mt="4"
+            >
+              <TextField.Root
+                type="number"
+                placeholder="Från (meter)"
+                disabled={!filterState.distance}
+                value={
+                  filterState.specificDistance?.from != null
+                    ? filterState.specificDistance.from
+                    : ''
+                }
+                onChange={handleSpecificDistanceFromChange}
+                min={0}
+                className="w-full"
               />
-            </Flex>
-          </Card>
-          <Card variant="surface" size="1">
-            <Flex direction="row" justify="between" align="center" gap="3">
-              <Text>Sulky</Text>
-              <Switch
-                checked={filterState.sulky}
-                onCheckedChange={() => toggleFilter('sulky')}
+              <TextField.Root
+                type="number"
+                placeholder="Till (meter)"
+                disabled={!filterState.distance}
+                value={
+                  filterState.specificDistance?.to != null
+                    ? filterState.specificDistance.to
+                    : ''
+                }
+                onChange={handleSpecificDistanceToChange}
+                min={0}
+                className="w-full"
               />
-            </Flex>
-          </Card>
-          <Card variant="surface" size="1">
-            <Flex direction="column" gap="4">
-              <Flex direction="row" justify="between" align="center" gap="3">
-                <Text>Distans</Text>
-                <Switch
-                  checked={filterState.distance}
-                  onCheckedChange={() => toggleFilter('distance')}
-                />
-              </Flex>
-              <Flex direction="row" justify="between" align="center" gap="3">
-                <TextField.Root
-                  type="number"
-                  placeholder="Från"
-                  disabled={!filterState.distance}
-                  value={
-                    filterState.specificDistance?.from != null
-                      ? filterState.specificDistance.from
-                      : ''
-                  }
-                  onChange={handleSpecificDistanceFromChange}
-                  min={0}
-                  className="w-full"
-                />
-                <TextField.Root
-                  type="number"
-                  placeholder="Till"
-                  disabled={!filterState.distance}
-                  value={
-                    filterState.specificDistance?.to != null
-                      ? filterState.specificDistance.to
-                      : ''
-                  }
-                  onChange={handleSpecificDistanceToChange}
-                  min={0}
-                  className="w-full"
-                />
-              </Flex>
             </Flex>
           </Card>
 
           <Card variant="surface" size="1">
-            <Flex direction="row" justify="between" align="center" gap="3">
-              <Text>Pengar</Text>
-              <Switch
-                checked={filterState.money}
-                onCheckedChange={() => toggleFilter('money')}
-              />
-            </Flex>
-          </Card>
-          <Card variant="surface" size="1">
-            <Flex direction="row" justify="between" align="center" gap="3">
-              <Text>Topplacering</Text>
-              <Switch
-                checked={filterState.top}
-                onCheckedChange={() => toggleFilter('top')}
-              />
-            </Flex>
-          </Card>
-          <Card variant="surface" size="1">
-            <Flex direction="row" justify="between" align="center" gap="3">
-              <Text>Vinst</Text>
-              <Switch
-                checked={filterState.win}
-                onCheckedChange={() => toggleFilter('win')}
-              />
-            </Flex>
-          </Card>
-          <Card variant="surface" size="1">
-            <Flex direction="row" justify="between" align="center" gap="3">
-              <Text>Aktuell bana</Text>
-              <Switch
-                checked={filterState.track}
-                onCheckedChange={() => toggleFilter('track')}
-              />
-            </Flex>
-          </Card>
-          <Card variant="surface" size="1">
-            <Flex direction="row" justify="between" align="center" gap="3">
-              <Text>Kusk</Text>
-              <Switch
-                checked={filterState.driver}
-                onCheckedChange={() => toggleFilter('driver')}
-              />
-            </Flex>
-          </Card>
-          <Card variant="surface" size="1">
-            <Flex direction="row" justify="between" align="center" gap="3">
-              <Text>Banförhållande</Text>
-              <Switch
-                checked={filterState.condition}
-                onCheckedChange={() => toggleFilter('condition')}
-              />
-            </Flex>
-          </Card>
-          <Card variant="surface" size="1">
-            <Flex direction="row" justify="between" align="center" gap="3">
-              <Text>STL</Text>
-              <Switch
-                checked={filterState.stl}
-                onCheckedChange={() => toggleFilter('stl')}
-              />
-            </Flex>
-          </Card>
-          <Card variant="surface" size="1">
             <Flex direction="column" gap="3">
               <Text>Tidsspann</Text>
-              <RadioGroup.Root
+              <RadioCards.Root
                 name="timespan"
                 value={filterState.timespan}
                 onValueChange={handleTimespanChange}
+                columns="1"
               >
-                <RadioGroup.Item value="latestMonths">
-                  Senaste månaderna
-                </RadioGroup.Item>
-                <RadioGroup.Item value="latestYear">
+                <RadioCards.Item value="all" className="w-full">
+                  Alla
+                </RadioCards.Item>
+                <RadioCards.Item value="latestYear" className="w-full">
                   Senaste året
-                </RadioGroup.Item>
-                <RadioGroup.Item value="all">Alla</RadioGroup.Item>
-              </RadioGroup.Root>
+                </RadioCards.Item>
+                <RadioCards.Item value="latestMonths" className="w-full">
+                  Senaste månaderna
+                </RadioCards.Item>
+              </RadioCards.Root>
             </Flex>
           </Card>
         </Flex>

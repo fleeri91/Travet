@@ -88,6 +88,7 @@ const Filter = ({ isOpen, onClose }: FilterProps): JSX.Element => {
 
         <Flex direction="column" gap="3">
           <CheckboxCards.Root
+            size="1"
             className="select-none"
             value={Object.entries(filterState)
               .filter(([key, val]) => typeof val === 'boolean' && val)
@@ -127,29 +128,30 @@ const Filter = ({ isOpen, onClose }: FilterProps): JSX.Element => {
               setFilterState(updated)
             }}
             columns={{ initial: '1', sm: '2' }}
+            gap="2"
           >
             <CheckboxCards.Item value="shoes">Skor</CheckboxCards.Item>
             <CheckboxCards.Item value="sulky">Sulky</CheckboxCards.Item>
-            <CheckboxCards.Item value="money">Pengar</CheckboxCards.Item>
             <CheckboxCards.Item value="top">Topplacering</CheckboxCards.Item>
             <CheckboxCards.Item value="win">Vinst</CheckboxCards.Item>
             <CheckboxCards.Item value="track">Aktuell bana</CheckboxCards.Item>
-            <CheckboxCards.Item value="driver">Kusk</CheckboxCards.Item>
             <CheckboxCards.Item value="condition">
               Banförhållande
             </CheckboxCards.Item>
+            <CheckboxCards.Item value="money">Pengar</CheckboxCards.Item>
             <CheckboxCards.Item value="stl">STL</CheckboxCards.Item>
+            <CheckboxCards.Item value="driver">Kusk</CheckboxCards.Item>
             <CheckboxCards.Item value="distance">Distans</CheckboxCards.Item>
           </CheckboxCards.Root>
 
-          <Card size="1" className="col-span-1" mt="4" mb="4">
-            <Text> Välj specifik distans</Text>
+          <Card variant="ghost" size="1" className="col-span-1">
+            <Text>Välj distans</Text>
             <Flex
               direction="row"
               justify="between"
               align="center"
               gap="3"
-              mt="4"
+              mt="2"
             >
               <TextField.Root
                 type="number"
@@ -180,7 +182,7 @@ const Filter = ({ isOpen, onClose }: FilterProps): JSX.Element => {
             </Flex>
           </Card>
 
-          <Card variant="surface" size="1">
+          <Card variant="ghost" size="1">
             <Flex direction="column" gap="3">
               <Text>Tidsspann</Text>
               <RadioCards.Root
@@ -188,6 +190,7 @@ const Filter = ({ isOpen, onClose }: FilterProps): JSX.Element => {
                 value={filterState.timespan}
                 onValueChange={handleTimespanChange}
                 columns="1"
+                size="1"
               >
                 <RadioCards.Item value="all" className="w-full">
                   Alla

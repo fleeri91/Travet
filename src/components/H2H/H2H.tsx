@@ -11,7 +11,8 @@ import {
   Heading,
   VisuallyHidden,
 } from '@radix-ui/themes'
-import { Game, Start } from '@/types/Game'
+import Accordion from '@/components/Accordion'
+import { Game } from '@/types/Game'
 import { type JSX } from 'react'
 import { RiCloseLine } from '@remixicon/react'
 
@@ -64,7 +65,7 @@ const H2H = ({ horseId, onClose, game }: H2HProps): JSX.Element | null => {
 
   return (
     <Dialog.Root open onOpenChange={onClose}>
-      <Dialog.Content size="3">
+      <Dialog.Content size="3" className="h-144">
         <VisuallyHidden>
           <Dialog.Title>Head 2 Head</Dialog.Title>
         </VisuallyHidden>
@@ -79,26 +80,27 @@ const H2H = ({ horseId, onClose, game }: H2HProps): JSX.Element | null => {
           </Box>
         </div>
         <Box mt="4">
-          <Flex direction="column" gap="3">
-            {horseH2H.map((entry) => (
-              <Card key={entry.opponentHorseId} variant="surface" size="2">
-                <div className="flex flex-col items-start justify-start gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-0">
-                  {/* Left: Selected Horse */}
+          <Accordion
+            type="multiple"
+            items={horseH2H.map((entry) => ({
+              value: `entry-${entry.opponentHorseId}`,
+              trigger: (
+                <div className="relative flex w-full flex-col items-start justify-between gap-4 sm:flex-row sm:items-center sm:gap-0">
                   <Flex align="center" gap="2">
-                    {/* Mobile: Wins badge */}
+                    {/* Wins badge for mobile */}
+                    {/*
                     <div className="block sm:hidden">
                       <Badge size={{ initial: '1', sm: '2' }} color="gray">
                         {entry.wins}
                       </Badge>
                     </div>
-
-                    {/* Desktop: Start number badge */}
+                    */}
+                    {/* Start number for selected horse desktop */}
                     <div className="hidden sm:block">
                       <Badge size={{ initial: '1', sm: '2' }} color="gray">
                         {selectedStart.number}
                       </Badge>
                     </div>
-
                     <Text
                       weight="medium"
                       color={entry.wins >= entry.losses ? 'green' : 'red'}
@@ -108,7 +110,7 @@ const H2H = ({ horseId, onClose, game }: H2HProps): JSX.Element | null => {
                     </Text>
                   </Flex>
 
-                  {/* Center: Score */}
+                  {/* Wins : Losses in center on desktop */}
                   <div className="absolute left-1/2 hidden -translate-x-1/2 sm:flex">
                     <Flex
                       align="center"
@@ -125,14 +127,13 @@ const H2H = ({ horseId, onClose, game }: H2HProps): JSX.Element | null => {
                       <Text size={{ initial: '1', sm: '2' }}>:</Text>
                       <Badge
                         size={{ initial: '1', sm: '2' }}
-                        color={entry.losses >= entry.wins ? 'green' : 'red'}
+                        color={entry.losses > entry.wins ? 'green' : 'red'}
                       >
                         {entry.losses}
                       </Badge>
                     </Flex>
                   </div>
 
-                  {/* Right: Opponent */}
                   <Flex
                     align="center"
                     gap="2"
@@ -140,75 +141,94 @@ const H2H = ({ horseId, onClose, game }: H2HProps): JSX.Element | null => {
                   >
                     <Text
                       weight="medium"
-                      color={entry.losses >= entry.wins ? 'green' : 'red'}
+                      color={entry.losses > entry.wins ? 'green' : 'red'}
                       size={{ initial: '1', sm: '2' }}
                     >
                       {entry.opponentName}
                     </Text>
 
+                    {/* Losses badge for mobile */}
+                    {/*
                     <div className="block sm:hidden">
                       <Badge size={{ initial: '1', sm: '2' }} color="gray">
                         {entry.losses}
                       </Badge>
                     </div>
+                    */}
 
+                    {/* Opponent start number desktop */}
                     <div className="hidden sm:block">
                       <Badge size={{ initial: '1', sm: '2' }} color="gray">
-                        {entry.opponentStartNumber}
+                        {entry.entries.length > 0
+                          ? entry.entries[0].opponentStartNumber
+                          : ''}
                       </Badge>
                     </div>
                   </Flex>
                 </div>
-
-                {/* Additional Info: Distance, Places */}
-                <Flex justify="between">
-                  <Flex mt="2" className="text-gray-700" direction="column">
-                    {entry.distance && (
-                      <Text size="2" weight="bold">
-                        {entry.position
-                          ? `${entry.distance}:${entry.position}`
-                          : `${entry.distance}`}
-                      </Text>
-                    )}
-
-                    {entry.startPlace && (
-                      <Text size="2" weight="bold">
-                        {`Placering: ${entry.startPlace}`}
-                      </Text>
-                    )}
-                    {entry.galopped && entry.galopped == true && (
-                      <Text size="2" weight="bold">
-                        {`Galopp: ${entry.galopped ? 'Ja' : 'Nej'}`}
-                      </Text>
-                    )}
-                  </Flex>
-                  <Flex
-                    mt="2"
-                    className="text-right text-gray-700"
-                    direction="column"
-                  >
-                    {entry.distance && (
-                      <Text size="2" weight="bold">
-                        {entry.opponentPlace
-                          ? `${entry.distance}:${entry.opponentPlace}`
-                          : `${entry.distance}`}
-                      </Text>
-                    )}
-                    {entry.opponentPlace && (
-                      <Text size="2" weight="bold">
-                        {`Placering: ${entry.opponentPlace}`}
-                      </Text>
-                    )}
-                    {entry.galopped && entry.opponentGalopped == true && (
-                      <Text size="2" weight="bold">
-                        {`Galopp: ${entry.opponentGalopped ? 'Ja' : 'Nej'}`}
-                      </Text>
-                    )}
-                  </Flex>
+              ),
+              content: (
+                <Flex gap="2" direction="column">
+                  {entry.entries.map((e, i) => (
+                    <Card
+                      variant="surface"
+                      size="2"
+                      key={`card-${entry.id}-${i}`}
+                    >
+                      <Flex
+                        key={`entry-${i}`}
+                        justify="between"
+                        className="text-gray-700"
+                        direction={{ initial: 'column', sm: 'row' }}
+                        mt={i > 0 ? '2' : '0'}
+                        gap="4"
+                      >
+                        <Flex direction="column" mt="2" minWidth="100px">
+                          {e.distance !== null && (
+                            <Text size="2" weight="bold">
+                              Distans: {e.distance}m
+                            </Text>
+                          )}
+                          {e.position !== null && (
+                            <Text size="2" weight="bold">
+                              Position: {e.position}
+                            </Text>
+                          )}
+                          {e.startPlace && (
+                            <Text size="2" weight="bold">
+                              Placering: {e.startPlace}
+                            </Text>
+                          )}
+                          {e.galopped !== null && (
+                            <Text size="2" weight="bold">
+                              Galopp: {e.galopped ? 'Ja' : 'Nej'}
+                            </Text>
+                          )}
+                        </Flex>
+                        <Flex
+                          mt="2"
+                          className="text-right"
+                          direction="column"
+                          minWidth="100px"
+                        >
+                          {e.opponentPlace && (
+                            <Text size="2" weight="bold">
+                              Motståndares placering: {e.opponentPlace}
+                            </Text>
+                          )}
+                          {e.opponentGalopped !== null && (
+                            <Text size="2" weight="bold">
+                              Galopp: {e.opponentGalopped ? 'Ja' : 'Nej'}
+                            </Text>
+                          )}
+                        </Flex>
+                      </Flex>
+                    </Card>
+                  ))}
                 </Flex>
-              </Card>
-            ))}
-          </Flex>
+              ),
+            }))}
+          />
         </Box>
       </Dialog.Content>
     </Dialog.Root>

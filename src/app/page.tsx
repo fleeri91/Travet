@@ -61,7 +61,7 @@ const Home = () => {
             width="auto"
           >
             {Array.from({ length: 9 }).map((_, i) => (
-              <Box key={i} className="h-44">
+              <Box key={i} className="h-38 2xl:h-46">
                 <Skeleton minHeight="100%" loading />
               </Box>
             ))}
@@ -133,7 +133,8 @@ const Home = () => {
                   <Card
                     key={game.id}
                     onClick={() => router.push(`/game/${game.id}`)}
-                    className="h-44 cursor-pointer"
+                    className="cursor-pointer"
+                    size={{ initial: '4', xl: '5' }}
                   >
                     <Flex
                       direction="column"
@@ -155,7 +156,7 @@ const Home = () => {
                       </Text>
                     </Flex>
                     {game.jackpotAmount && (
-                      <Box className="absolute -top-[0px] -left-[10px] h-[150px] w-[150px] overflow-hidden">
+                      <Box className="absolute -top-[10px] -left-[70px] h-[200px] w-[200px] overflow-hidden">
                         <Text
                           as="span"
                           weight="bold"

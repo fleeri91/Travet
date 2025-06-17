@@ -1,6 +1,5 @@
 import { Driver, Horse, RaceResult, StartResult, Track } from './ATG/Game'
 import { RecordResult } from './ATG/Record'
-import { RaceStatistics } from './RaceStatistics'
 
 export interface Game {
   id: string
@@ -23,7 +22,6 @@ export interface Race {
   result: RaceResult
   status: string
   starts: Start[]
-  statistics: RaceStatistics[]
 }
 
 export interface Start {

@@ -9,7 +9,6 @@ import {
   Container,
   Flex,
   IconButton,
-  SegmentedControl,
   Spinner,
   Tabs,
   Text,
@@ -19,18 +18,15 @@ import { RiFilter3Line, RiCalendarLine } from '@remixicon/react'
 
 import RaceInfoCard from '@/components/RaceInfoCard'
 import RaceFilterTable from '@/components/RaceFilterTable'
-import RaceStatisticsRanking from '@/components/RaceStatisticsRanking'
 import Filter from '@/components/Filter'
 
 import { Game, Race } from '@/types/Game'
-import { computeRaceStatistics } from '@/utils/statistics'
 import AdBanner from '@/components/AdSense/AdBanner'
 
 const GamePage = (props: { params: Promise<{ gameId: string }> }) => {
   const params = use(props.params)
   const router = useRouter()
   const [filterOpen, setFilterOpen] = useState<boolean>(false)
-  const [view, setView] = useState<'start' | 'statistics'>('start')
 
   const { data, isLoading } = useSWR<Game>(
     params.gameId ? `game/?id=${params.gameId}` : null,
@@ -42,20 +38,6 @@ const GamePage = (props: { params: Promise<{ gameId: string }> }) => {
     }
   )
 
-  const gameData = useMemo<Game | null>(() => {
-    if (!data) return null
-
-    const enrichedRaces: Race[] = data.races.map((apiRace) => ({
-      ...apiRace,
-      statistics: [computeRaceStatistics(apiRace.starts)],
-    }))
-
-    return {
-      id: data.id,
-      races: enrichedRaces,
-    }
-  }, [data])
-
   if (isLoading) {
     return (
       <Flex className="h-screen items-center">
@@ -64,7 +46,7 @@ const GamePage = (props: { params: Promise<{ gameId: string }> }) => {
     )
   }
 
-  if (!gameData?.races) {
+  if (!data?.races) {
     return (
       <Box className="flex h-screen w-full flex-col items-center justify-center gap-4">
         <Text as="div" size="4">
@@ -80,10 +62,10 @@ const GamePage = (props: { params: Promise<{ gameId: string }> }) => {
   return (
     <Box my="9">
       <Container size="4" px="4">
-        <Tabs.Root defaultValue={gameData.races[0].id ?? ''}>
+        <Tabs.Root defaultValue={data.races[0].id ?? ''}>
           <Tabs.List className="pr-2">
             <Flex>
-              {gameData.races?.map((race, index) => (
+              {data.races?.map((race, index) => (
                 <Tabs.Trigger key={index} value={race.id}>
                   <Text size="3" weight="bold">
                     {index + 1}
@@ -92,17 +74,15 @@ const GamePage = (props: { params: Promise<{ gameId: string }> }) => {
               ))}
             </Flex>
             <Flex gap="2" className="ml-auto">
-              {view === 'start' && (
-                <Tooltip content="Filter">
-                  <IconButton
-                    variant="soft"
-                    className="cursor-pointer"
-                    onClick={() => setFilterOpen(true)}
-                  >
-                    <RiFilter3Line />
-                  </IconButton>
-                </Tooltip>
-              )}
+              <Tooltip content="Filter">
+                <IconButton
+                  variant="soft"
+                  className="cursor-pointer"
+                  onClick={() => setFilterOpen(true)}
+                >
+                  <RiFilter3Line />
+                </IconButton>
+              </Tooltip>
               <Tooltip content="Kalender">
                 <IconButton
                   variant="soft"
@@ -115,35 +95,10 @@ const GamePage = (props: { params: Promise<{ gameId: string }> }) => {
             </Flex>
           </Tabs.List>
           <Box pt="3">
-            <SegmentedControl.Root
-              value={view}
-              size="3"
-              onValueChange={(value: 'start' | 'statistics') => setView(value)}
-              className="mb-4 w-full"
-            >
-              <SegmentedControl.Item value="start" className="cursor-pointer">
-                <Text className="text-sm sm:text-base">Startlista</Text>
-              </SegmentedControl.Item>
-              <SegmentedControl.Item
-                value="statistics"
-                className="cursor-pointer"
-              >
-                <Text className="text-sm sm:text-base">Statistik</Text>
-              </SegmentedControl.Item>
-            </SegmentedControl.Root>
-            {gameData.races?.map((race, index) => (
+            {data.races?.map((race, index) => (
               <Tabs.Content key={index} value={race.id}>
                 <RaceInfoCard race={race} raceIndex={index} />
-                {view === 'start' && (
-                  <RaceFilterTable
-                    game={gameData}
-                    race={race}
-                    raceIndex={index}
-                  />
-                )}
-                {view === 'statistics' && (
-                  <RaceStatisticsRanking raceStatistics={race.statistics[0]} />
-                )}
+                <RaceFilterTable game={data} race={race} raceIndex={index} />
               </Tabs.Content>
             ))}
           </Box>

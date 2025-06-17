@@ -1,92 +1,23 @@
 'use client'
 
-import useSWR from 'swr'
 import { useRouter } from 'next/navigation'
 import dayjs from 'dayjs'
 import sv from 'dayjs/locale/sv'
-import {
-  Box,
-  Container,
-  Grid,
-  Text,
-  Card,
-  Flex,
-  IconButton,
-  Skeleton,
-  Button,
-} from '@radix-ui/themes'
+import { Box, Container, Text, Flex, IconButton } from '@radix-ui/themes'
 import { RiArrowLeftSLine, RiArrowRightSLine } from '@remixicon/react'
 
-import { ATGCalendarDayRoot } from '@/types/ATG/CalendarDay'
 import { useCalendarStore } from '@/store/useCalendar'
-import { GameStatus } from '@/constants/GameStatus'
+import Calendar from '@/components/Calendar'
 
 const Home = () => {
-  const router = useRouter()
   const { selectedDate, today, setPreviousDate, setNextDate } =
     useCalendarStore()
 
   const FIVE_DAYS = dayjs(today).add(4, 'day')
 
-  const { data, isLoading, error, mutate } = useSWR<ATGCalendarDayRoot>(
-    selectedDate ? `/day?date=${selectedDate}` : null,
-    {
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-      errorRetryCount: 3,
-      errorRetryInterval: 5000,
-    }
-  )
-
-  if (isLoading) {
-    return (
-      <Box className="my-16">
-        <Container size="4">
-          <Box className="p-4">
-            <Flex justify="center" align="center" gap="4">
-              <Box className="h-8 w-8">
-                <Skeleton loading minHeight="100%" />
-              </Box>
-              <Box className="flex h-8 w-24">
-                <Skeleton loading minHeight="100%" />
-              </Box>
-              <Box className="h-8 w-8">
-                <Skeleton loading minHeight="100%" />
-              </Box>
-            </Flex>
-          </Box>
-          <Grid
-            columns={{ initial: '1', sm: '2', md: '3' }}
-            gap="3"
-            width="auto"
-          >
-            {Array.from({ length: 9 }).map((_, i) => (
-              <Box key={i} className="h-38 2xl:h-46">
-                <Skeleton minHeight="100%" loading />
-              </Box>
-            ))}
-          </Grid>
-        </Container>
-      </Box>
-    )
-  }
-
-  if (error) {
-    return (
-      <Box className="flex h-screen w-full flex-col items-center justify-center gap-4">
-        <Text as="div" size="4">
-          Hoppsan! Något gick fel..
-        </Text>
-        <Button onClick={() => mutate()} className="cursor-pointer">
-          Försök igen
-        </Button>
-      </Box>
-    )
-  }
-
   return (
     <Box className="my-16">
-      <Container size="4" className="px-4">
+      <Container size="3" className="px-4">
         <Box className="p-4">
           <Flex justify="center" align="center" gap="4">
             <IconButton
@@ -115,69 +46,7 @@ const Home = () => {
             </IconButton>
           </Flex>
         </Box>
-        {data?.games && (
-          <Grid
-            columns={{ initial: '1', sm: '2', md: '3' }}
-            gap="3"
-            width="auto"
-          >
-            {Object.keys(data.games).flatMap((gameType) =>
-              data.games[gameType].map((game) => {
-                const trackNames =
-                  data.tracks
-                    .filter((track) => game.tracks?.includes(track.id))
-                    .map((track) => track.name)
-                    .join(', ') || ''
-
-                return (
-                  <Card
-                    key={game.id}
-                    onClick={() => router.push(`/game/${game.id}`)}
-                    className="cursor-pointer"
-                    size={{ initial: '4', xl: '5' }}
-                  >
-                    <Flex
-                      direction="column"
-                      justify="center"
-                      align="center"
-                      className="h-full"
-                    >
-                      <Text size="8" weight="bold" className="uppercase">
-                        {gameType}
-                      </Text>
-                      <Text as="div" size="4" color="gray">
-                        {trackNames}
-                      </Text>
-                      <Text as="div" size="3" color="gray">
-                        {game.status == GameStatus.bettable &&
-                          dayjs(game.startTime).format('HH:mm')}
-                        {game.status == GameStatus.ongoing && 'Pågående'}
-                        {game.status == GameStatus.results && 'Avslutad'}
-                      </Text>
-                    </Flex>
-                    {game.jackpotAmount && (
-                      <Box className="absolute -top-[10px] -left-[70px] h-[200px] w-[200px] overflow-hidden">
-                        <Text
-                          as="span"
-                          weight="bold"
-                          size="3"
-                          className="absolute top-[30px] -right-[25px] w-[225px] -rotate-45 bg-yellow-500 py-[15px] text-center leading-none text-black uppercase"
-                        >
-                          Jackpot
-                        </Text>
-                      </Box>
-                    )}
-                  </Card>
-                )
-              })
-            )}
-            {Object.keys(data.games).length === 0 && (
-              <Box>
-                <Text>No games available for this date</Text>
-              </Box>
-            )}
-          </Grid>
-        )}
+        <Calendar selectedDate={selectedDate} />
       </Container>
     </Box>
   )

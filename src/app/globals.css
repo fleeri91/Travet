@@ -3,3 +3,8 @@
 .rt-TableCell {
   height: 100%;
 }
+
+.scrollbar-gutter {
+  scrollbar-gutter: stable;
+  overflow-y: auto;
+}

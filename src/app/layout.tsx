@@ -35,7 +35,7 @@ const RootLayout = ({
   children: React.ReactNode
 }>) => {
   return (
-    <html lang="en">
+    <html lang="en" className="scrollbar-gutter">
       <head>
         <AdSense pId="1299064064705433" />
       </head>

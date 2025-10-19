@@ -2,8 +2,7 @@ import { NextResponse, NextRequest } from 'next/server'
 import axios from 'axios'
 
 import { ATGGameRoot } from '@/types/ATG/Game'
-import { ATGRecordRoot } from '@/types/ATG/Record'
-import { Start } from '@/types/Game'
+import { ATGStartRoot } from '@/types/ATG/Start'
 
 export async function GET(request: NextRequest) {
   const params = request.nextUrl.searchParams
@@ -20,22 +19,24 @@ export async function GET(request: NextRequest) {
 
     if (response.data) {
       const gameData: ATGGameRoot = response.data as ATGGameRoot
+
       const raceData = await Promise.all(
         gameData.races.map(async (race) => {
-          const startRequests = race.starts.map(async (start) => {
-            const startResponse = await axios.get<ATGRecordRoot>(
-              `${process.env.API_URL}/races/${race.id}/start/${start.number}`
-            )
-            const startWithData: Start = {
-              ...start,
-              records: startResponse.data.horse.results.records,
-            }
-            return startWithData
+          const raceStartResponse = await axios.get<ATGStartRoot[]>(
+            `${process.env.API_URL}/races/${race.id}/start/`
+          )
+
+          const fetchedStartsById = Object.fromEntries(
+            raceStartResponse.data.map((s) => [s.startNumber, s])
+          )
+
+          const updatedStarts = race.starts.map((start) => {
+            const fetched = fetchedStartsById[start.number]
+            const records = fetched?.horse?.results?.records ?? []
+            return { ...start, records }
           })
 
-          const starts = await Promise.all(startRequests)
-
-          return { ...race, starts }
+          return { ...race, starts: updatedStarts }
         })
       )
 

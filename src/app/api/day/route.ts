@@ -5,7 +5,7 @@ import { ATGCalendarDayRoot } from '@/types/ATG/CalendarDay'
 
 const ALLOWED_COUNTRYCODES = ['SE', 'NO', 'DK', 'FI']
 const ALLOWED_GAMETYPES = [
-  'V75',
+  'V85',
   'GS75',
   'V86',
   'V64',

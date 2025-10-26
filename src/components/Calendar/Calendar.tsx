@@ -16,7 +16,7 @@ import Link from 'next/link'
 import useSWR from 'swr'
 
 const gameTypeColors: Record<GameType, RadixColors> = {
-  [GameType.V75]: 'blue',
+  [GameType.V85]: 'blue',
   [GameType.GS75]: 'jade',
   [GameType.V86]: 'purple',
   [GameType.V64]: 'orange',

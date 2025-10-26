@@ -1,5 +1,5 @@
 export enum GameType {
-  V75 = 'V75',
+  V85 = 'V85',
   GS75 = 'GS75',
   V86 = 'V86',
   V64 = 'V64',
